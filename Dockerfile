@@ -1,5 +1,5 @@
 FROM ubuntu:24.04
-LABEL maintainer="Brady Wetherington <bwetherington@grokability.com>"
+LABEL maintainer="HieuBT <hieubt@hsb.edu.vn>"
 
 # No need to add `apt-get clean` here, reference:
 # - https://github.com/grokability/snipe-it/pull/9201
