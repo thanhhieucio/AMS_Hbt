@@ -20,8 +20,6 @@ gcloud compute ssh "${VM_NAME}" --zone="${VM_ZONE}" --command="
   sudo docker build -t hieubt/ams-hbt:latest .
   echo '--- docker compose up -d ---'
   sudo docker compose up -d
-  echo '--- pruning dangling images ---'
-  sudo docker image prune -f
   echo '--- status ---'
   sudo docker compose ps
 "

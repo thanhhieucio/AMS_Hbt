@@ -1,6 +1,12 @@
 # Implementation notes
 
 _Auto-appended by Claude Code PostToolUse hook. Claude also adds human-readable summaries below file-change lines._
+## 2026-08-21 16:xx - Rebrand Snipe-IT/AMS Hbt sang HSB-IT
+- **Why:** User yeu cau ca nhan hoa du an, doi ten app/caption/duong dan lien quan tu Snipe-IT/AMS Hbt sang HSB-IT va Viet hoa README tren GitHub.
+- **Intent:** Doi cac be mat nguoi dung thay duoc sang `HSB-IT`: ten site/env mac dinh, mail/PDF metadata, setup wizard, email templates, ngon ngu vi-VN/en-US va README.md.
+- **Touched surface:** `implementation-notes.md`, `README.md`, `.env*`, `docker/docker.env`, `deploy.sh`, `config/app.php`, `config/pdf.php`, cac view setup/mail/basic, cac mail/notification header, PDF creator, setup defaults va file ngon ngu vi-VN/en-US.
+- **Risks:** Khong doi truc tiep cac dinh danh noi bo `snipeit:*`, `_snipeit_`, `window.snipeit`, duong dan volume `/var/lib/snipeit` trong pass nay vi chung co the lien quan DB, Artisan schedule, JS runtime va du lieu hien huu. Neu muon doi tiep can lam them alias/migration/compat check.
+- **Rollback/verify:** Rollback bang git diff/checkout cac file tren. Verify bang `php -l` cac file PHP da cham, `php artisan config:clear`, va `rg "Snipe-IT|AMS Hbt" README.md .env .env.example .env.docker docker/docker.env config/app.php config/pdf.php resources/views resources/lang/vi-VN resources/lang/en-US app`.
 ## 2026-08-21 16:xx - Viet hoa giao dien AMS Hbt
 - **Why:** User yeu cau dich va Viet hoa toan bo caption/text/phan hien thi cho nguoi dung.
 - **Intent:** Dat tieng Viet (`vi-VN`) lam ngon ngu mac dinh cho app/setup/docker/env mau; sua goi `resources/lang/vi-VN` de chuoi co dau hien thi dung UTF-8 va giam fallback sang tieng Anh.
@@ -67,3 +73,14 @@ _Auto-appended by Claude Code PostToolUse hook. Claude also adds human-readable 
   - Không có PHP/ImageMagick trong PATH của shell — dùng PHP GD qua Herd (`C:\Users\HieuBT\.config\herd\bin\php84\php.exe`) với font `arialbd.ttf`/`arial.ttf` từ `C:\Windows\Fonts` để render text "HSB-IT" (đậm, đen) + "HIEUBT@HSB.EDU.VN" (nhỏ, xám) lên canvas 320×78 nền trong suốt, ghi đè `public/img/logo.png`.
 - **Verify:** Đã xem lại ảnh PNG mới bằng Read tool trước khi ghi đè, xác nhận hiển thị đúng "HSB-IT" + email. Kiểm tra thực tế: sau khi deploy, mở `http://34.142.200.14/setup` xem logo mới. Rollback: `git checkout -- public/img/logo.png`.
 - 2026-08-21 15:58:03 | Edit | implementation-notes.md
+- 2026-08-21 16:10:24 | Edit | deploy.sh
+
+## 2026-08-21 16:15 — Redeploy logo mới + bỏ workflow ethicalcheck.yml lỗi
+- **Why:** Commit logo HSB-IT (entry 2026-08-21 16:00) cần đưa lên `34.142.200.14`; đồng thời user báo GitHub Actions lỗi "Unable to resolve action `apisec-inc/ethicalcheck-action`, not found".
+- **What:**
+  - `deploy.sh`: bỏ bước `docker image prune -f` sau `docker compose up -d` — bước này từng xóa mất toàn bộ intermediate image (build cache) của legacy builder, khiến lần deploy kế tiếp phải build lại từ đầu (~15 phút thay vì vài giây khi không có gì đổi).
+  - Chạy `./deploy.sh` (nền, ~15 phút do file `logo.png` đổi làm cache Docker mất hiệu lực từ step COPY trở đi) → container `ams-hbt-app-1` recreate thành công, `ams-hbt-db-1` không bị động tới.
+  - Xóa `.github/workflows/ethicalcheck.yml`: workflow này kế thừa từ Snipe-IT gốc, trỏ tới `apisec-inc/ethicalcheck-action@005fac...` (action bên thứ 3 hiện không resolve được), test một API demo không liên quan (`netbanking.apisec.ai`) và gửi report về `snipe@snipe.net` — không có giá trị với AMS Hbt, chỉ gây lỗi đỏ mỗi lần push/PR vào `master`.
+  - **Lưu ý:** phát hiện có phiên Claude Code/Codex khác đang chạy song song, sửa nhiều file khác (rebrand HSB-IT diện rộng, Việt hóa `resources/lang/vi-VN/**`, `config/app.php`, `.env*`, v.v. — xem 2 entry phía trên do phiên đó tự ghi). Chỉ commit 3 file thuộc phạm vi việc này (`deploy.sh`, xóa `ethicalcheck.yml`, `implementation-notes.md`), không đụng vào các file đang dang dở của phiên kia.
+- **Verify:** `curl http://34.142.200.14/` → HTTP 302 sang `/setup` sau redeploy. Rollback prune-fix: `git revert` commit này rồi thêm lại dòng `docker image prune -f` nếu cần. Rollback ethicalcheck: `git checkout <commit trước>^ -- .github/workflows/ethicalcheck.yml`.
+- 2026-08-21 16:18:23 | Edit | implementation-notes.md
