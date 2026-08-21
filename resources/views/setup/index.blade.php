@@ -32,7 +32,7 @@ Kiểm tra hệ thống ::
     <tr {!! ($start_settings['db_conn']===true) ? ' class="success"' : ' class="danger"' !!}>
       <td>Cơ sở dữ liệu</td>
       <td>@if ($start_settings['db_conn']===true)<i class="fas fa-check preflight-success"></i>@else<i class="fas fa-times preflight-error"></i>@endif</td>
-      <td>@if ($start_settings['db_conn']===true)Đã kết nối tới <code>{{ $start_settings['db_name'] }}</code>.@else Không kết nối được cơ sở dữ liệu. Vui lòng kiểm tra cấu hình database trong <code>.env</code>. Lỗi trả về: <code>{{ $start_settings['db_error'] }}</code> @endif</td>
+      <td>@if ($start_settings['db_conn']===true)Đã kết nối cơ sở dữ liệu thành công.@else Không kết nối được cơ sở dữ liệu. Vui lòng kiểm tra cấu hình database trong <code>.env</code>. Lỗi trả về: <code>{{ $start_settings['db_error'] }}</code> @endif</td>
     </tr>
 
     <tr {!! (!$start_settings['env_exposed']) ? ' class="success"' : ' class="danger"' !!}>
