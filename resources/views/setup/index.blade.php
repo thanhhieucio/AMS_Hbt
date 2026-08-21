@@ -139,14 +139,14 @@ Kiểm tra hệ thống ::
           <div class="form-group col-lg-4">
             <label for="db_database">Tên cơ sở dữ liệu</label>
             <input class="form-control" type="text" name="db_database" id="db_database" required
-                   value="{{ old('db_database', config('database.connections.'.config('database.default').'.database')) }}">
+                   value="{{ old('db_database') }}">
             <x-form.error name="db_database" :bag="'database'" />
           </div>
 
           <div class="form-group col-lg-4">
             <label for="db_username">Tên đăng nhập</label>
             <input class="form-control" type="text" name="db_username" id="db_username" required
-                   value="{{ old('db_username', config('database.connections.'.config('database.default').'.username')) }}">
+                   value="{{ old('db_username') }}">
             <x-form.error name="db_username" :bag="'database'" />
           </div>
 
