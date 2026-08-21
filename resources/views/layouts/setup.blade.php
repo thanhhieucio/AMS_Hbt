@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<html>
     <head>
       <title>
         @section('title')
@@ -138,7 +137,7 @@
                         </div>
                     </div>
 
-                      <strong>HSB-IT {{ trans('general.version') }}</strong> {{ config('version.app_version') }} -
+                      <strong>{{ trans('general.version') }} HSB-IT</strong> {{ config('version.app_version') }} -
                       {{ trans('general.build') }} {{ config('version.build_version') }} ({{ config('version.branch') }})
 
                   </div>

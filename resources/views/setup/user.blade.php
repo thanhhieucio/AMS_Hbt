@@ -25,7 +25,7 @@
         <label for="site_name">
           {{ trans('general.site_name') }}
         </label>
-        <input class="form-control" placeholder="Quan ly tai san HSB-IT" required="" name="site_name" type="text" value="{{ old('site_name') }}">
+        <input class="form-control" placeholder="Quản lý tài sản HSB-IT" required="" name="site_name" type="text" value="{{ old('site_name') }}">
 
         <x-form.error name="site_name" />
       </div>
@@ -36,7 +36,7 @@
           <!-- first name -->
           <div class="form-group col-lg-6">
               <label for="first_name">{{ trans('general.first_name') }}</label>
-              <input class="form-control" placeholder="Nguyen Van" required="" name="first_name" type="text" id="first_name" value="{{ old('first_name') }}">
+              <input class="form-control" placeholder="Nguyễn Văn" required="" name="first_name" type="text" id="first_name" value="{{ old('first_name') }}">
               <x-form.error name="first_name" />
           </div>
 

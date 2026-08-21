@@ -43,7 +43,7 @@ class SetupController extends Controller
         $start_settings['php_version_min'] = false;
 
         if (version_compare(PHP_VERSION, config('app.min_php'), '<')) {
-            return response('<center><h1>This software requires PHP version '.config('app.min_php').' or greater. This server is running '.PHP_VERSION.'. </h1><h2>Please upgrade PHP on this server and try again. </h2></center>', 500);
+            return response('<center><h1>Phần mềm yêu cầu PHP phiên bản '.config('app.min_php').' trở lên. Máy chủ này đang chạy '.PHP_VERSION.'. </h1><h2>Vui lòng nâng cấp PHP trên máy chủ rồi thử lại.</h2></center>', 500);
         }
 
         try {
@@ -283,8 +283,8 @@ class SetupController extends Controller
         $settings->link_light_color = $request->input('link_light_color', '#296282');
         $settings->link_dark_color = $request->input('link_dark_color', '#296282');
         $settings->nav_link_color = $request->input('nav_link_color', '#FFFFFF');
-        $settings->locale = $request->input('locale', 'en-US');
-        $settings->default_currency = $request->input('default_currency', 'USD');
+        $settings->locale = $request->input('locale', 'vi-VN');
+        $settings->default_currency = $request->input('default_currency', 'VND');
         $settings->created_by = 1;
         $settings->email_domain = $request->input('email_domain');
         $settings->email_format = $request->input('email_format');

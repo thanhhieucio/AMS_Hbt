@@ -82,3 +82,12 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - **Verify:** `php -l` sạch cho 4 file PHP đã sửa/thêm; `php artisan route:list --name=setup` thấy `setup.database.save`; render `resources/views/setup/index.blade.php` trực tiếp qua bootstrap Laravel (không qua HTTP, có share `$errors` giả lập) ra HTML hợp lệ và chứa panel mới. Chưa test được qua trình duyệt thật (dev server Herd không chạy ở `127.0.0.1:8001` lúc thao tác) — cần mở `/setup` thủ công, chọn PostgreSQL, nhập thông tin Cloud SQL thật và bấm "Kiểm tra & lưu cấu hình database" để xác nhận round-trip ghi `.env` + redirect hoạt động đúng trên môi trường thật trước khi coi là xong.
 - 2026-08-21 18:14:53 | Edit | implementation-notes.md
 - 2026-08-21 18:25:42 | Edit | config/app.php
+
+## 2026-08-21 - Sửa trang setup production còn tiếng Anh/Snipe-IT
+
+- **Why:** User báo `http://34.142.200.14/setup` vẫn hiển thị tiếng Anh và footer `Snipe-IT Version v8.7.0`.
+- **Intent:** Chuẩn hóa riêng setup wizard sang tiếng Việt Unicode, bảo đảm fallback `en-US` của setup cũng trả tiếng Việt, đổi default locale admin đầu tiên về `vi-VN`, rồi kiểm tra/redeploy production để xóa cache/source cũ.
+- **Touched surface:** `resources/views/setup/*`, `resources/views/layouts/setup.blade.php`, `resources/lang/en-US/general.php`, `app/Http/Controllers/SetupController.php`, production deploy/cache.
+- **Risks:** Đổi một phần key trong `en-US` sang tiếng Việt là cố ý để setup vẫn Việt hóa nếu production `.env` còn locale cũ; không tác động business logic ngoài wizard cài đặt.
+- **Rollback/verify:** Rollback bằng git diff theo các file trên. Verify bằng lint PHP, quét chuỗi `Snipe-IT Version`/setup tiếng Anh còn sót, deploy và `curl http://34.142.200.14/setup` xác nhận `lang=vi-VN`, text tiếng Việt, footer HSB-IT.
+- 2026-08-21 18:39:00 | Deploy note | Production VM source path is /opt/ams-hbt; deploy.sh now pulls there and tags the rebuilt image for both hieubt/hsb-it and legacy hieubt/ams-hbt compose compatibility.

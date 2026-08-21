@@ -5,7 +5,7 @@ set -euo pipefail
 
 VM_NAME="hieubt-hsb-ams-server"
 VM_ZONE="asia-southeast1-b"
-REMOTE_DIR="/opt/hsb-it"
+REMOTE_DIR="/opt/ams-hbt"
 
 echo "==> Deploying HSB-IT to ${VM_NAME} (${VM_ZONE})"
 echo "==> Make sure your changes are committed AND pushed to GitHub (origin/master) first."
@@ -18,6 +18,7 @@ gcloud compute ssh "${VM_NAME}" --zone="${VM_ZONE}" --command="
   git pull origin master
   echo '--- docker build (uses layer cache, but any file change re-runs composer install) ---'
   sudo docker build -t hieubt/hsb-it:latest .
+  sudo docker tag hieubt/hsb-it:latest hieubt/ams-hbt:latest
   echo '--- docker compose up -d ---'
   sudo docker compose up -d
   echo '--- status ---'

@@ -15,30 +15,30 @@
     </style>
     <div class="col-md-12">
         <p>
-            Cai dat HSB-IT da hoan tat. Ban co the <strong><a href="{{ config('app.url') }}">vao dashboard</a></strong> de bat dau quan ly tai san.
+            Cài đặt HSB-IT đã hoàn tất. Bạn có thể <strong><a href="{{ config('app.url') }}">vào dashboard</a></strong> để bắt đầu quản lý tài sản.
         </p>
         <div class="well well-sm">
             <div class="row">
                 <div class="col-md-6">
                     <ul>
-                        <li><i class="fa-solid fa-list-check fa-fw"></i> Tao phong ban, dia diem va nguoi dung.</li>
-                        <li><i class="fa-solid fa-tags fa-fw"></i> Cau hinh ma tai san, tem nhan va ma QR.</li>
-                        <li><i class="fa-solid fa-file-import fa-fw"></i> Import tai san tu CSV neu da co du lieu.</li>
+                        <li><i class="fa-solid fa-list-check fa-fw"></i> Tạo phòng ban, địa điểm và người dùng.</li>
+                        <li><i class="fa-solid fa-tags fa-fw"></i> Cấu hình mã tài sản, tem nhãn và mã QR.</li>
+                        <li><i class="fa-solid fa-file-import fa-fw"></i> Import tài sản từ CSV nếu đã có dữ liệu.</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
                     <ul>
-                        <li><i class="fa-solid fa-envelope fa-fw"></i> Cau hinh SMTP that neu can gui email ban giao.</li>
-                        <li><i class="fa-solid fa-shield-halved fa-fw"></i> Kiem tra quyen admin va phan quyen nguoi dung.</li>
-                        <li><i class="fa-solid fa-database fa-fw"></i> Thiet lap lich backup dinh ky.</li>
+                        <li><i class="fa-solid fa-envelope fa-fw"></i> Cấu hình SMTP thật nếu cần gửi email bàn giao.</li>
+                        <li><i class="fa-solid fa-shield-halved fa-fw"></i> Kiểm tra quyền admin và phân quyền người dùng.</li>
+                        <li><i class="fa-solid fa-database fa-fw"></i> Thiết lập lịch backup định kỳ.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="well well-sm well-warning">
-            <p><x-icon type="tip" /> <strong>Luu y khi dong bo user bang SCIM hoac LDAP</strong></p>
-            <p>Neu dung SCIM/LDAP, hay thong nhat dinh dang username giua file CSV va dich vu danh ba de tranh tao trung nguoi dung.</p>
+            <p><x-icon type="tip" /> <strong>Lưu ý khi đồng bộ user bằng SCIM hoặc LDAP</strong></p>
+            <p>Nếu dùng SCIM/LDAP, hãy thống nhất định dạng username giữa file CSV và dịch vụ danh bạ để tránh tạo trùng người dùng.</p>
         </div>
     </div>
 
