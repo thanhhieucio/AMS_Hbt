@@ -2,10 +2,10 @@
 
 return [
 
-    'select_language' => 'Select a Language',
+    'select_language' => 'Chọn ngôn ngữ',
     'languages' => [
-        'en-US' => 'English, US',
-        'en-GB' => 'English, UK',
+        'en-US' => 'Tiếng Anh, Mỹ',
+        'en-GB' => 'Tiếng Anh, Anh',
         'am-ET' => 'Amharic',
         'af-ZA' => 'Afrikaans',
         'ar-SA' => 'Arabic',
@@ -64,12 +64,12 @@ return [
         'th-TH' => 'Thai',
         'tr-TR' => 'Turkish',
         'uk-UA' => 'Ukranian',
-        'vi-VN' => 'Vietnamese',
+        'vi-VN' => 'Tiếng Việt',
         'cy-GB' => 'Welsh',
         'zu-ZA' => 'Zulu',
     ],
 
-    'select_country' => 'Select a Country',
+    'select_country' => 'Chọn quốc gia',
 
     'countries' => [
         'AC' => 'Ascension Island',
@@ -303,8 +303,8 @@ return [
         'TZ' => 'Tanzania, United Republic Of',
         'UA' => 'Ukraine',
         'UG' => 'Uganda',
-        'UK' => 'United Kingdom',
-        'US' => 'United States',
+        'UK' => 'Vương quốc Anh',
+        'US' => 'Hoa Kỳ',
         'UM' => 'United States Minor Outlying Islands',
         'UY' => 'Uruguay',
         'UZ' => 'Uzbekistan',
@@ -313,7 +313,7 @@ return [
         'VE' => 'Venezuela',
         'VG' => 'Virgin Islands (British)',
         'VI' => 'Virgin Islands (U.S.)',
-        'VN' => 'Viet Nam',
+        'VN' => 'Việt Nam',
         'VU' => 'Vanuatu',
         'GB-WLS' => 'Wales',
         'WF' => 'Wallis And Futuna Islands',

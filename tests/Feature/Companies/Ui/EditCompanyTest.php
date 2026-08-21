@@ -19,7 +19,7 @@ class EditCompanyTest extends TestCase
     {
         // Regression guard for the migration off @include('partials.forms
         // .edit.company-select'). The parent-company picker relies on two
-        // data-* hooks read by the js-data-ajax initializer in snipeit.js:
+        // data-* hooks read by the js-data-ajax initializer in hsbit.js:
         // data-only-top-level="true" so sub-companies get greyed out (they
         // can't themselves become parents), and data-exclude-id="{id}" so
         // the company being edited never appears in its own parent list.

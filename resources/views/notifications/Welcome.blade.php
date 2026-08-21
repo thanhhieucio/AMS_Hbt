@@ -1,7 +1,7 @@
 @component('mail::message')
 {{ trans('mail.hello') }} {{ $first_name }} {{$last_name}},
 
-{{ trans('mail.admin_has_created', ['web' => $snipeSettings->site_name]) }}
+{{ trans('mail.admin_has_created', ['web' => $hsbSettings->site_name]) }}
 
 <strong>{{ trans('mail.username') }}: </strong> {{ $username }}<br>
 
@@ -14,9 +14,9 @@
 </p>
 
 {{ trans('mail.best_regards') }} <br>
-@if ($snipeSettings->show_url_in_emails=='1')
-    <p><a href="{{ config('app.url') }}">{{ $snipeSettings->site_name }}</a></p>
+@if ($hsbSettings->show_url_in_emails=='1')
+    <p><a href="{{ config('app.url') }}">{{ $hsbSettings->site_name }}</a></p>
 @else
-    <p>{{ $snipeSettings->site_name }}</p>
+    <p>{{ $hsbSettings->site_name }}</p>
 @endif
 @endcomponent

@@ -11,14 +11,14 @@ class PurgeLoginAttempts extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:purge-logins';
+    protected $signature = 'hsbit:purge-logins';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clears the login_attempts table';
+    protected $description = 'Xóa bảng login_attempts.';
 
     /**
      * Create a new command instance.
@@ -37,7 +37,7 @@ class PurgeLoginAttempts extends Command
      */
     public function handle()
     {
-        if ($this->confirm("\n****************************************************\nTHIS WILL DELETE ALL OF THE YOUR LOGIN ATTEMPT RECORDS. \nThere is NO undo! \n****************************************************\n\nDo you wish to continue? No backsies! [y|N]")) {
+        if ($this->confirm("\n****************************************************\nTHAO TÁC NÀY SẼ XÓA TOÀN BỘ BẢN GHI THỬ ĐĂNG NHẬP. \nKhông thể hoàn tác! \n****************************************************\n\nBạn có muốn tiếp tục? Không thể hoàn tác! [y|N]")) {
             \DB::statement('delete from login_attempts');
         }
     }

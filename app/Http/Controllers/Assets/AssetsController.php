@@ -35,11 +35,11 @@ use TypeError;
 
 /**
  * This class controls all actions related to assets for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  *
- * @author [A. Gianotto] [<snipe@snipe.net>]
+ * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
  */
 class AssetsController extends Controller
 {
@@ -57,7 +57,7 @@ class AssetsController extends Controller
      * Returns a view that invokes the ajax tables which actually contains
      * the content for the assets listing, which is generated in getDatatable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see AssetController::getDatatable() method that generates the JSON response
      * @since [v1.0]
@@ -74,7 +74,7 @@ class AssetsController extends Controller
     /**
      * Returns a view that presents a form to create a new asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -99,7 +99,7 @@ class AssetsController extends Controller
     /**
      * Validate and process new asset form data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -306,7 +306,7 @@ class AssetsController extends Controller
     /**
      * Returns a view that presents a form to edit an existing asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -328,7 +328,7 @@ class AssetsController extends Controller
     /**
      * Returns a view that presents information about an asset for detail view.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *
@@ -408,7 +408,7 @@ class AssetsController extends Controller
      *
      * @since [v1.0]
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      */
     public function update(ImageUploadRequest $request, Asset $asset): RedirectResponse
     {
@@ -554,7 +554,7 @@ class AssetsController extends Controller
     /**
      * Delete a given asset (mark as deleted).
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *
@@ -575,7 +575,7 @@ class AssetsController extends Controller
         }
 
         // Note: the image file is deliberately preserved across this
-        // soft-delete. Snipe-IT's `snipeit:purge` command permanently
+        // soft-delete. HSB-IT's `hsbit:purge` command permanently
         // removes it later when the row is force-deleted. Keeping the
         // file here means a restored soft-deleted row still has its
         // image.
@@ -587,7 +587,7 @@ class AssetsController extends Controller
     /**
      * Searches the assets table by serial, and redirects if it finds one
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -607,7 +607,7 @@ class AssetsController extends Controller
     /**
      * Searches the assets table by asset tag, and redirects if it finds one
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -634,7 +634,7 @@ class AssetsController extends Controller
     /**
      * Return a QR code for the asset
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *
@@ -674,7 +674,7 @@ class AssetsController extends Controller
     /**
      * Return a 2D barcode for the asset
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *
@@ -742,7 +742,7 @@ class AssetsController extends Controller
     /**
      * Returns a view that presents a form to clone an asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *
@@ -776,7 +776,7 @@ class AssetsController extends Controller
     /**
      * Restore a deleted asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      *

@@ -14,7 +14,7 @@ use Tests\TestCase;
  * construct malformed filter keys against the attribute, which then
  * blew up server-side (see the malformed-key 400 fix in the same PR).
  *
- * SnipeSCIMConfig's `emails` doRead now wraps the object in an outer
+ * HsbSCIMConfig's `emails` doRead now wraps the object in an outer
  * array so `emails` always serializes as `[{...}]`.
  */
 class UserEmailsShapeTest extends TestCase
@@ -55,7 +55,7 @@ class UserEmailsShapeTest extends TestCase
 
     public function test_emails_shape_is_consistent_across_users_in_list_response(): void
     {
-        // Direct reproduction of the ListResponse Snipe pasted from the
+        // Direct reproduction of the ListResponse Hsb pasted from the
         // scim log: multiple users, `emails` on each should be an
         // array. Regression guard against a future one-off doRead
         // returning a bare object when a caller passes an unusual

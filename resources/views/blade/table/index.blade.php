@@ -22,13 +22,13 @@
      the clone-and-overlay approach that misplaces tooltips when the
      container reflows (see /hardware/2600#maintenances + info panel
      toggle) and drifts in height with long-content rows. Matching CSS
-     lives in overrides.less under `.snipe-table--sticky-*-N`. --}}
+     lives in overrides.less under `.hsb-table--sticky-*-N`. --}}
 <table
     role="table"
     @class([
-        'table', 'table-striped', 'snipe-table',
-        'snipe-table--sticky-right-' . $fixed_right_number => $use_sticky_css && $fixed_right_number,
-        'snipe-table--sticky-left-' . $fixed_number => $use_sticky_css && $fixed_number,
+        'table', 'table-striped', 'hsb-table',
+        'hsb-table--sticky-right-' . $fixed_right_number => $use_sticky_css && $fixed_right_number,
+        'hsb-table--sticky-left-' . $fixed_number => $use_sticky_css && $fixed_number,
     ])
     data-cookie-id-table="{{ $name }}ListingTable"
     data-id-table="{{ $name }}ListingTable"

@@ -177,7 +177,7 @@ class RestoreFromBackup extends Command
      * @var string
      */
     // FIXME - , stripping prefixes and nonstandard SQL statements. Without --prefix, guess and return the correct prefix to strip
-    protected $signature = 'snipeit:restore 
+    protected $signature = 'hsbit:restore 
                                             {--force : Skip the danger prompt; assuming you enter "y"} 
                                             {filename : The zip file to be migrated}
                                             {--no-progress : Don\'t show a progress bar}
@@ -190,7 +190,7 @@ class RestoreFromBackup extends Command
      *
      * @var string
      */
-    protected $description = 'Restore from a previously created Snipe-IT backup file';
+    protected $description = 'Khôi phục từ một tệp sao lưu HSB-IT đã tạo trước đó.';
 
     /**
      * Create a new command instance.
@@ -218,10 +218,10 @@ class RestoreFromBackup extends Command
         $filename = $this->argument('filename');
 
         if (! $filename) {
-            return $this->error('Missing required filename');
+            return $this->error('Thiếu tên tệp bắt buộc');
         }
 
-        if (! $this->option('force') && ! $this->option('sanitize-guess-prefix') && ! $this->confirm('Are you sure you wish to restore from the given backup file? This can lead to MASSIVE DATA LOSS!')) {
+        if (! $this->option('force') && ! $this->option('sanitize-guess-prefix') && ! $this->confirm('Bạn có chắc muốn khôi phục từ tệp sao lưu đã chọn? Thao tác này có thể gây MẤT DỮ LIỆU NGHIÊM TRỌNG!')) {
             return $this->error('Data loss not confirmed');
         }
 
@@ -421,8 +421,8 @@ class RestoreFromBackup extends Command
 
         if (strpos($sqlfiles[0], 'db-dumps') === false) {
             // return $this->error("SQL backup file is missing 'db-dumps' component of full pathname: ".$sqlfiles[0]);
-            // older Snipe-IT installs don't have the db-dumps subdirectory component
-            $this->warn("Did not find the 'db-dumps' directory - is this really a Snipe-IT backup file? Continuing anyways...");
+            // older HSB-IT installs don't have the db-dumps subdirectory component
+            $this->warn("Did not find the 'db-dumps' directory - is this really a HSB-IT backup file? Continuing anyways...");
         }
 
         $sql_stat = $za->statIndex($sqlfile_indices[0]);
@@ -461,7 +461,7 @@ class RestoreFromBackup extends Command
         //             we unilaterally prepend a slash to the `mysql` command. This might mean your path could look like /blah/blah/blah//mysql - which should be fine. But maybe in some environments it isn't?
         $mysql_binary = config('database.connections.mysql.dump.dump_binary_path').\DIRECTORY_SEPARATOR.'mysql'.(\DIRECTORY_SEPARATOR == '\\' ? '.exe' : '');
         if (! file_exists($mysql_binary)) {
-            return $this->error("mysql tool at: '$mysql_binary' does not exist, cannot restore. Please edit DB_DUMP_PATH in your .env to point to a directory that contains the mysqldump and mysql binary");
+            return $this->error("Không tìm thấy công cụ mysql tại: '$mysql_binary', không thể khôi phục. Vui lòng chỉnh DB_DUMP_PATH trong .env trỏ tới thư mục chứa mysqldump và mysql");
         }
         $proc_results = proc_open("$mysql_binary -h " .
             escapeshellarg(config('database.connections.mysql.host')) .

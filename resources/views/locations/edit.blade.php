@@ -90,7 +90,7 @@
 
                 <x-form.address :item="$item" />
 
-                @if ($snipeSettings->ldap_enabled == 1)
+                @if ($hsbSettings->ldap_enabled == 1)
                     <x-form.row
                         :label="trans('admin/locations/table.ldap_ou')"
                         :$item

@@ -134,7 +134,7 @@
                     </h2>
                 </div>
                 <div class="box-body">
-                    <table id="audited" class="table table-striped snipe-table">
+                    <table id="audited" class="table table-striped hsb-table">
                         <thead>
                             <tr>
                                 <th scope="col">{{ trans('general.audit') }}</th>
@@ -164,7 +164,7 @@
 {{-- Page-specific glue: the audit flow (AJAX form submit, dynamic result
      table, optional audio feedback gated on the user's enable_sounds
      preference) is deeply specific to this screen, so it stays inline
-     rather than polluting snipeit.js with quickscan-only handlers. Label
+     rather than polluting hsbit.js with quickscan-only handlers. Label
      swap and initial focus are trivial DOM wiring that come along for
      the ride so we don't split this into two spots. --}}
 @section('moar_scripts')

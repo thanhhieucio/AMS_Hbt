@@ -19,7 +19,7 @@ class SamlClearExpiredNonces extends Command
      *
      * @var string
      */
-    protected $description = 'Clears out expired SAML assertions from the saml_nonces table';
+    protected $description = 'Xóa các xác nhận SAML đã hết hạn khỏi bảng saml_nonces.';
 
     /**
      * Create a new command instance.

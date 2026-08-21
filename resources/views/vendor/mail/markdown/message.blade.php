@@ -2,23 +2,23 @@
 {{-- Header --}}
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-@if (($snipeSettings->show_images_in_email=='1' ) && ($snipeSettings::setupCompleted()))
+@if (($hsbSettings->show_images_in_email=='1' ) && ($hsbSettings::setupCompleted()))
 
-@if ($snipeSettings->brand == '3')
-@if ($snipeSettings->logo!='')
-<img class="navbar-brand-img logo" src="{{ Storage::disk('public')->url($snipeSettings->logo) }}" alt="">
+@if ($hsbSettings->brand == '3')
+@if ($hsbSettings->logo!='')
+<img class="navbar-brand-img logo" src="{{ Storage::disk('public')->url($hsbSettings->logo) }}" alt="">
 @endif
-{{ $snipeSettings->site_name }}
+{{ $hsbSettings->site_name }}
 
-@elseif ($snipeSettings->brand == '2')
-@if ($snipeSettings->logo!='')
-<img class="navbar-brand-img logo" src="{{ Storage::disk('public')->url($snipeSettings->logo) }}" alt="">
+@elseif ($hsbSettings->brand == '2')
+@if ($hsbSettings->logo!='')
+<img class="navbar-brand-img logo" src="{{ Storage::disk('public')->url($hsbSettings->logo) }}" alt="">
 @endif
 @else
-{{ $snipeSettings->site_name }}
+{{ $hsbSettings->site_name }}
 @endif
 @else
-Snipe-IT
+HSB-IT
 @endif
 @endcomponent
 @endslot
@@ -38,14 +38,14 @@ Snipe-IT
 {{-- Footer --}}
 @slot('footer')
 @component('mail::footer')
-@if($snipeSettings::setupCompleted())
-© {{ date('Y') }} {{ $snipeSettings->site_name }}. {{ trans('mail.rights_reserved') }}
+@if($hsbSettings::setupCompleted())
+© {{ date('Y') }} {{ $hsbSettings->site_name }}. {{ trans('mail.rights_reserved') }}
 @else
-© {{ date('Y') }} Snipe-IT. {{ trans('mail.rights_reserved') }}
+© {{ date('Y') }} HSB-IT. {{ trans('mail.rights_reserved') }}
 @endif
 
-@if ($snipeSettings->privacy_policy_link!='')
-<a href="{{ $snipeSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
+@if ($hsbSettings->privacy_policy_link!='')
+<a href="{{ $hsbSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
 @endif
 
 @endcomponent

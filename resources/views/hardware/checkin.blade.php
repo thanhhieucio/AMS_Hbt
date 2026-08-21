@@ -106,7 +106,7 @@
                     </x-form.row>
 
                     {{-- Requestable toggle. The outer form-group carries
-                         id=requestable-wrapper — the snipeit.js handler
+                         id=requestable-wrapper — the hsbit.js handler
                          shows/hides it based on whether the selected
                          status is deployable (list of deployable status
                          ids handed off via data attribute), and
@@ -127,7 +127,7 @@
                                     value="1"
                                     name="requestable"
                                     id="requestable"
-                                    data-user-preference-key="snipeit.checkin.requestable_default.{{ auth()->id() ?? 'guest' }}"
+                                    data-user-preference-key="hsbit.checkin.requestable_default.{{ auth()->id() ?? 'guest' }}"
                                     data-had-old-input="{{ ((bool) old('requestable', false)) || session()->has('_old_input.requestable') ? '1' : '0' }}"
                                     @checked((bool) old('requestable', $asset->requestable))
                                 />
@@ -190,7 +190,7 @@
                         input_div_class="col-md-8"
                     >
                         <x-slot:input>
-                            <textarea class="col-md-6 form-control" id="note" @required($snipeSettings->require_checkinout_notes) name="note">{{ old('note', $asset->note) }}</textarea>
+                            <textarea class="col-md-6 form-control" id="note" @required($hsbSettings->require_checkinout_notes) name="note">{{ old('note', $asset->note) }}</textarea>
                         </x-slot:input>
                     </x-form.row>
 

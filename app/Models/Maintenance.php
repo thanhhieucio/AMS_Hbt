@@ -21,7 +21,7 @@ use Watson\Validating\ValidatingTrait;
  *
  * @version v1.0
  */
-class Maintenance extends SnipeModel implements ICompanyableChild
+class Maintenance extends HsbModel implements ICompanyableChild
 {
     use CompanyableChildTrait;
     use HasFactory;
@@ -225,7 +225,7 @@ class Maintenance extends SnipeModel implements ICompanyableChild
     /**
      * Get the maintenance logs
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v8.2.2]
      *

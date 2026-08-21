@@ -21,7 +21,7 @@
                             data-side-pagination="server"
                             data-sort-order="desc"
                             id="userRequests"
-                            class="table table-striped snipe-table"
+                            class="table table-striped hsb-table"
                             data-url="{{ route('api.assets.requested') }}"
                             data-export-options='{
                   "fileName": "my-requested-assets-{{ date('Y-m-d') }}",

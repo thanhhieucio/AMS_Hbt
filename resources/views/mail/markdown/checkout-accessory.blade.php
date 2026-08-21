@@ -3,7 +3,7 @@
 
 {{ $introduction_line }}
 
-@if (($snipeSettings->show_images_in_email =='1') && $item->getImageUrl())
+@if (($hsbSettings->show_images_in_email =='1') && $item->getImageUrl())
 <center><img src="{{ $item->getImageUrl() }}" alt="Accessory" style="max-width: 570px;"></center>
 @endif
 
@@ -58,6 +58,6 @@
 
 {{ trans('mail.best_regards') }}
 
-{{ $snipeSettings->site_name }}
+{{ $hsbSettings->site_name }}
 
 @endcomponent

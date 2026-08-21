@@ -16,7 +16,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Department extends SnipeModel
+class Department extends HsbModel
 {
     use CompanyableTrait;
     use HasFactory;
@@ -104,7 +104,7 @@ class Department extends SnipeModel
     /**
      * Establishes the department -> company relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v4.0]
      *
@@ -118,7 +118,7 @@ class Department extends SnipeModel
     /**
      * Establishes the department -> users relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v4.0]
      *
@@ -132,7 +132,7 @@ class Department extends SnipeModel
     /**
      * Establishes the department -> manager relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v4.0]
      *
@@ -146,7 +146,7 @@ class Department extends SnipeModel
     /**
      * Establishes the department -> location relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v4.0]
      *

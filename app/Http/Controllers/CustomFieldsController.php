@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 /**
  * This controller handles all actions related to Custom Asset Fields for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @todo Improve documentation here.
  * @todo Check for raw DB queries and try to convert them to query builder statements
@@ -43,7 +43,7 @@ class CustomFieldsController extends Controller
      *
      * @see CustomFieldsController::storeField()
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.1.5]
      */
@@ -55,7 +55,7 @@ class CustomFieldsController extends Controller
     /**
      * Detach a custom field from a fieldset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */

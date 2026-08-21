@@ -103,7 +103,7 @@
                                 <table data-id-table="upload-table"
                                         data-side-pagination="client"
                                         id="upload-table"
-                                        class="col-md-12 table table-striped snipe-table">
+                                        class="col-md-12 table table-striped hsb-table">
 
                                     <tr>
                                         <th class="col-md-1">
@@ -380,7 +380,7 @@
                                         data-minimum-results-for-search="-1"
                                         style="width: 100%"
                                     />
-                                    @if ($typeOfImport === 'asset' && $snipeSettings->auto_increment_assets == 0)
+                                    @if ($typeOfImport === 'asset' && $hsbSettings->auto_increment_assets == 0)
                                         <p class="help-block">
                                             {{ trans('general.auto_incrementing_asset_tags_disabled_so_tags_required') }}
                                         </p>
@@ -402,7 +402,7 @@
                                 />
                             @endif
 
-                            @if ($typeOfImport === 'asset' && $snipeSettings->auto_increment_assets == 1 && $update)
+                            @if ($typeOfImport === 'asset' && $hsbSettings->auto_increment_assets == 1 && $update)
                                 <div class="form-group">
                                     <p class="help-block col-md-8 col-md-offset-3">
                                         {{ trans('general.auto_incrementing_asset_tags_enabled_so_now_assets_will_be_created') }}
@@ -887,13 +887,13 @@
         });
 
         // select2 measures its parent width at init time. Because
-        // snipeit.js runs select2 init on all .select2 elements on
+        // hsbit.js runs select2 init on all .select2 elements on
         // page-ready, the type dropdown inside the modal gets a 0-width
         // parent (modal is display:none) and renders as a tiny stub. Kick
         // it after Bootstrap 3's shown.bs.modal fires so it can measure
         // for real. Full-width to match the modal-body column, matching
         // what the inline style already asks for via min-width.
-        // snipeit.js runs select2() on page-ready with no options, so it
+        // hsbit.js runs select2() on page-ready with no options, so it
         // measures against the still-hidden modal (0px parent width) and
         // sets .select2-container to width:0px inline. That stays wrong
         // after the modal opens - and worse, it never reflows on browser
@@ -957,7 +957,7 @@
                 $wire.startProcessing(withBackup);
 
                 // Fake backup progress. Real progress isn't available -
-                // the sync artisan snipeit:backup call emits no percentage
+                // the sync artisan hsbit:backup call emits no percentage
                 // hook - so tick the bar toward 90% on an asymptotic
                 // curve so it visibly moves without ever claiming to be
                 // done. The .done()/.fail() for slice 0 snaps it to 100%

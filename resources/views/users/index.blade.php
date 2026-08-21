@@ -19,7 +19,7 @@
 @section('header_right')
 
     @can('create', \App\Models\User::class)
-        @if ($snipeSettings->ldap_enabled == 1)
+        @if ($hsbSettings->ldap_enabled == 1)
             <a href="{{ route('ldap/user') }}" class="btn btn-theme pull-right"><i class="fas fa-sitemap"></i> {{trans('general.ldap_sync')}}</a>
         @endif
     @endcan

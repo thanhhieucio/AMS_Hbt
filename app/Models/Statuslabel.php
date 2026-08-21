@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Statuslabel extends SnipeModel
+class Statuslabel extends HsbModel
 {
     use HasFactory;
     use Presentable;
@@ -117,7 +117,7 @@ class Statuslabel extends SnipeModel
     /**
      * Establishes the status label -> assets relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -136,7 +136,7 @@ class Statuslabel extends SnipeModel
     /**
      * Gets the status label type
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -206,7 +206,7 @@ class Statuslabel extends SnipeModel
     /**
      * Helper function to determine type attributes
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *

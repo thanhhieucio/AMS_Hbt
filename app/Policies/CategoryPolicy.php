@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class CategoryPolicy extends SnipePermissionsPolicy
+class CategoryPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

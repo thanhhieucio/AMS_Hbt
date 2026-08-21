@@ -23,7 +23,7 @@
                 data-buttons="oauthButtons"
                 data-sort-name="created_at"
                 id="OAuthClientsTable"
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
             >
                 <thead>
                     <tr>
@@ -122,7 +122,7 @@
                 data-sort-order="desc"
                 data-sort-name="created_at"
                 id="AuthorizedAppsTable"
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
             >
                 <thead>
                     <tr>

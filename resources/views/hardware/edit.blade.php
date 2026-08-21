@@ -88,8 +88,8 @@
          name (asset_tags[N] / serials[N]) alongside row 1. --}}
     @if (! $item->id)
         <livewire:asset-additional-tags
-            :autoPrefix="$snipeSettings->auto_increment_prefix ?? ''"
-            :autoEnabled="$snipeSettings->auto_increment_assets == '1'"
+            :autoPrefix="$hsbSettings->auto_increment_prefix ?? ''"
+            :autoEnabled="$hsbSettings->auto_increment_assets == '1'"
         />
     @endif
 
@@ -382,7 +382,7 @@
                     // custom fields that came with the new HTML. Without
                     // this, the pickers would just be plain text inputs
                     // until page reload.
-                    window.snipeitInitDatetimepickers('#custom_fields_content');
+                    window.hsbitInitDatetimepickers('#custom_fields_content');
                     //now re-populate the custom fields based on the previously saved values
                     $('#custom_fields_content').find('input,select,textarea').each(function (index,elem) {
                         if(transformed_oldvals[elem.name]) {
@@ -464,7 +464,7 @@
         });
 
         @if (isset($cloned_model))
-            @if ($snipeSettings->auto_increment_assets == '1')
+            @if ($hsbSettings->auto_increment_assets == '1')
                 $('input[name="serials[1]"]').trigger('focus');
             @else
                 $('#asset_tag').trigger('focus');

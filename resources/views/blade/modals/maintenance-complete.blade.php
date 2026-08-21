@@ -2,7 +2,7 @@
      page that lists maintenances via `x-table.maintenances`. The bootstrap-
      table actions formatter that emits the green checkmark button lives in
      partials/bootstrap-table.blade.php; the click handler that populates the
-     form action and shows this modal lives in resources/assets/js/snipeit.js
+     form action and shows this modal lives in resources/assets/js/hsbit.js
      as a delegated `.complete-maintenance` handler. --}}
 <div class="modal fade" id="completeMaintenanceModal" tabindex="-1" role="dialog" aria-labelledby="completeMaintenanceModalLabel" aria-hidden="true">
     <div class="modal-dialog">

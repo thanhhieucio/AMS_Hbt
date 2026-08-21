@@ -11,7 +11,7 @@ use App\Providers\LivewireServiceProvider;
 use App\Providers\RouteServiceProvider;
 use App\Providers\SamlServiceProvider;
 use App\Providers\SettingsServiceProvider;
-use App\Providers\SnipeTranslationServiceProvider;
+use App\Providers\HsbTranslationServiceProvider;
 use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
@@ -95,7 +95,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('SITE_NAME', 'Snipe-IT'),
+    'name' => env('SITE_NAME', 'HSB-IT'),
 
     /*
     |--------------------------------------------------------------------------
@@ -174,7 +174,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en-US'),
+    'locale' => env('APP_LOCALE', 'vi-VN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -225,7 +225,7 @@ return [
    |--------------------------------------------------------------------------
    |
    | Normal users will never need to edit this. This option lets you run
-   | Snipe-IT within an I-Frame, which is normally disabled by default for
+   | HSB-IT within an I-Frame, which is normally disabled by default for
    | security reasons, to prevent clickjacking. It should normally be set to false.
    |
    */
@@ -244,7 +244,7 @@ return [
    | primitive against internal services or cloud metadata endpoints.
    |
    | Some operators legitimately run their own webhook receiver on the same
-   | private network as Snipe-IT (self-hosted Mattermost, Rocket.Chat, an
+   | private network as HSB-IT (self-hosted Mattermost, Rocket.Chat, an
    | internal ChatOps bot, etc.). Setting this to true re-enables outbound
    | requests to those addresses. Scheme restrictions (http/https only) are
    | still enforced. Leave this off unless you know you need it.
@@ -340,7 +340,7 @@ return [
     | unless you have a specific need for it.
     |
     | The European Commission now requires at least 3072-bit keys for new SAML certificates
-    | @link https://github.com/grokability/snipe-it/issues/17386
+    | @link https://github.com/thanhhieucio/HSB-IT/issues/17386
     */
 
     'saml_key_size' => env('SAML_KEY_SIZE', 2048),
@@ -351,7 +351,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Normal users will never need to edit this. This option lets you run a
-    | version of Snipe-IT with limited functionality to prevent demo abuse.
+    | version of HSB-IT with limited functionality to prevent demo abuse.
     |
     */
 
@@ -373,7 +373,7 @@ return [
     | Default: false. The test helpers resolve the hostname and reject any
     | URL that lands on a private / loopback / link-local / reserved range.
     |
-    | Set to true ONLY when the Snipe-IT installation is legitimately
+    | Set to true ONLY when the HSB-IT installation is legitimately
     | pointed at services on the same private network (self-hosted on-prem
     | alongside internal AD/Slack/webhooks is the typical case). Never
     | enable on hosted / multi-tenant deployments.
@@ -463,7 +463,7 @@ return [
         RedisServiceProvider::class,
         PasswordResetServiceProvider::class,
         SessionServiceProvider::class,
-        SnipeTranslationServiceProvider::class, // we REPLACE the default Laravel translator with our own
+        HsbTranslationServiceProvider::class, // we REPLACE the default Laravel translator with our own
         ValidationServiceProvider::class,
         ViewServiceProvider::class,
 

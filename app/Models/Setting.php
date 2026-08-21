@@ -33,7 +33,7 @@ class Setting extends Model
      *
      * @var string
      */
-    public const SETUP_CHECK_KEY = 'snipeit_setup_check';
+    public const SETUP_CHECK_KEY = 'hsbit_setup_check';
 
     /**
      * Whether the model should inject it's identifier to the unique
@@ -88,7 +88,7 @@ class Setting extends Model
      * Substrings (matched case-insensitively against the request's User-Agent)
      * that identify common scripted or default HTTP clients. New installs see
      * this list as the pre-filled textarea value; admins can add, remove, or
-     * blank it out entirely. Browser-driven AJAX (snipeit.js, datatables,
+     * blank it out entirely. Browser-driven AJAX (hsbit.js, datatables,
      * select2, etc.) carries the browser's own User-Agent and is unaffected.
      */
     public const DEFAULT_BLOCKED_API_USER_AGENTS = [
@@ -211,7 +211,7 @@ class Setting extends Model
      *
      * @return string escaped CSS
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      */
     protected function headerColor(): Attribute
     {

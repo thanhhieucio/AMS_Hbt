@@ -15,7 +15,7 @@ function url_get_contents ($Url) {
     }
     print("file_get_contents() failed, trying curl instead.\n");
     if (!function_exists('curl_init')){
-        die("cURL is not installed!\nThis is required for Snipe-IT as well as the upgrade script, so you will need to fix this before continuing.\nAborting upgrade...\n");
+        die("cURL is not installed!\nThis is required for HSB-IT as well as the upgrade script, so you will need to fix this before continuing.\nAborting upgrade...\n");
     }
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $Url);
@@ -73,13 +73,13 @@ if ($argc > 1){
 }
 
 echo "\e[95m--------------------------------------------------------\n";
-echo "WELCOME TO THE SNIPE-IT UPGRADER! \n";
+echo "WELCOME TO THE HSB-IT UPGRADER! \n";
 echo "--------------------------------------------------------\n\n";
 echo "This script will attempt to: \n\n";
 echo "- validate some very basic .env file settings \n";
 echo "- check your PHP version and extension requirements \n";
 echo "- check directory permissions \n";
-echo "- change your 'git remote' to the new Snipe-IT GitHub URL \n";
+echo "- change your 'git remote' to the new HSB-IT GitHub URL \n";
 echo "- do a git pull to bring you to the latest version \n";
 echo "- run composer install to get your vendors up to date \n";
 echo "- run a backup \n";
@@ -87,8 +87,8 @@ echo "- run migrations to get your schema up to date \n";
 echo "- clear out old cache settings\e[39m\n\n";
 
 
-// Fetching most current upgrade requirements from github. Read more here: https://github.com/grokability/snipe-it/pull/14127
-$remote_requirements_file = "https://raw.githubusercontent.com/grokability/snipe-it/$branch/.upgrade_requirements.json";
+// Fetching most current upgrade requirements from github. Read more here: https://github.com/thanhhieucio/HSB-IT/pull/14127
+$remote_requirements_file = "https://raw.githubusercontent.com/thanhhieucio/HSB-IT/$branch/.upgrade_requirements.json";
 $upgrade_requirements_raw = url_get_contents($remote_requirements_file);
 $upgrade_requirements = json_decode($upgrade_requirements_raw, true);
 if (! $upgrade_requirements) {
@@ -272,8 +272,8 @@ if(!$skip_php_checks){
 
     } else {
         echo "\e[91m!!!!!!!!!!!!!!!!!!!!!!!!! PHP VERSION ERROR !!!!!!!!!!!!!!!!!!!!!!!!!\n";
-        echo "This version of PHP (".phpversion().") is NOT compatible with Snipe-IT.\n";
-        echo "Snipe-IT requires PHP versions between ".$php_min_works." and ".$php_max_wontwork.".\n";
+        echo "This version of PHP (".phpversion().") is NOT compatible with HSB-IT.\n";
+        echo "HSB-IT requires PHP versions between ".$php_min_works." and ".$php_max_wontwork.".\n";
         echo "Please install a compatible version of PHP and re-run this script again. \n";
         echo "\e[91m!!!!!!!!!!!!!!!!!!!!!!!!! ABORTING THE UPGRADER !!!!!!!!!!!!!!!!!!!!!!\n";
         exit(1);
@@ -439,7 +439,7 @@ $git_version = shell_exec('git --version');
 if ((strpos('git version', $git_version)) === false) {
     echo "Git is installed. \n";
 
-    // check remotes for legacy snipe/snipe-it URL
+    // check remotes for legacy hieubt/hsb-it URL
     $remote = shell_exec('git remote -v');
     foreach (explode("\n", $remote) as $line) {
         $remote_bits = explode("\t", $line, 2);
@@ -447,9 +447,9 @@ if ((strpos('git version', $git_version)) === false) {
             continue;
         }
         @list($url, $purpose) = explode(" ", $remote_bits[1]);
-        if (in_array($url, ['git@github.com:snipe/snipe-it.git', 'https://github.com/snipe/snipe-it.git'])) {
+        if (in_array($url, ['git@github.com:hieubt/hsb-it.git', 'https://github.com/hieubt/hsb-it.git'])) {
             // SSH or HTTPS remotes
-            $new_url = preg_replace("|snipe/snipe-it|", "grokability/snipe-it", $url);
+            $new_url = preg_replace("|hieubt/hsb-it|", "thanhhieucio/HSB-IT", $url);
             echo $success_icon . " Resetting remote " . $remote_bits[0] . " at $url to $new_url for purpose: $purpose\n";
             $push = '';
             if ($purpose == '(push)') {
@@ -474,7 +474,7 @@ if ((strpos('git version', $git_version)) === false) {
 } else {
     echo "Git is NOT installed. You can still use this upgrade script to run common \n";
     echo "migration commands, but you will have to manually download the updated files. \n\n";
-    echo "Please note that this script will not download the latest Snipe-IT \n";
+    echo "Please note that this script will not download the latest HSB-IT \n";
     echo "files for you unless you have git installed. \n";
     echo "It simply runs the standard composer, artisan, and migration \n";
     echo "commands needed to finalize the upgrade after. \n\n";
@@ -566,7 +566,7 @@ echo "--------------------------------------------------------\e[39m\n\n";
 exec('php artisan down',  $down_results, $return_code);
 echo '-- ' . implode("\n", $down_results) . "\n";
 if ($return_code > 0) {
-    die("Something went wrong with downing your site. This can't be good. Please investigate the error and be sure to check https://snipe-it.readme.io/docs/common-issues and https://snipe-it.readme.io/docs/installation-issues for solutions to common upgrading issues. Aborting!\n\n");
+    die("Something went wrong with downing your site. This can't be good. Please investigate the error and be sure to check https://docs.hsb.edu.vn/hsb-it/docs/common-issues and https://docs.hsb.edu.vn/hsb-it/docs/installation-issues for solutions to common upgrading issues. Aborting!\n\n");
 }
 unset($return_code);
 
@@ -576,7 +576,7 @@ echo "STEP 8: Backing up database: \n";
 echo "--------------------------------------------------------\e[39m\n\n";
 
 if (!$skip_backup) {
-    $backup = exec('php artisan snipeit:backup', $backup_results, $return_code);
+    $backup = exec('php artisan hsbit:backup', $backup_results, $return_code);
 
     if ($return_code > 0) {
         die($error_icon." Something went wrong with your backup. Aborting!\n\n");
@@ -624,7 +624,7 @@ echo $success_icon.' '.trim($up)."\n\n";
 
 echo "\e[92m---------------------- FINISHED! -----------------------\n";
 echo "All done! Clear your browser cookies and re-login to use \n";
-echo "your upgraded Snipe-IT!\n";
+echo "your upgraded HSB-IT!\n";
 echo "--------------------------------------------------------\e[39m\n\n";
 
 

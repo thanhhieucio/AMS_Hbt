@@ -26,7 +26,7 @@ class ComponentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -168,7 +168,7 @@ class ComponentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -190,7 +190,7 @@ class ComponentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $id
      */
@@ -207,7 +207,7 @@ class ComponentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -231,7 +231,7 @@ class ComponentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -293,7 +293,7 @@ class ComponentsController extends Controller
     /**
      * Validate and checkout the component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      * t
      *
      * @since [v5.1.8]
@@ -407,7 +407,7 @@ class ComponentsController extends Controller
     /**
      * Validate and store checkin data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.1.8]
      */

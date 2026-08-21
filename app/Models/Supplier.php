@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Supplier extends SnipeModel
+class Supplier extends HsbModel
 {
     use HasFactory;
     use HasUploads;
@@ -94,7 +94,7 @@ class Supplier extends SnipeModel
      * We do this to eager load the "count" of seats from the controller.
      * Otherwise calling "count()" on each model results in n+1.
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v4.0]
      *
@@ -108,7 +108,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> assets relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -122,7 +122,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> accessories relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -136,7 +136,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> component relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v6.1.1]
      *
@@ -150,7 +150,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> component relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v6.1.1]
      *
@@ -164,7 +164,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> admin user relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @return Relation
      */
@@ -176,7 +176,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> asset maintenances relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      */
@@ -188,7 +188,7 @@ class Supplier extends SnipeModel
     /**
      * Return the number of assets by supplier
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -206,7 +206,7 @@ class Supplier extends SnipeModel
     /**
      * Establishes the supplier -> license relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -220,7 +220,7 @@ class Supplier extends SnipeModel
     /**
      * Return the number of licenses by supplier
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -236,7 +236,7 @@ class Supplier extends SnipeModel
      *
      * @todo this should be handled via validation, no?
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *

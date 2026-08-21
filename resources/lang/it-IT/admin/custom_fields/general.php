@@ -69,5 +69,5 @@ return [
         'radio' => 'Pulsanti di opzione',
     ],
     'markdown_supported' => 'Markdown supportato',
-    'general_help_text' => 'I campi personalizzati memorizzano informazioni aggiuntive non coperte dai campi predefiniti del Bene. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'I campi personalizzati memorizzano informazioni aggiuntive non coperte dai campi predefiniti del Bene. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

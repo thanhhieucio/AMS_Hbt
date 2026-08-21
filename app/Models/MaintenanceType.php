@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class MaintenanceType extends SnipeModel
+class MaintenanceType extends HsbModel
 {
     use HasFactory;
     use Presentable;

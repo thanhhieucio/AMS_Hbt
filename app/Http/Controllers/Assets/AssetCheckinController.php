@@ -23,7 +23,7 @@ class AssetCheckinController extends Controller
     /**
      * Returns a view that presents a form to check an asset back into inventory.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      * @param  string  $backto
@@ -82,7 +82,7 @@ class AssetCheckinController extends Controller
     /**
      * Validate and process the form data to check an asset back into inventory.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $assetId
      * @param  null  $backto

@@ -4,19 +4,19 @@ namespace App\Presenters;
 
 use App\Models\Asset;
 use App\Models\Setting;
-use App\Models\SnipeModel;
+use App\Models\HsbModel;
 
 abstract class Presenter
 {
     /**
-     * @var SnipeModel
+     * @var HsbModel
      */
     protected $model;
 
     /**
      * Presenter constructor.
      */
-    public function __construct(SnipeModel $model)
+    public function __construct(HsbModel $model)
     {
         $this->model = $model;
     }

@@ -14,14 +14,14 @@ class FixBulkAccessoryCheckinActionLogEntries extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:fix-bulk-accessory-action-log-entries {--dry-run : Run the sync process but don\'t update the database} {--skip-backup : Skip pre-execution backup}';
+    protected $signature = 'hsbit:fix-bulk-accessory-action-log-entries {--dry-run : Run the sync process but don\'t update the database} {--skip-backup : Skip pre-execution backup}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This script attempts to fix timestamps and missing created_by values for bulk checkin entries in the log table';
+    protected $description = 'Sửa timestamp và created_by bị thiếu cho các dòng nhật ký thu hồi phụ kiện hàng loạt.';
 
     private bool $dryrun = false;
 
@@ -36,7 +36,7 @@ class FixBulkAccessoryCheckinActionLogEntries extends Command
         $this->dryrun = $this->option('dry-run');
 
         if ($this->dryrun) {
-            $this->info('This is a DRY RUN - no changes will be saved.');
+            $this->info('Đây là CHẠY THỬ - không lưu thay đổi nào.');
             $this->newLine();
         }
 
@@ -55,7 +55,7 @@ class FixBulkAccessoryCheckinActionLogEntries extends Command
             return 0;
         }
 
-        $this->info('Found '.$logs->count().' logs with incorrect timestamps:');
+        $this->info('Tìm thấy '.$logs->count().' nhật ký có timestamp không đúng:');
 
         $this->table(
             ['ID', 'Created By', 'Created At', 'Updated At'],
@@ -75,7 +75,7 @@ class FixBulkAccessoryCheckinActionLogEntries extends Command
 
         if (! $this->dryrun && ! $this->skipBackup) {
             $this->info('Backing up the database before making changes...');
-            $this->call('snipeit:backup');
+            $this->call('hsbit:backup');
         }
 
         if ($this->dryrun) {

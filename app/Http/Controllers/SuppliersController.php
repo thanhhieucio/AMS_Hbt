@@ -17,7 +17,7 @@ use Illuminate\Http\RedirectResponse;
 
 /**
  * This controller handles all actions related to Suppliers for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */

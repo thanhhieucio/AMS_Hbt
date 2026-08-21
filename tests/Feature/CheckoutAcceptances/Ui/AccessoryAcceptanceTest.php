@@ -165,7 +165,7 @@ class AccessoryAcceptanceTest extends TestCase
     }
 
     /**
-     * @link https://github.com/grokability/snipe-it/issues/17589
+     * @link https://github.com/thanhhieucio/HSB-IT/issues/17589
      */
     public function test_all_accessory_checkout_entries_are_removed_when_user_declines_acceptance()
     {

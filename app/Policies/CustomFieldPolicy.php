@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class CustomFieldPolicy extends SnipePermissionsPolicy
+class CustomFieldPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

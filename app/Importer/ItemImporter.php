@@ -106,7 +106,7 @@ class ItemImporter extends Importer
      * Parse row to determine what (if anything) we should checkout to.
      *
      * @param  array  $row  CSV Row being parsed
-     * @return ?SnipeModel Model to be checked out to
+     * @return ?HsbModel Model to be checked out to
      */
     protected function determineCheckout($row)
     {
@@ -131,7 +131,7 @@ class ItemImporter extends Importer
      *
      * @since 4.0
      *
-     * @param  $model  SnipeModel Model that's being updated.
+     * @param  $model  HsbModel Model that's being updated.
      * @param  $updating  boolean Should we remove blank values?
      * @return array
      */
@@ -155,7 +155,7 @@ class ItemImporter extends Importer
     /**
      * Convenience function for updating that strips the empty values.
      *
-     * @param  $model  SnipeModel Model that's being updated.
+     * @param  $model  HsbModel Model that's being updated.
      * @return array
      */
     protected function sanitizeItemForUpdating($model)

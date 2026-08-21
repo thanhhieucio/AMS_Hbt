@@ -42,7 +42,7 @@ class ProfileController extends Controller
     /**
      * Display a listing of requested assets.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.3.0]
      */
@@ -92,7 +92,7 @@ class ProfileController extends Controller
     /**
      * Delete an API token
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.0.5]
      */
@@ -130,7 +130,7 @@ class ProfileController extends Controller
     /**
      * Delete an API token
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.0.5]
      */
@@ -162,7 +162,7 @@ class ProfileController extends Controller
     /**
      * Show user's API tokens
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.0.5]
      */

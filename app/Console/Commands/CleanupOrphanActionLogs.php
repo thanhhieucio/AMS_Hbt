@@ -20,7 +20,7 @@ use function Laravel\Prompts\warning;
  * Find (and optionally delete) action_log rows whose polymorphic parent
  * no longer exists.
  *
- * Prior versions of snipeit:purge left orphaned action_logs behind when
+ * Prior versions of hsbit:purge left orphaned action_logs behind when
  * they force-deleted parent rows without cleaning up the polymorphic
  * children. On installations with millions of action_log rows this can
  * accumulate over years.
@@ -38,12 +38,12 @@ use function Laravel\Prompts\warning;
  */
 class CleanupOrphanActionLogs extends Command
 {
-    protected $signature = 'snipeit:orphan-action-logs
+    protected $signature = 'hsbit:orphan-action-logs
         {--delete : Actually delete the orphans. Default is dry-run.}
         {--chunk=1000 : Rows deleted per batch. Larger = fewer round trips, longer lock hold.}
         {--include-unresolvable : Also delete rows whose type is a class that no longer exists in the codebase.}';
 
-    protected $description = 'Find (and optionally delete) action_log rows whose polymorphic parent no longer exists. Cleanup for orphans left behind by older snipeit:purge runs.';
+    protected $description = 'Tìm và tùy chọn xóa các dòng action_log không còn bản ghi cha. Dọn phần còn sót lại từ các lần chạy hsbit:purge cũ.';
 
     /**
      * Column pairs on action_logs that reference a polymorphic parent.
@@ -190,7 +190,7 @@ class CleanupOrphanActionLogs extends Command
             return self::SUCCESS;
         }
 
-        warning(sprintf('About to delete %s action_log rows. This cannot be undone.', number_format($toDelete)));
+        warning(sprintf('Sắp xóa %s dòng action_log. Không thể hoàn tác.', number_format($toDelete)));
         if (! confirm('Proceed with deletion?', default: false)) {
             info('Cancelled. Nothing was deleted.');
 

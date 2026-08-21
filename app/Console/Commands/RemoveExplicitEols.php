@@ -13,14 +13,14 @@ class RemoveExplicitEols extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:remove-explicit-eols {--model_name= : The name of the asset model to update (use "all" to update all models)}';
+    protected $signature = 'hsbit:remove-explicit-eols {--model_name= : The name of the asset model to update (use "all" to update all models)}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Removes explicit EOLs on assets with selected model so they may inherit the asset model EOL';
+    protected $description = 'Xóa EOL đặt trực tiếp trên tài sản thuộc model đã chọn để tài sản kế thừa EOL từ model.';
 
     /**
      * Execute the console command.

@@ -69,5 +69,5 @@ return [
         'radio' => 'Radyo Butonları',
     ],
     'markdown_supported' => 'Markdown desteklenmektedir',
-    'general_help_text' => 'Özel alanlar, varsayılan varlık alanlarının kapsamadığı ek bilgileri saklar. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Özel alanlar, varsayılan varlık alanlarının kapsamadığı ek bilgileri saklar. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

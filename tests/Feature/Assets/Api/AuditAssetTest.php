@@ -144,7 +144,7 @@ class AuditAssetTest extends TestCase
     }
 
     /**
-     * @link https://github.com/grokability/snipe-it/issues/18495
+     * @link https://github.com/thanhhieucio/HSB-IT/issues/18495
      */
     public function test_audit_does_not_set_next_audit_date_if_given_null()
     {

@@ -16,14 +16,14 @@ class CleanOldCheckoutRequests extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:clean-old-checkout-requests';
+    protected $signature = 'hsbit:clean-old-checkout-requests';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Removes checkout requests that reference deleted assets or users.';
+    protected $description = 'Xóa các yêu cầu cấp phát tham chiếu tới tài sản hoặc người dùng đã bị xóa.';
 
     /**
      * Execute the console command.

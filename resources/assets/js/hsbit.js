@@ -42,7 +42,7 @@ window.ClipboardJS = require('clipboard')
 /**
  * Module containing core application logic.
  * @param  {jQuery} $        Insulated jQuery object
- * @param  {JSON} settings Insulated `window.snipeit.settings` object.
+ * @param  {JSON} settings Insulated `window.hsbit.settings` object.
  * @return {IIFE}          Immediately invoked. Returns self.
  */
 
@@ -381,7 +381,7 @@ $(function () {
              * We are specifically chosing empty alt-text below, because this
              * image conveys no additional information, relative to the text
              * that will *always* be there in any select2 list that is in use
-             * in Snipe-IT. If that changes, we would probably want to change
+             * in HSB-IT. If that changes, we would probably want to change
              * some signatures of some functions, but right now, we don't want
              * screen readers to say "HP SuperJet 5000, .... picture of HP
              * SuperJet 5000..." and so on, for every single row in a list of
@@ -492,7 +492,7 @@ $(function () {
         // user_add() flow, etc.) can trigger the sync once the selector is
         // visible. Standalone checkout pages don't need to call this — the
         // initial-render block below handles them.
-        window.snipeitSyncCheckoutToTypeUi = syncCheckoutToTypeUi;
+        window.hsbitSyncCheckoutToTypeUi = syncCheckoutToTypeUi;
 
         // Apply the current radio selection on initial render unless the page
         // has explicitly hidden the selector via an inline style="display:none"
@@ -517,7 +517,7 @@ $(function () {
     // Allow full page URL to activate a tab's ID
     // ------------------------------------------------
     // This allows linking to a tab on page load via the address bar.
-    // So a URL such as, http://snipe-it.local/hardware/2/#my_tab will
+    // So a URL such as, http://hsb-it.local/hardware/2/#my_tab will
     // cause the tab on that page with an ID of “my_tab” to be active.
     if (taburl.match('#') ) {
         $('.nav-tabs a[href="#'+taburl.split('#')[1]+'"]').tab('show');
@@ -540,11 +540,11 @@ $(function () {
     // at init time. Tables inside a hidden tab pane initialize with a
     // zero-width container and the fixed left/right columns never recover
     // on their own once the pane becomes visible. Force a resetView on any
-    // snipe-tables inside the newly-shown pane so fixed columns line up.
+    // hsb-tables inside the newly-shown pane so fixed columns line up.
     $('body').on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
         var pane = $(e.target).attr('href');
         if (!pane) return;
-        $(pane).find('.snipe-table').each(function () {
+        $(pane).find('.hsb-table').each(function () {
             if ($(this).data('bootstrap.table')) {
                 $(this).bootstrapTable('resetView');
             }
@@ -555,11 +555,11 @@ $(function () {
     // widths from the initial layout and doesn't recompute when the window
     // width changes. Debounce so a drag-resize doesn't fire resetView on
     // every intermediate pixel.
-    var snipeTableResizeTimer;
+    var hsbTableResizeTimer;
     $(window).on('resize', function () {
-        clearTimeout(snipeTableResizeTimer);
-        snipeTableResizeTimer = setTimeout(function () {
-            $('.snipe-table').each(function () {
+        clearTimeout(hsbTableResizeTimer);
+        hsbTableResizeTimer = setTimeout(function () {
+            $('.hsb-table').each(function () {
                 if ($(this).data('bootstrap.table')) {
                     $(this).bootstrapTable('resetView');
                 }
@@ -694,7 +694,7 @@ $(document).ready(function () {
     // asset create/edit when the model changes) can re-run the init on the
     // freshly-inserted elements. Pass a jQuery scope to narrow the search;
     // omit to init every uninitialised picker on the page.
-    window.snipeitInitDatetimepickers = function (scope) {
+    window.hsbitInitDatetimepickers = function (scope) {
         var $targets = scope ? $(scope).find('[data-provide="datetimepicker"]') : $('[data-provide="datetimepicker"]');
         $targets.each(initDatetimepicker);
     };
@@ -772,13 +772,13 @@ $(document).ready(function () {
             if (!$start.length || !$end.length) {
                 return;
             }
-            $start.off('dp.change.snipeitDateRange').on('dp.change.snipeitDateRange', function (e) {
+            $start.off('dp.change.hsbitDateRange').on('dp.change.hsbitDateRange', function (e) {
                 var picker = $end.data('DateTimePicker');
                 if (picker) {
                     picker.minDate(e.date);
                 }
             });
-            $end.off('dp.change.snipeitDateRange').on('dp.change.snipeitDateRange', function (e) {
+            $end.off('dp.change.hsbitDateRange').on('dp.change.hsbitDateRange', function (e) {
                 var picker = $start.data('DateTimePicker');
                 if (picker) {
                     picker.maxDate(e.date);
@@ -793,11 +793,11 @@ $(document).ready(function () {
     // order the admin picked in Localization settings. Runs once before any
     // picker is initialized; downstream code that formats using moment's w/W
     // tokens will pick up the same value.
-    if (window.snipeit && window.snipeit.settings && typeof window.snipeit.settings.first_day_of_week === 'number') {
-        moment.updateLocale(moment.locale(), { week: { dow: window.snipeit.settings.first_day_of_week } });
+    if (window.hsbit && window.hsbit.settings && typeof window.hsbit.settings.first_day_of_week === 'number') {
+        moment.updateLocale(moment.locale(), { week: { dow: window.hsbit.settings.first_day_of_week } });
     }
 
-    window.snipeitInitDatetimepickers();
+    window.hsbitInitDatetimepickers();
     initDateRangeLinking();
 });
 

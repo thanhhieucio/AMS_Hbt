@@ -287,7 +287,7 @@ abstract class Importer
     /**
      * Figure out the fieldname of the custom field
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since 3.0
      *

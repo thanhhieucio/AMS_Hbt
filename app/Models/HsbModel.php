@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Storage;
 
-class SnipeModel extends Model
+class HsbModel extends Model
 {
     // Setters that are appropriate across multiple models.
     public function setPurchaseDateAttribute($value)
@@ -248,7 +248,7 @@ class SnipeModel extends Model
      *
      * @since  [v3.0]
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      */
     public function adminuser()
     {

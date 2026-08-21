@@ -40,7 +40,7 @@
                 data-sort-order="asc"
                 data-sort-name="name"
                 id="kitModelsTable"
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
                 data-url="{{ route('api.kits.models.index', $item->id) }}"
                 data-export-options='{
                 "fileName": "export-kit-models-{{ date('Y-m-d') }}",
@@ -80,7 +80,7 @@
 {{--                    data-sort-order="asc"--}}
 {{--                    data-sort-name="name"--}}
 {{--                    id="kitLicensesTable"--}}
-{{--                    class="table table-striped snipe-table"--}}
+{{--                    class="table table-striped hsb-table"--}}
 {{--                    data-url="{{ route('api.kits.licenses.index', $item->id) }}"--}}
 {{--                    data-export-options='{--}}
 {{--                    "fileName": "export-kit-models-{{ date('Y-m-d') }}",--}}
@@ -117,7 +117,7 @@
 {{--                    data-sort-order="asc"--}}
 {{--                    data-sort-name="name"--}}
 {{--                    id="kitConsumablesTable"--}}
-{{--                    class="table table-striped snipe-table"--}}
+{{--                    class="table table-striped hsb-table"--}}
 {{--                    data-url="{{ route('api.kits.consumables.index', $item->id) }}"--}}
 {{--                    data-export-options='{--}}
 {{--                    "fileName": "export-kit-models-{{ date('Y-m-d') }}",--}}
@@ -154,7 +154,7 @@
 {{--                    data-sort-order="asc"--}}
 {{--                    data-sort-name="name"--}}
 {{--                    id="kitAccessoriesTable"--}}
-{{--                    class="table table-striped snipe-table"--}}
+{{--                    class="table table-striped hsb-table"--}}
 {{--                    data-url="{{ route('api.kits.accessories.index', $item->id) }}"--}}
 {{--                    data-export-options='{--}}
 {{--                    "fileName": "export-kit-models-{{ date('Y-m-d') }}",--}}

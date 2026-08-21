@@ -9,7 +9,7 @@
 {{-- Page content --}}
 @section('content')
 
-@if ($snipeSettings->dashboard_message!='')
+@if ($hsbSettings->dashboard_message!='')
 <div class="row">
     <div class="col-md-12">
         <div class="box box-default">
@@ -17,7 +17,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {!!  Helper::parseEscapedMarkedown($snipeSettings->dashboard_message)  !!}
+                        {!!  Helper::parseEscapedMarkedown($hsbSettings->dashboard_message)  !!}
                     </div>
                 </div>
             </div>
@@ -238,7 +238,7 @@
                     data-fixed-right-number="false"
                     data-sort-name="created_at"
                     id="dashActivityReport"
-                    class="table table-striped snipe-table"
+                    class="table table-striped hsb-table"
                     data-url="{{ route('api.activity.index', ['limit' => 25]) }}">
                     <thead>
                     <tr>
@@ -289,7 +289,7 @@
 <div class="row">
     <div class="col-md-6">
 
-		@if ((($snipeSettings->scope_locations_fmcs!='1') && ($snipeSettings->full_multiple_companies_support=='1')))
+		@if ((($hsbSettings->scope_locations_fmcs!='1') && ($hsbSettings->full_multiple_companies_support=='1')))
 			 <!-- Companies -->	
 			<div class="box box-default">
 				<div class="box-header with-border">
@@ -316,7 +316,7 @@
                                     data-fixed-right-number="false"
 									data-sort-field="assets_count"
 									id="dashCompanySummary"
-									class="table table-striped snipe-table"
+									class="table table-striped hsb-table"
 									data-url="{{ route('api.companies.index', ['sort' => 'assets_count', 'order' => 'asc']) }}">
 
 								<thead>
@@ -386,7 +386,7 @@
 									data-sort-field="assets_count"
 									id="dashLocationSummary"
                                     data-show-columns="false"
-									class="table table-striped snipe-table"
+									class="table table-striped hsb-table"
 									data-url="{{ route('api.locations.index', ['sort' => 'assets_count', 'order' => 'asc']) }}">
 								<thead>
 								<tr>
@@ -450,7 +450,7 @@
                                 data-sort-order="desc"
                                 data-sort-field="assets_count"
                                 id="dashCategorySummary"
-                                class="table table-striped snipe-table"
+                                class="table table-striped hsb-table"
                                 data-url="{{ route('api.categories.index', ['sort' => 'assets_count', 'order' => 'asc']) }}">
                             <thead>
                             <tr>

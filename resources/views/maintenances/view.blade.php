@@ -101,7 +101,7 @@ use Carbon\Carbon;
                                 </x-data-row>
 
                                 <x-data-row :label="trans('admin/maintenances/form.cost')" copy_what="cost">
-                                    {{ $snipeSettings->default_currency .' '. Helper::formatCurrencyOutput($maintenance->cost) }}
+                                    {{ $hsbSettings->default_currency .' '. Helper::formatCurrencyOutput($maintenance->cost) }}
                                 </x-data-row>
 
                                 <x-data-row :label="trans('admin/maintenances/form.is_warranty')">

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Manufacturer extends SnipeModel
+class Manufacturer extends HsbModel
 {
     use HasFactory;
 

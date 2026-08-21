@@ -16,14 +16,14 @@ class SendUpcomingAuditReport extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:upcoming-audits {--with-output : Display the results in a table in your console in addition to sending the email}';
+    protected $signature = 'hsbit:upcoming-audits {--with-output : Display the results in a table in your console in addition to sending the email}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send email/slack notifications for upcoming asset audits.';
+    protected $description = 'Gửi thông báo email/slack cho các kỳ kiểm kê tài sản sắp tới.';
 
     /**
      * Create a new command instance.

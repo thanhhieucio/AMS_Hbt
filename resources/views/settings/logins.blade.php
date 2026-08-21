@@ -24,7 +24,7 @@
                             id="loginReport"
                             data-url="{{ route('api.settings.login_attempts') }}"
                             data-mobile-responsive="true"
-                            class="table table-striped snipe-table"
+                            class="table table-striped hsb-table"
                             data-export-options='{
                         "fileName": "login-report-{{ date('Y-m-d') }}"}'>
 

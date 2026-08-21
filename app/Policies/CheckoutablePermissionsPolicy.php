@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-abstract class CheckoutablePermissionsPolicy extends SnipePermissionsPolicy
+abstract class CheckoutablePermissionsPolicy extends HsbPermissionsPolicy
 {
     /**
      * Determine whether the user can checkout the accessory.

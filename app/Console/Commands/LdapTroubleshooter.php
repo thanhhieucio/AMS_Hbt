@@ -63,7 +63,7 @@ class LdapTroubleshooter extends Command
      *
      * @var string
      */
-    protected $description = 'Runs a series of non-destructive LDAP commands to help try and determine correct LDAP settings for your environment.';
+    protected $description = 'Chạy các kiểm tra LDAP không phá hủy để hỗ trợ xác định cấu hình LDAP phù hợp cho môi trường hiện tại.';
 
     /**
      * Create a new command instance.
@@ -147,9 +147,9 @@ class LdapTroubleshooter extends Command
         $this->settings = $settings;
         if ($this->option('ldap-search')) {
             if (! $this->option('force')) {
-                $confirmation = $this->confirm('WARNING: This command will display your LDAP password on your terminal. Are you sure this is ok?');
+                $confirmation = $this->confirm('CẢNH BÁO: Lệnh này sẽ hiển thị mật khẩu LDAP trên terminal. Bạn có chắc muốn tiếp tục?');
                 if (! $confirmation) {
-                    $this->error('ABORTING');
+                    $this->error('ĐANG HỦY');
                     exit(-1);
                 }
             }
@@ -172,7 +172,7 @@ class LdapTroubleshooter extends Command
             try {
                 $w = Crypt::Decrypt($settings->ldap_pword);
             } catch (Exception $e) {
-                $this->warn('Could not decrypt password. This usually means an LDAP password was not set or the APP_KEY was changed since the LDAP pasword was last saved.  Aborting.');
+                $this->warn('Không giải mã được mật khẩu. Thường là do chưa đặt mật khẩu LDAP hoặc APP_KEY đã thay đổi sau lần lưu mật khẩu LDAP gần nhất. Đang hủy.');
                 exit(0);
             }
 
@@ -198,34 +198,34 @@ class LdapTroubleshooter extends Command
             ($major == 8 && $minor == 4 && $patch < 7)
         ) {
             $this->warn("PHP Version: $php_version WARNING - Versions before 8.3.21 or 8.4.7 will return INCONSISTENT results!");
-            if (! $this->confirm('Are you sure you wish to continue?')) {
-                $this->warn('ABORTING');
+            if (! $this->confirm('Bạn có chắc muốn tiếp tục?')) {
+                $this->warn('ĐANG HỦY');
                 exit(-1);
             }
         }
 
         if (! $this->option('force')) {
-            $confirmation = $this->confirm('WARNING: This command will make several attempts to connect to your LDAP server. Are you sure this is ok?');
+            $confirmation = $this->confirm('CẢNH BÁO: Lệnh này sẽ thử kết nối nhiều lần tới máy chủ LDAP. Bạn có chắc muốn tiếp tục?');
             if (! $confirmation) {
-                $this->error('ABORTING');
+                $this->error('ĐANG HỦY');
                 exit(-1);
             }
         }
         // $this->line(print_r($settings,true));
-        $this->line('STAGE 1: Checking settings');
+        $this->line('BƯỚC 1: Kiểm tra cấu hình');
         if (! $settings->ldap_enabled) {
-            $this->error("WARNING: Snipe-IT's LDAP setting is not turned on. (That may be OK if you're still trying to figure out settings)");
+            $this->error("CẢNH BÁO: Cấu hình LDAP của HSB-IT chưa được bật. Điều này có thể bình thường nếu bạn vẫn đang dò cấu hình.");
         }
 
         $ldap_conn = false;
         try {
             $ldap_conn = ldap_connect($settings->ldap_server);
         } catch (Exception $e) {
-            $this->error("WARNING: Exception caught when executing 'ldap_connect()' - ".$e->getMessage().'. We will try to guess.');
+            $this->error("CẢNH BÁO: Bắt được ngoại lệ khi chạy 'ldap_connect()' - ".$e->getMessage().'. Hệ thống sẽ thử tự suy đoán.');
         }
 
         if (! $ldap_conn) {
-            $this->error('WARNING: LDAP Server setting of: '.$settings->ldap_server.' cannot be parsed. We will try to guess.');
+            $this->error('CẢNH BÁO: Cấu hình máy chủ LDAP: '.$settings->ldap_server.' cannot be parsed. Hệ thống sẽ thử tự suy đoán.');
             // exit(-1);
         }
         // since we never use $ldap_conn again, we don't have to ldap_unbind() it (it's not even connected, tbh - that only happens at bind-time)
@@ -233,11 +233,11 @@ class LdapTroubleshooter extends Command
         $parsed = parse_url($settings->ldap_server);
 
         if (@$parsed['scheme'] != 'ldap' && @$parsed['scheme'] != 'ldaps') {
-            $this->error("WARNING: LDAP URL Scheme of '".@$parsed['scheme']."' is probably incorrect; should usually be ldap or ldaps");
+            $this->error("CẢNH BÁO: Scheme LDAP '".@$parsed['scheme']."' có thể chưa đúng; thông thường nên là ldap hoặc ldaps");
         }
 
         if (! @$parsed['host']) {
-            $this->error('ERROR: Cannot determine hostname or IP from ldap URL: '.$settings->ldap_server.'. ABORTING.');
+            $this->error('LỖI: Không xác định được hostname hoặc IP từ LDAP URL: '.$settings->ldap_server.'. ĐANG HỦY.');
             exit(-1);
         } else {
             $this->info('Determined LDAP hostname to be: '.$parsed['host']);
@@ -255,7 +255,7 @@ class LdapTroubleshooter extends Command
             // $this->info("Host IP is: ".print_r($ips,true));
 
             if (! $ips || count($ips) == 0) {
-                $this->error('ERROR: DNS lookup of host: '.$parsed['host'].' has failed. ABORTING.');
+                $this->error('LỖI: Tra cứu DNS cho host: '.$parsed['host'].' thất bại. ĐANG HỦY.');
                 exit(-1);
             }
             $this->debugout("IP's? ".print_r($ips, true));
@@ -268,10 +268,10 @@ class LdapTroubleshooter extends Command
         }
         foreach ($raw_ips as $ip) {
             if ($ip == '127.0.0.1') {
-                $this->error('WARNING: Using the localhost IP as the LDAP server. This is usually wrong');
+                $this->error('CẢNH BÁO: Đang dùng IP localhost làm máy chủ LDAP. Trường hợp này thường không đúng.');
             }
             if (ip_in_range($ip, '10.0.0.0/8') || ip_in_range($ip, '192.168.0.0/16') || ip_in_range($ip, '172.16.0.0/12')) {
-                $this->error('WARNING: Using an RFC1918 Private address for LDAP server. This may be correct, but it can be a problem if your Snipe-IT instance is not hosted on your private network');
+                $this->error('CẢNH BÁO: Đang dùng địa chỉ riêng RFC1918 cho máy chủ LDAP. Có thể đúng, nhưng sẽ có vấn đề nếu HSB-IT không chạy trong mạng riêng của bạn.');
             }
         }
 
@@ -294,24 +294,24 @@ class LdapTroubleshooter extends Command
                 $this->error('Exception: '.$e->getMessage());
             }
             if ($result) {
-                $this->info('Success!');
+                $this->info('Thành công!');
                 $open_ports[] = $port;
             } else {
-                $this->error("WARNING: Cannot connect to port: $port - $errstr ($errno)");
+                $this->error("CẢNH BÁO: Không thể kết nối tới cổng: $port - $errstr ($errno)");
             }
         }
 
         if (count($open_ports) == 0) {
-            $this->error('ERROR - no open ports. ABORTING.');
+            $this->error('ERROR - no open ports. ĐANG HỦY.');
             exit(-1);
         }
 
-        $this->line('STAGE 3: Determine encryption algorithm, if any');
+        $this->line('BƯỚC 3: Xác định thuật toán mã hóa nếu có');
 
         $ldap_urls = []; // [url, cert-check?, start_tls?]
         $pretty_ldap_urls = [];
         foreach ($open_ports as $port) {
-            $this->line("Trying TLS first for port $port");
+            $this->line("Đang thử TLS trước cho cổng $port");
             $ldap_url = 'ldaps://'.$parsed['host'].":$port";
             if ($this->test_anonymous_bind($ldap_url)) {
                 $this->info("Anonymous bind succesful to $ldap_url!");
@@ -320,7 +320,7 @@ class LdapTroubleshooter extends Command
 
                 continue; // TODO - lots of copypasta in these if(test_anonymous_bind()) routines...
             } else {
-                $this->error("WARNING: Failed to bind to $ldap_url - trying without certificate checks.");
+                $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url - đang thử lại không kiểm tra chứng chỉ.");
             }
 
             if ($this->test_anonymous_bind($ldap_url, false)) {
@@ -330,7 +330,7 @@ class LdapTroubleshooter extends Command
 
                 continue;
             } else {
-                $this->error("WARNING: Failed to bind to $ldap_url with certificate checks disabled. Trying unencrypted with STARTTLS");
+                $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url khi đã tắt kiểm tra chứng chỉ. Đang thử không mã hóa với STARTTLS.");
             }
 
             // now switching to ldap:// URL's from ldaps://
@@ -343,7 +343,7 @@ class LdapTroubleshooter extends Command
 
                 continue;
             } else {
-                $this->error("WARNING: Failed to bind to $ldap_url with STARTTLS enabled. Trying without certificate checks.");
+                $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url khi đã bật STARTTLS. Đang thử lại không kiểm tra chứng chỉ.");
             }
 
             if ($this->test_anonymous_bind($ldap_url, false, true)) {
@@ -353,7 +353,7 @@ class LdapTroubleshooter extends Command
 
                 continue;
             } else {
-                $this->error("WARNING: Failed to bind to $ldap_url with STARTTLS enabled, and cert checks disabled. Trying without STARTTLS");
+                $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url khi đã bật STARTTLS và tắt kiểm tra chứng chỉ. Đang thử lại không dùng STARTTLS.");
             }
 
             if ($this->test_anonymous_bind($ldap_url)) {
@@ -363,36 +363,36 @@ class LdapTroubleshooter extends Command
 
                 continue;
             } else {
-                $this->error("WARNING: Failed to bind to $ldap_url. Giving up on port $port");
+                $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url. Bỏ qua cổng $port");
             }
         }
 
         $this->debugout(print_r($ldap_urls, true));
 
         if (count($ldap_urls) > 0) {
-            $this->debugout("Found working LDAP URL's: ");
-            foreach ($ldap_urls as $ldap_url) { // TODO maybe do this as a $this->table() instead?
+            $this->debugout("Tìm thấy LDAP URL hoạt động: ");
+            foreach ($ldap_urls as $ldap_url) { // TODO maybe do this với tài khoản a $this->table() instead?
                 $this->debugout('LDAP URL: '.$ldap_url[0]);
                 $this->debugout($ldap_url[0].($ldap_url[1] ? ' certificate checks enabled' : ' certificate checks disabled').($ldap_url[2] ? ' STARTTLS Enabled ' : ' STARTTLS Disabled'));
             }
             $this->table(['URL', 'Cert Checks?', 'STARTTLS?'], $pretty_ldap_urls);
         } else {
-            $this->error("ERROR - no valid LDAP URL's available - ABORTING");
+            $this->error("ERROR - no valid LDAP URL's available - ĐANG HỦY");
             exit(1);
         }
 
-        $this->line('STAGE 4: Test Administrative Bind for LDAP Sync');
+        $this->line('BƯỚC 4: Kiểm tra bind quản trị cho đồng bộ LDAP');
         foreach ($ldap_urls as $ldap_url) {
             try {
                 $w = Crypt::Decrypt($settings->ldap_pword);
             } catch (Exception $e) {
-                $this->warn('Could not decrypt password. This usually means an LDAP password was not set or the APP_KEY was changed since the LDAP pasword was last saved.  Aborting.');
+                $this->warn('Không giải mã được mật khẩu. Thường là do chưa đặt mật khẩu LDAP hoặc APP_KEY đã thay đổi sau lần lưu mật khẩu LDAP gần nhất. Đang hủy.');
                 exit(0);
             }
             $this->test_authed_bind($ldap_url[0], $ldap_url[1], $ldap_url[2], $settings->ldap_uname, $w);
         }
 
-        $this->line('STAGE 5: Test BaseDN');
+        $this->line('BƯỚC 5: Kiểm tra BaseDN');
         // grab all LDAP_ constants and fill up a reversed array mapping from weird LDAP dotted-strings to (Constant Name)
         $all_defined_constants = get_defined_constants();
         $ldap_constants = [];
@@ -407,31 +407,31 @@ class LdapTroubleshooter extends Command
             try {
                 $w = Crypt::Decrypt($settings->ldap_pword);
             } catch (Exception $e) {
-                $this->warn('Could not decrypt password. This usually means an LDAP password was not set or the APP_KEY was changed since the LDAP pasword was last saved.  Aborting.');
+                $this->warn('Không giải mã được mật khẩu. Thường là do chưa đặt mật khẩu LDAP hoặc APP_KEY đã thay đổi sau lần lưu mật khẩu LDAP gần nhất. Đang hủy.');
                 exit(0);
             }
 
             if ($this->test_informational_bind($ldap_url[0], $ldap_url[1], $ldap_url[2], $settings->ldap_uname, $w, $settings)) {
-                $this->info('Success getting informational bind!');
+                $this->info('Bind lấy thông tin thành công!');
             } else {
                 $this->error('Unable to get information from bind.');
             }
         }
 
-        $this->line('STAGE 6: Test LDAP Login to Snipe-IT');
+        $this->line('BƯỚC 6: Kiểm tra đăng nhập LDAP vào HSB-IT');
         foreach ($ldap_urls as $ldap_url) {
-            $this->line('Starting auth to '.$ldap_url[0]);
+            $this->line('Bắt đầu xác thực tới '.$ldap_url[0]);
             while (true) {
-                $with_tls = $ldap_url[1] ? 'with' : 'without';
-                $with_startssl = $ldap_url[2] ? 'using' : 'not using';
-                if (! $this->confirm('Do you wish to try to authenticate to this directory: '.$ldap_url[0]." $with_tls TLS and $with_startssl STARTSSL?")) {
+                $with_tls = $ldap_url[1] ? 'có' : 'không có';
+                $with_startssl = $ldap_url[2] ? 'có dùng' : 'không dùng';
+                if (! $this->confirm('Bạn có muốn thử xác thực tới thư mục này: '.$ldap_url[0]." $with_tls TLS và $with_startssl STARTSSL?")) {
                     break;
                 }
-                $username = $this->ask('Username');
-                $password = $this->secret('Password');
+                $username = $this->ask('Tên đăng nhập');
+                $password = $this->secret('Mật khẩu');
                 $results = $this->test_authed_bind($ldap_url[0], $ldap_url[1], $ldap_url[2], $username, $password); // FIXME - should do some other stuff here, maybe with the concatenating or something? maybe? and/or should put up some results?
                 if ($results) {
-                    $this->info('Success authenticating with '.$username);
+                    $this->info('Xác thực thành công với '.$username);
                 } else {
                     $this->error('Unable to authenticate with '.$username);
                 }
@@ -461,13 +461,13 @@ class LdapTroubleshooter extends Command
         }
         if ($start_tls) {
             if (! ldap_start_tls($lconn)) {
-                $this->error('WARNING: Unable to start TLS');
+                $this->error('CẢNH BÁO: Không thể khởi động TLS.');
 
                 return false;
             }
         }
         if (! $lconn) {
-            $this->error('WARNING: Failed to generate connection string - using: '.$ldap_url);
+            $this->error('CẢNH BÁO: Không tạo được chuỗi kết nối - đang dùng: '.$ldap_url);
 
             return false;
         }
@@ -492,7 +492,7 @@ class LdapTroubleshooter extends Command
 
                 return (bool) $bind_results;
             } catch (Exception $e) {
-                $this->error('WARNING: Exception caught during bind - '.$e->getMessage());
+                $this->error('CẢNH BÁO: Bắt được ngoại lệ khi bind - '.$e->getMessage());
 
                 return false;
             }
@@ -507,16 +507,16 @@ class LdapTroubleshooter extends Command
                 $bind_results = ldap_bind($lconn, $username, $password);
                 ldap_close($lconn);
                 if (! $bind_results) {
-                    $this->error("WARNING: Failed to bind to $ldap_url as $username");
+                    $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url với tài khoản $username");
 
                     return false;
                 } else {
-                    $this->info("SUCCESS - Able to bind to $ldap_url as $username");
+                    $this->info("THÀNH CÔNG - Bind được tới $ldap_url với tài khoản $username");
 
                     return (bool) $lconn;
                 }
             } catch (Exception $e) {
-                $this->error("WARNING: Exception caught during Authed bind to $username - ".$e->getMessage());
+                $this->error("CẢNH BÁO: Bắt được ngoại lệ khi bind xác thực tới $username - ".$e->getMessage());
 
                 return false;
             }
@@ -530,11 +530,11 @@ class LdapTroubleshooter extends Command
                 $conn = $this->connect_to_ldap($ldap_url, $check_cert, $start_tls);
                 $bind_results = ldap_bind($conn, $username, $password);
                 if (! $bind_results) {
-                    $this->error("WARNING: Failed to bind to $ldap_url as $username");
+                    $this->error("CẢNH BÁO: Bind thất bại tới $ldap_url với tài khoản $username");
 
                     return false;
                 }
-                $this->info("SUCCESS - Able to bind to $ldap_url as $username");
+                $this->info("THÀNH CÔNG - Bind được tới $ldap_url với tài khoản $username");
                 $cleaned_results = [];
                 try {
                     // This _may_ only work for Active Directory?
@@ -555,7 +555,7 @@ class LdapTroubleshooter extends Command
                 $this->debugout('Base DN is: '.$settings->ldap_basedn.' and filter is: '.parenthesized_filter($settings->ldap_filter));
                 $search_results = ldap_search($conn, $settings->ldap_basedn, parenthesized_filter($settings->ldap_filter));
                 $entries = ldap_get_entries($conn, $search_results);
-                $this->info('Printing first 10 results: ');
+                $this->info('In 10 kết quả đầu tiên: ');
                 $pretty_data = array_slice($this->ldap_results_cleaner($entries), 0, 10);
                 // print_r($data);
                 $headers = [];
@@ -587,7 +587,7 @@ class LdapTroubleshooter extends Command
 
                 $this->table($headers, $table);
             } catch (Exception $e) {
-                $this->error("WARNING: Exception caught during Authed bind to $username - ".$e->getMessage());
+                $this->error("CẢNH BÁO: Bắt được ngoại lệ khi bind xác thực tới $username - ".$e->getMessage());
 
                 return false;
             } finally {
@@ -607,7 +607,7 @@ class LdapTroubleshooter extends Command
     {
         if (! (function_exists('pcntl_sigtimedwait') && function_exists('posix_getpid') && function_exists('pcntl_fork') && function_exists('posix_kill') && function_exists('pcntl_wifsignaled'))) {
             // POSIX functions needed for forking aren't present, just run the function inline (ignoring timeout)
-            $this->line('WARNING: Unable to execute POSIX fork() commands, timeout may not be respected');
+            $this->line('CẢNH BÁO: Không thể chạy lệnh POSIX fork(), timeout có thể không được áp dụng');
 
             return $function();
         } else {

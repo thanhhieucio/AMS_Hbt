@@ -5,7 +5,7 @@
 {{ trans('mail.test_mail_text') }}
 
 Thanks,
-Snipe-IT
+HSB-IT
 @if ($setupCompleted)
 @endcomponent
 @endif

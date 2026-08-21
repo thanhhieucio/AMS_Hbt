@@ -31,7 +31,7 @@
                         data-sort-name="created_at"
                         id="activityReport"
                         data-url="{{ route('api.activity.index') }}"
-                        class="table table-striped snipe-table"
+                        class="table table-striped hsb-table"
                         data-export-options='{
                         "fileName": "activity-report-{{ date('Y-m-d') }}",
                         "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

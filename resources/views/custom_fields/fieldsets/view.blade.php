@@ -28,7 +28,7 @@
             </x-form>
 
             @if((isset($custom_fieldset)) && ($custom_fieldset->id!=''))
-                <table id="sort" class="table table-responsive table-striped snipe-table table-no-bordered todo-list" style="padding-top: 30px">
+                <table id="sort" class="table table-responsive table-striped hsb-table table-no-bordered todo-list" style="padding-top: 30px">
                     <thead>
                     <tr>
                         {{-- Hide the sorting handle if we can't update the fieldset --}}

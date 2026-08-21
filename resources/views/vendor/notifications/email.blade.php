@@ -72,33 +72,33 @@ $style = [
                     <tr>
                         <td style="{{ $style['email-masthead'] }}">
 
-                            @if (($snipeSettings->show_images_in_email=='1' ) && ($snipeSettings::setupCompleted()))
+                            @if (($hsbSettings->show_images_in_email=='1' ) && ($hsbSettings::setupCompleted()))
                                 @php
                                     $logo = '';
-                                    if ($snipeSettings->logo != ''){
-                                        $logo = $snipeSettings->logo;
+                                    if ($hsbSettings->logo != ''){
+                                        $logo = $hsbSettings->logo;
                                     }
 
-                                    if ($snipeSettings->email_logo != ''){
-                                        $logo = $snipeSettings->email_logo;
+                                    if ($hsbSettings->email_logo != ''){
+                                        $logo = $hsbSettings->email_logo;
                                     }
                                 @endphp
 
-                                @if ($snipeSettings->brand == '3')
+                                @if ($hsbSettings->brand == '3')
                                     @if ($logo!='')
                                         <img class="navbar-brand-img logo" style="max-width: 50px;" src="{{ Storage::disk('public')->url($logo) }}" alt="">
                                     @endif
-                                    {{ $snipeSettings->site_name }}
+                                    {{ $hsbSettings->site_name }}
 
-                                @elseif ($snipeSettings->brand == '2')
+                                @elseif ($hsbSettings->brand == '2')
                                     @if ($logo!='')
                                         <img class="navbar-brand-img logo" style="max-width: 50px;" src="{{ Storage::disk('public')->url($logo) }}" alt="">
                                     @endif
                                 @else
-                                    {{ $snipeSettings->site_name }}
+                                    {{ $hsbSettings->site_name }}
                                 @endif
                             @else
-                                Snipe-IT
+                                HSB-IT
                             @endif
                         </td>
                     </tr>
@@ -167,7 +167,7 @@ $style = [
 
                                         <!-- Salutation -->
                                         <p style="{{ $style['paragraph'] }}">
-                                            Regards,<br>{{ $snipeSettings->site_name }}
+                                            Regards,<br>{{ $hsbSettings->site_name }}
                                         </p>
 
                                         <!-- Sub Copy -->
@@ -203,13 +203,13 @@ $style = [
                                     <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
                                         <p style="{{ $style['paragraph-sub'] }}">
                                             &copy; {{ date('Y') }}
-                                            <a style="{{ $style['anchor'] }}" href="{{ config('app.url') }}" target="_blank">{{ $snipeSettings->site_name }}</a>.
+                                            <a style="{{ $style['anchor'] }}" href="{{ config('app.url') }}" target="_blank">{{ $hsbSettings->site_name }}</a>.
                                             {{ trans('mail.rights_reserved') }}
                                         </p>
 
-                                        @if ($snipeSettings->privacy_policy_link!='')
+                                        @if ($hsbSettings->privacy_policy_link!='')
                                             <p style="{{ $style['paragraph-sub'] }}">
-                                                <a href="{{ $snipeSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
+                                                <a href="{{ $hsbSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
                                             </p>
 
                                         @endif

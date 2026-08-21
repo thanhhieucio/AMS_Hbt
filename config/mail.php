@@ -15,7 +15,7 @@ return [
     | DO NOT MAKE CHANGES DIRECTLY TO THIS FILE.
     |
     | Instead use your .env file to set your application configuration settings.
-    | See https://snipe-it.readme.io/docs/configuration for more info.
+    | See https://docs.hsb.edu.vn/hsb-it/docs/configuration for more info.
     |
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -39,7 +39,7 @@ return [
     | messages sent by your application. Alternative mailers may be setup
     | and used as needed; however, this mailer will be used by default.
     |
-    | Previous versions of Snipe-IT and Laravel used SwiftMailer, which used
+    | Previous versions of HSB-IT and Laravel used SwiftMailer, which used
     | MAIL_DRIVER instead of MAIL_MAILER. In order to not break existing
     | installations, we'll accept both
     |

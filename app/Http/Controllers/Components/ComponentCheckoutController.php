@@ -19,7 +19,7 @@ class ComponentCheckoutController extends Controller
     /**
      * Returns a view that allows the checkout of a component to an asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentCheckoutController::store() method that stores the data.
      * @since [v3.0]
@@ -47,7 +47,7 @@ class ComponentCheckoutController extends Controller
 
                 // Return the checkout view
                 return view('components/checkout', compact('component'))
-                    ->with('snipe_component', $component);
+                    ->with('hsb_component', $component);
             }
 
             // Invalid category
@@ -63,7 +63,7 @@ class ComponentCheckoutController extends Controller
     /**
      * Validate and store checkout data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentCheckoutController::create() method that returns the form.
      * @since [v3.0]

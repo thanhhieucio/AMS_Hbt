@@ -50,7 +50,7 @@ then
   exit
 fi
 
-#if [ ! -f /var/lib/snipeit/ssl/snipeit-ssl.crt -o ! -f /var/lib/snipeit/ssl/snipeit-ssl.key ]
+#if [ ! -f /var/lib/hsbit/ssl/hsbit-ssl.crt -o ! -f /var/lib/hsbit/ssl/hsbit-ssl.key ]
 #then
  # rm /etc/apache2/conf.d/ssl.conf && rm /etc/apache2/conf.d/default-ssl.conf
 #fi
@@ -74,12 +74,12 @@ for dir in \
   'dumps' \
   'keys'
 do
-  [ ! -d "/var/lib/snipeit/$dir" ] && mkdir -p "/var/lib/snipeit/$dir"
+  [ ! -d "/var/lib/hsbit/$dir" ] && mkdir -p "/var/lib/hsbit/$dir"
 done
 
-chown -R apache:root /var/lib/snipeit/data/*
-chown -R apache:root /var/lib/snipeit/dumps
-chown -R apache:root /var/lib/snipeit/keys
+chown -R apache:root /var/lib/hsbit/data/*
+chown -R apache:root /var/lib/hsbit/dumps
+chown -R apache:root /var/lib/hsbit/keys
 chown -R apache:root /var/www/html/storage/framework/cache
 
 # Fix php settings

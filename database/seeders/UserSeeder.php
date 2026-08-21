@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
         $departmentIds = Department::all()->pluck('id');
 
         // Named admins get multiple companies. They manage assets across several organisations.
-        foreach (['firstAdmin', 'snipeAdmin', 'testAdmin'] as $state) {
+        foreach (['firstAdmin', 'hsbAdmin', 'testAdmin'] as $state) {
             $user = User::factory()->{$state}()->withoutCompany()->create([
                 'department_id' => $departmentIds->random(),
             ]);

@@ -354,7 +354,7 @@
             // Livewire morphs the DOM — when the user changes the element type
             // or edits field_values, the preview markup is fresh and any
             // previous widget wrappers are gone. On initial page load the
-            // global inits in snipeit.js catch these; the interceptor below
+            // global inits in hsbit.js catch these; the interceptor below
             // catches every subsequent morph.
             //
             // We destroy any existing widget instance before re-init because
@@ -381,8 +381,8 @@
                         existing.destroy();
                     }
                 });
-                if (typeof window.snipeitInitDatetimepickers === 'function') {
-                    window.snipeitInitDatetimepickers($scope);
+                if (typeof window.hsbitInitDatetimepickers === 'function') {
+                    window.hsbitInitDatetimepickers($scope);
                 }
             };
 

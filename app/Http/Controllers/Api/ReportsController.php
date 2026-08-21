@@ -25,7 +25,7 @@ class ReportsController extends Controller
     /**
      * Returns Activity Report JSON.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */

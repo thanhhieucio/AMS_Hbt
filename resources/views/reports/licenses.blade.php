@@ -19,7 +19,7 @@
                             data-sort-order="asc"
                             id="licensesReport"
                             data-advanced-search="false"
-                            class="table table-striped snipe-table"
+                            class="table table-striped hsb-table"
                             data-export-options='{
                         "fileName": "license-report-{{ date('Y-m-d') }}",
                         "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
@@ -64,16 +64,16 @@
                                     @endif</td>
                                 <td>{{ $license->purchase_date }}</td>
                                 <td class="text-right">
-                                    {{ $snipeSettings->default_currency }}{{ Helper::formatCurrencyOutput($license->purchase_cost) }}
+                                    {{ $hsbSettings->default_currency }}{{ Helper::formatCurrencyOutput($license->purchase_cost) }}
                                 </td>
                                 <td>
                                     {{ ($license->depreciation) ? e($license->depreciation->name).' ('.$license->depreciation->months.' '.trans('general.months').')' : ''  }}
                                 </td>
                                 <td class="text-right">
-                                    {{ $snipeSettings->default_currency }}{{ Helper::formatCurrencyOutput($license->getDepreciatedValue()) }}
+                                    {{ $hsbSettings->default_currency }}{{ Helper::formatCurrencyOutput($license->getDepreciatedValue()) }}
                                 </td>
                                 <td class="text-right">
-                                    -{{ $snipeSettings->default_currency }}{{ Helper::formatCurrencyOutput(($license->purchase_cost - $license->getDepreciatedValue())) }}
+                                    -{{ $hsbSettings->default_currency }}{{ Helper::formatCurrencyOutput(($license->purchase_cost - $license->getDepreciatedValue())) }}
                                 </td>
                             </tr>
                             @endforeach

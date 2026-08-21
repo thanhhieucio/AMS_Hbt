@@ -14,14 +14,14 @@ class FixMismatchedAssetsAndLogs extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:fix-assets-and-logs {--dryrun : Run the sync process but don\'t update the database}';
+    protected $signature = 'hsbit:fix-assets-and-logs {--dryrun : Run the sync process but don\'t update the database}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This script attempts to check the log table and check that the assets.assigned_to matches the last checkout.';
+    protected $description = 'Kiểm tra bảng nhật ký và đối chiếu assets.assigned_to với lần cấp phát gần nhất.';
 
     /**
      * Is dry-run?
@@ -52,7 +52,7 @@ class FixMismatchedAssetsAndLogs extends Command
         }
 
         if ($this->dryrun) {
-            $this->info('This is a DRY RUN - no changes will be saved.');
+            $this->info('Đây là CHẠY THỬ - không lưu thay đổi nào.');
         }
 
         $mismatch_count = 0;

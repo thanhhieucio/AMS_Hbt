@@ -51,7 +51,7 @@
                     <x-form.checkbox-row
                         name="requestable"
                         :label="trans('admin/hardware/general.requestable')"
-                        data-user-preference-key="snipeit.checkout.requestable_default.{{ auth()->id() ?? 'guest' }}"
+                        data-user-preference-key="hsbit.checkout.requestable_default.{{ auth()->id() ?? 'guest' }}"
                         data-had-old-input="{{ ((bool) old('requestable', false)) || session()->has('_old_input.requestable') ? '1' : '0' }}"
                     />
 

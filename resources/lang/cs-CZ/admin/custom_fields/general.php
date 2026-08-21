@@ -69,5 +69,5 @@ return [
         'radio' => 'Přepínače',
     ],
     'markdown_supported' => 'Markdown is supported',
-    'general_help_text' => 'Vlastní pole ukládají další informace nad rámec výchozích polí majetku. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Vlastní pole ukládají další informace nad rámec výchozích polí majetku. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

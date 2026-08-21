@@ -27,7 +27,7 @@ class AllowedUploadExtensionTest extends TestCase
     // mismatch this rule exists to tolerate.
     private function realUpload(string $clientName, string $content): UploadedFile
     {
-        $path = tempnam(sys_get_temp_dir(), 'snipeit_rule_');
+        $path = tempnam(sys_get_temp_dir(), 'hsbit_rule_');
         file_put_contents($path, $content);
         $this->tempFiles[] = $path;
 
@@ -144,7 +144,7 @@ class AllowedUploadExtensionTest extends TestCase
         ));
     }
 
-    // Shebang scripts stay allowed. Snipe-IT does not execute uploads and
+    // Shebang scripts stay allowed. HSB-IT does not execute uploads and
     // legitimate script snippets end up in .txt support-ticket attachments
     // often enough that rejecting them is user-hostile.
     #[Test]

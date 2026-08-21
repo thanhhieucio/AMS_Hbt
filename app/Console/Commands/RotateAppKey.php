@@ -17,7 +17,7 @@ class RotateAppKey extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:rotate-key
+    protected $signature = 'hsbit:rotate-key
                             {previous_key? : The previous key to rotate from} 
                             {--emergency : Emergency mode - rotate from .env APP_KEY to newly-generated one, modifying .env} 
                             {--force : Skip interactive confirmation}';
@@ -27,7 +27,7 @@ class RotateAppKey extends Command
      *
      * @var string
      */
-    protected $description = 'Rotates APP_KEY to a new value, optionally taking the previous key as an argument';
+    protected $description = 'Xoay APP_KEY sang giá trị mới, có thể truyền khóa cũ làm tham số.';
 
     /**
      * Create a new command instance.
@@ -126,7 +126,7 @@ class RotateAppKey extends Command
                 }
             }
         } else {
-            $this->info('This operation has been canceled. No changes have been made.');
+            $this->info('Thao tác đã bị hủy. Chưa có thay đổi nào được thực hiện.');
         }
     }
 

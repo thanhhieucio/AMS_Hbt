@@ -1,29 +1,30 @@
-# Running the Test Suite
+# Chạy bộ kiểm thử
 
-This document is targeted at developers looking to make modifications to this application's code base and want to run the existing test suite.
+Tài liệu này dành cho lập trình viên cần sửa mã nguồn HSB-IT và chạy bộ kiểm thử hiện có.
 
-Before starting, follow the [instructions](README.md#installation) for installing the application locally and ensure you can load it in a browser properly.
+Trước khi bắt đầu, hãy làm theo phần [cài đặt](README.md#cai-dat-nhanh) để chạy ứng dụng ở máy local và bảo đảm có thể mở ứng dụng trong trình duyệt.
 
-## Unit and Feature Tests
+## Kiểm thử Unit và Feature
 
-Before attempting to run the test suite copy the example environment file for tests and update the values to match your environment:
+Trước khi chạy test, hãy sao chép file môi trường mẫu cho test và chỉnh lại các giá trị theo môi trường của bạn:
 
 `cp .env.testing.example .env.testing`
 
-The following should work for running tests in memory with sqlite:
-```
+Cấu hình sau có thể dùng để chạy test bằng SQLite trong bộ nhớ:
+
+```env
 # --------------------------------------------
-# REQUIRED: BASIC APP SETTINGS
+# BẮT BUỘC: CẤU HÌNH ỨNG DỤNG CƠ BẢN
 # --------------------------------------------
 APP_ENV=testing
 APP_DEBUG=true
 APP_KEY=base64:glJpcM7BYwWiBggp3SQ/+NlRkqsBQMaGEOjemXqJzOU=
 APP_URL=http://localhost:8000
-APP_TIMEZONE='UTC'
-APP_LOCALE=en-US
+APP_TIMEZONE='Asia/Ho_Chi_Minh'
+APP_LOCALE=vi-VN
 
 # --------------------------------------------
-# REQUIRED: DATABASE SETTINGS
+# BẮT BUỘC: CẤU HÌNH CƠ SỞ DỮ LIỆU
 # --------------------------------------------
 DB_CONNECTION=sqlite_testing
 #DB_HOST=127.0.0.1
@@ -33,8 +34,9 @@ DB_CONNECTION=sqlite_testing
 #DB_PASSWORD=null
 ```
 
-To use MySQL you should update the `DB_` variables to match your local test database:
-```
+Nếu dùng MySQL, hãy cập nhật các biến `DB_` cho khớp cơ sở dữ liệu test local:
+
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -43,23 +45,24 @@ DB_USERNAME={}
 DB_PASSWORD={}
 ```
 
-Now you are ready to run the entire test suite from your terminal:
+Sau đó có thể chạy toàn bộ bộ kiểm thử từ terminal:
 
 ```shell
 php artisan test
-````
+```
 
-To run individual test files, you can pass the path to the test that you want to run:
+Chạy một file test cụ thể bằng cách truyền đường dẫn file:
 
 ```shell
 php artisan test tests/Unit/AccessoryTest.php
 ```
 
-Some tests, like ones concerning LDAP, are marked with the `@group` annotation. Those groups can be run, or excluded, using the `--group` or `--exclude-group` flags:
+Một số test, ví dụ nhóm liên quan LDAP, được đánh dấu bằng annotation `@group`. Có thể chạy riêng hoặc loại trừ nhóm đó bằng `--group` hoặc `--exclude-group`:
 
 ```shell
 php artisan test --group=ldap
 
 php artisan test --exclude-group=ldap
 ```
-This can be helpful if a set of tests are failing because you don't have an extension, like LDAP, installed.
+
+Cách này hữu ích khi một nhóm test thất bại vì máy local chưa cài extension tương ứng, ví dụ LDAP.

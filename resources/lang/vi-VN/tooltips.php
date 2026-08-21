@@ -18,7 +18,7 @@ return [
     ],
 
     'checkin_all' => [
-        'user' => 'Checkin all items for this user and optionally delete them. You will be able to confirm this on the next page.',
+        'user' => 'Thu hồi tất cả mục của người dùng này và tùy chọn xóa người dùng. Bạn sẽ xác nhận ở trang tiếp theo.',
     ],
 
 ];

@@ -101,7 +101,7 @@ class AssetSeeder extends Seeder
         return function () {
             // Seeded assets are unassigned at creation, so location_id matches
             // rtd_location_id. Setting both here removes the need to run
-            // snipeit:sync-asset-locations after seeding (that command exists
+            // hsbit:sync-asset-locations after seeding (that command exists
             // as a manual maintenance tool for production drift, not as a seed
             // dependency).
             $locationId = $this->locationIds->random();

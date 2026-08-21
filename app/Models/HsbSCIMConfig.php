@@ -38,7 +38,7 @@ function eloquent($name, $attribute = null): Attribute
 // Azure Entra ID sends PATCH without a "path" field, putting the full URN as the value dict key
 // e.g. {"op":"add","value":{"urn:...grokability...:location":"Head Office"}}.
 // The upstream library's add() only searches the default (core) schema, silently dropping grokability attrs.
-class SnipeRootComplex extends Complex
+class HsbRootComplex extends Complex
 {
     private function findInSchema(string $schemaUrn, string $attrName): ?object
     {
@@ -71,7 +71,7 @@ class SnipeRootComplex extends Complex
             try {
                 $path = Parser::parse($key);
             } catch (FilterException $e) {
-                throw new SCIMException('SnipeRootComplex::add: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
+                throw new SCIMException('HsbRootComplex::add: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
             }
 
             if ($path->isNotEmpty()) {
@@ -88,7 +88,7 @@ class SnipeRootComplex extends Complex
                 // the misconfiguration is on their end, versus the previous 500,
                 // which made it look like it was on our end.
                 if ($path->getAttributePath() === null) {
-                    throw new SCIMException('SnipeRootComplex::add: Cannot route SCIM key with no attribute path: '.$key, 400);
+                    throw new SCIMException('HsbRootComplex::add: Cannot route SCIM key with no attribute path: '.$key, 400);
                 }
 
                 $attributeNames = $path->getAttributePathAttributes();
@@ -143,7 +143,7 @@ class SnipeRootComplex extends Complex
                 try {
                     $parsed = Parser::parse($key);
                 } catch (FilterException $e) {
-                    throw new SCIMException('SnipeRootComplex::replace: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
+                    throw new SCIMException('HsbRootComplex::replace: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
                 }
                 $schemaUrn = $parsed->getAttributePath()?->path?->schema;
                 $attrName = $parsed->getAttributePathAttributes()[0] ?? null;
@@ -160,7 +160,7 @@ class SnipeRootComplex extends Complex
                 try {
                     $path = Parser::parse($key);
                 } catch (FilterException $e) {
-                    throw new SCIMException('SnipeRootComplex::replace: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
+                    throw new SCIMException('HsbRootComplex::replace: Malformed SCIM key: '.$key.' ('.$e->getMessage().')', 400);
                 }
                 if ($path->isNotEmpty()) {
                     // See the matching guard in add() — isNotEmpty() lets
@@ -171,7 +171,7 @@ class SnipeRootComplex extends Complex
                     // wild for misconfigured SCIM clients sending
                     // filter-key bodies to PUT /Users/{id}.
                     if ($path->getAttributePath() === null) {
-                        throw new SCIMException('SnipeRootComplex::replace: Cannot route SCIM key with no attribute path: '.$key, 400);
+                        throw new SCIMException('HsbRootComplex::replace: Cannot route SCIM key with no attribute path: '.$key, 400);
                     }
 
                     $attributeNames = $path->getAttributePathAttributes();
@@ -239,7 +239,7 @@ class SnipeRootComplex extends Complex
 // not the full member list. Using sync() would wipe all other members on every user update.
 // Override replace() to use syncWithoutDetaching() so it behaves like add(); op=remove with a
 // filter path still handles explicit removals correctly.
-class SnipeMutableCollection extends MutableCollection
+class HsbMutableCollection extends MutableCollection
 {
     public function replace($value, Model &$object, ?Path $path = null)
     {
@@ -303,7 +303,7 @@ class MappedTable extends Attribute
 
     // SCIM clients may send scalar-mapped attributes like `department`
     // and `location` as complex objects — {"value": "Engineering"} or
-    // {"displayName": "Engineering"} — and SnipeRootComplex::replace()
+    // {"displayName": "Engineering"} — and HsbRootComplex::replace()
     // additionally wraps sub-attribute values ({"remaining.path" => v})
     // when descending. MappedTable is a leaf that maps ONE relationship
     // field, so anything arriving as an array must be unwrapped before
@@ -414,7 +414,7 @@ class UpdatableComplex extends Complex
     }
 }
 
-class SnipeSCIMConfig
+class HsbSCIMConfig
 {
     public function __construct() {}
 
@@ -446,7 +446,7 @@ class SnipeSCIMConfig
             'withRelations' => [],
             'description' => 'User Account',
 
-            'map' => (new SnipeRootComplex)->withSubAttributes(
+            'map' => (new HsbRootComplex)->withSubAttributes(
                 new class('schemas', ['urn:ietf:params:scim:schemas:core:2.0:User', self::ENTERPRISE, self::GROKABILITY]) extends Constant
                 {
                     public function replace($value, &$object, $path = null)
@@ -734,10 +734,10 @@ class SnipeSCIMConfig
                                     $manager_id = substr($url, strlen($users_prefix));
                                 }
                             } elseif (array_key_exists('value', $value)) {
-                                // this is _Snipe-IT_'s ID being passed as 'value' I believe?
+                                // this is _HSB-IT_'s ID being passed as 'value' I believe?
                                 // if you use the 'managerId' field in Okta, you get:
                                 //     [value] => 9999999
-                                // that, at least, is the spec - but *what* ID is that?! It's supposed to be a Snipe-IT one!
+                                // that, at least, is the spec - but *what* ID is that?! It's supposed to be a HSB-IT one!
                                 $manager_id = $value['value'];
                             }
                             \Log::debug("Non-Microsoft - Trying to '$operation' for manager with value: ".print_r($value, true));
@@ -805,7 +805,7 @@ class SnipeSCIMConfig
                         if ($routeResource && $group->id == $routeResource->id) {
                             return;
                         }
-                        // POST create with an initial members[] triggers SnipeMutableCollection
+                        // POST create with an initial members[] triggers HsbMutableCollection
                         // to save the parent early (so the pivot INSERT has a valid group_id),
                         // which puts a row in the DB before this closure re-runs. Recognize the
                         // just-saved row as ours so validation doesn't false-positive.
@@ -815,7 +815,7 @@ class SnipeSCIMConfig
                         }
                         $fail('The name has already been taken.');
                     }),
-                    (new SnipeMutableCollection('members'))->withSubAttributes(
+                    (new HsbMutableCollection('members'))->withSubAttributes(
                         eloquent('value', 'id')->ensure('required'),
                         (new class('$ref') extends Eloquent
                         {

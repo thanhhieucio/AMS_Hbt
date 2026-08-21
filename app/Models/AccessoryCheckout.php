@@ -80,7 +80,7 @@ class AccessoryCheckout extends Model
     /**
      * Gets the lowercased name of the type of target the asset is assigned to
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v4.0]
      *

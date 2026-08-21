@@ -851,7 +851,7 @@
             html += '</ul>'
             html += '<div style="overflow:auto;">'
             html += '<div>{{ trans('admin/settings/message.ldap.sync_success') }}<br><br></div>'
-            html += '<table class="table table-striped snipe-table table-bordered table-condensed">'
+            html += '<table class="table table-striped hsb-table table-bordered table-condensed">'
             html += buildLdapResultsTableHeader()
             html += buildLdapResultsTableBody(results.user_sync.users)
             html += '</table></div>'

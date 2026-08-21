@@ -6,10 +6,10 @@ volumes:
 
 services:
   app:
-    image: hieubt/ams-hbt:${APP_VERSION:-latest}
+    image: hieubt/hsb-it:${APP_VERSION:-latest}
     restart: unless-stopped
     volumes:
-      - storage:/var/lib/snipeit
+      - storage:/var/lib/hsbit
     ports:
       - "${APP_PORT:-8000}:80"
     depends_on:

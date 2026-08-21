@@ -104,7 +104,7 @@
 
                         </div>
 
-                        @if ($snipeSettings->require_accept_signature=='1')
+                        @if ($hsbSettings->require_accept_signature=='1')
                             <div class="col-md-12">
                                 <h3 style="padding-top: 20px">{{trans('general.sign_tos')}}</h3>
                                 <div id="signature-pad" class="m-signature-pad">
@@ -155,7 +155,7 @@
 
     <script nonce="{{ csrf_token() }}">
 
-        @if ($snipeSettings->require_accept_signature=='1')
+        @if ($hsbSettings->require_accept_signature=='1')
 
         var wrapper = document.getElementById("signature-pad"),
             canvas = wrapper.querySelector("canvas"),

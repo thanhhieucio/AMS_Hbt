@@ -71,7 +71,7 @@ class StoreAssetWithFullMultipleCompanySupportTest extends TestCase
     }
 
     /**
-     * @link https://github.com/grokability/snipe-it/issues/18798
+     * @link https://github.com/thanhhieucio/HSB-IT/issues/18798
      */
     public function test_allows_creating_asset_with_scoped_location()
     {

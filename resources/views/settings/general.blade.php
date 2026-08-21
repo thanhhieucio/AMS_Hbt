@@ -190,7 +190,7 @@
                                         'manufacturer' => trans('general.manufacturer'),
                                         'model_number' => trans('general.model_no'),
                                     ]"
-                                    :selected="$snipeSettings->modellist_displays"
+                                    :selected="$hsbSettings->modellist_displays"
                                 />
 
                                 <!-- Shortcuts enable -->

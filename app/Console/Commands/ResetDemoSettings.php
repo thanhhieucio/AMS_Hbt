@@ -14,14 +14,14 @@ class ResetDemoSettings extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:demo-settings';
+    protected $signature = 'hsbit:demo-settings';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will reset the Snipe-IT demo settings back to default. ';
+    protected $description = 'Đặt lại cấu hình demo HSB-IT về mặc định.';
 
     /**
      * Create a new command instance.
@@ -41,31 +41,31 @@ class ResetDemoSettings extends Command
     public function handle()
     {
 
-        $this->info('Resetting the demo settings.');
+        $this->info('Dang dat lai cau hinh demo.');
         $settings = Setting::first();
         $settings->per_page = 20;
-        $settings->site_name = 'Snipe-IT Asset Management Demo';
+        $settings->site_name = 'Demo quan ly tai san HSB-IT';
         $settings->auto_increment_assets = 1;
-        $settings->logo = 'snipe-logo.png';
-        $settings->alert_email = 'service@snipe-it.io';
-        $settings->login_note = "Use any of the following credentials to login to the demo:\n\n- `admin` / `password`\n- `assets` / `password`\n- `testuser` / `password`";
+        $settings->logo = 'hsb-logo.png';
+        $settings->alert_email = 'service@hsb-it.io';
+        $settings->login_note = "Dung mot trong cac tai khoan sau de dang nhap ban demo:\n\n- `admin` / `password`\n- `assets` / `password`\n- `testuser` / `password`";
         $settings->header_color = '#3c8dbc';
         $settings->link_dark_color = '#5fa4cc';
         $settings->link_light_color = '#296282;';
         $settings->nav_link_color = '#FFFFFF';
         $settings->label2_2d_type = 'QRCODE';
-        $settings->default_currency = 'USD';
+        $settings->default_currency = 'VND';
         $settings->brand = 2;
         $settings->ldap_enabled = 0;
         $settings->full_multiple_companies_support = 0;
         $settings->label2_1d_type = 'C128';
-        $settings->email_domain = 'snipeitapp.com';
+        $settings->email_domain = 'hsb.edu.vn';
         $settings->email_format = 'filastname';
         $settings->username_format = 'filastname';
         $settings->date_display_format = 'D M d, Y';
         $settings->time_display_format = 'g:iA';
         $settings->thumbnail_max_h = '30';
-        $settings->locale = 'en-US';
+        $settings->locale = 'vi-VN';
         $settings->version_footer = 'on';
         $settings->support_footer = 'on';
         $settings->saml_enabled = '0';
@@ -79,53 +79,11 @@ class ResetDemoSettings extends Command
 
         $settings->save();
 
-        if ($user = User::where('username', '=', 'admin')->first()) {
-            $user->locale = 'en-US';
-            $user->enable_confetti = 1;
-            $user->enable_sounds = 1;
-            $user->save();
-        }
-
-        $assetsUser = User::updateOrCreate(
-            ['username' => 'assets'],
-            [
-                'first_name' => 'Assets',
-                'last_name' => 'User',
-                'password' => Hash::make('password'),
-                'activated' => 1,
-            ]
-        );
-        $assetsUser->permissions = json_encode([
-            'assets.view' => 1,
-            'assets.create' => 1,
-            'assets.edit' => 1,
-            'assets.delete' => 1,
-            'assets.checkout' => 1,
-            'assets.checkin' => 1,
-            'assets.audit' => 1,
-            'assets.files' => 1,
-            'assets.view.requestable' => 1,
-            'assets.view.encrypted_custom_fields' => 1,
+        User::where('username', 'admin')->update([
+            'password' => Hash::make('password'),
+            'locale' => 'vi-VN',
         ]);
-        $assetsUser->save();
 
-        $testUser = User::updateOrCreate(
-            ['username' => 'testuser'],
-            [
-                'first_name' => 'Test',
-                'last_name' => 'User',
-                'password' => Hash::make('password'),
-                'activated' => 1,
-            ]
-        );
-        $testUser->permissions = json_encode([
-            'self.checkout_assets' => 1,
-            'assets.view.requestable' => 1,
-        ]);
-        $testUser->save();
-
-        \Storage::disk('public')->put('snipe-logo.png', file_get_contents(public_path('img/demo/snipe-logo.png')));
-        \Storage::disk('public')->put('snipe-logo-lg.png', file_get_contents(public_path('img/demo/snipe-logo-lg.png')));
-
+        $this->info('Hoan tat dat lai demo HSB-IT.');
     }
 }

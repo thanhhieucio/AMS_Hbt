@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class LocationPolicy extends SnipePermissionsPolicy
+class LocationPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

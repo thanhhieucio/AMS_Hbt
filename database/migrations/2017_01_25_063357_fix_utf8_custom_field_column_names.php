@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
  * 2017_01_25_063357_fix_utf8_custom_field_column_names.php migration
  * as a one-time fix.
  *
- * @author [A. Gianotto] [<snipe@snipe.net>]
+ * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
  *
  * @since [v4.0]
  *
@@ -75,12 +75,12 @@ class FixUtf8CustomFieldColumnNames extends Migration
     public function down()
     {
         // In the up method above, updateLegacyColumnName is called and custom fields in the assets table are prefixed
-        // with "_snipe_it_", suffixed with "_{id of the CustomField}", and stored in custom_fields.db_column.
+        // with "_hsb_it_", suffixed with "_{id of the CustomField}", and stored in custom_fields.db_column.
         // The following reverses those changes.
         foreach (CustomField::all() as $field) {
             $currentColumnName = $field->db_column;
 
-            // "_snipeit_imei_1" becomes "_snipeit_imei"
+            // "_hsbit_imei_1" becomes "_hsbit_imei"
             $legacyColumnName = (string) Str::of($currentColumnName)->replaceMatches('/_(\d)+$/', '');
 
             if (Schema::hasColumn(CustomField::$table_name, $currentColumnName)) {

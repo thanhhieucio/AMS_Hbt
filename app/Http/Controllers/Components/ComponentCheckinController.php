@@ -20,7 +20,7 @@ class ComponentCheckinController extends Controller
     /**
      * Returns a view that allows the checkin of a component from an asset.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentCheckinController::store() method that stores the data.
      * @since [v4.1.4]
@@ -32,7 +32,7 @@ class ComponentCheckinController extends Controller
     public function create($component_asset_id)
     {
 
-        // This could probably be done more cleanly but I am very tired. - @snipe
+        // This could probably be done more cleanly but I am very tired. - @hsb
         if ($component_assets = DB::table('components_assets')->find($component_asset_id)) {
             if (is_null($component = Component::find($component_assets->component_id))) {
                 return redirect()->route('components.index')->with('error', trans('admin/components/messages.not_found'));
@@ -44,7 +44,7 @@ class ComponentCheckinController extends Controller
             $this->authorize('checkin', $component);
 
             return view('components/checkin', compact('component_assets', 'component', 'asset'))
-                ->with('snipe_component', $component);
+                ->with('hsb_component', $component);
         }
 
         return redirect()->route('components.index')->with('error', trans('admin/components/messages.not_found'));
@@ -53,7 +53,7 @@ class ComponentCheckinController extends Controller
     /**
      * Validate and store checkin data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentCheckinController::create() method that returns the form.
      * @since [v4.1.4]

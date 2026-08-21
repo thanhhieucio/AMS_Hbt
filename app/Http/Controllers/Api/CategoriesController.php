@@ -21,7 +21,7 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -75,7 +75,7 @@ class CategoriesController extends Controller
 
         /*
          * This checks to see if we should override the Admin Setting to show archived assets in list.
-         * We don't currently use it within the Snipe-IT GUI, but will be useful for API integrations where they
+         * We don't currently use it within the HSB-IT GUI, but will be useful for API integrations where they
          * may actually need to fetch assets that are archived.
          *
          * @see \App\Models\Category::showableAssets()
@@ -149,7 +149,7 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -175,7 +175,7 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -193,7 +193,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -224,7 +224,7 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -254,7 +254,7 @@ class CategoriesController extends Controller
     /**
      * Gets a paginated collection for the select2 menus
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0.16]
      * @see SelectlistTransformer

@@ -16,12 +16,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         if (Setting::getSettings()?->alerts_enabled === 1) {
-            $schedule->command('snipeit:inventory-alerts')->daily();
-            $schedule->command('snipeit:expiring-alerts')->daily();
-            $schedule->command('snipeit:expected-checkin')->daily();
-            $schedule->command('snipeit:upcoming-audits')->daily();
+            $schedule->command('hsbit:inventory-alerts')->daily();
+            $schedule->command('hsbit:expiring-alerts')->daily();
+            $schedule->command('hsbit:expected-checkin')->daily();
+            $schedule->command('hsbit:upcoming-audits')->daily();
         }
-        $schedule->command('snipeit:backup')->weekly();
+        $schedule->command('hsbit:backup')->weekly();
         $schedule->command('backup:clean')->daily();
         $schedule->command('auth:clear-resets')->everyFifteenMinutes();
         $schedule->command('saml:clear_expired_nonces')->weekly();

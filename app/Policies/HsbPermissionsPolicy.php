@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 
 /**
- * SnipePermissionsPolicy provides methods for handling the granular permissions used throughout Snipe-IT.
+ * HsbPermissionsPolicy provides methods for handling the granular permissions used throughout HSB-IT.
  * Each "area" of a permission (which is usually a model, like Assets, Departments, etc), has a setting
  * in config/permissions.php like view/create/edit/delete (and sometimes some extra stuff like
  * checkout/checkin, etc.)
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Gate;
  *    return 'manufacturers';
  * }
  */
-abstract class SnipePermissionsPolicy
+abstract class HsbPermissionsPolicy
 {
     /**
      * This should return the key of the model in the users json permission string.
@@ -47,7 +47,7 @@ abstract class SnipePermissionsPolicy
          *
          * The *superuser* global permission gets handled in the AuthServiceProvider before() method.
          *
-         * @see https://snipe-it.readme.io/docs/permissions
+         * @see https://docs.hsb.edu.vn/hsb-it/docs/permissions
          */
         if ($user->hasAccess('admin')) {
             return true;

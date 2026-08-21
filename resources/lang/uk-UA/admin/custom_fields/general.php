@@ -69,5 +69,5 @@ return [
         'radio' => 'Перемикач',
     ],
     'markdown_supported' => 'Markdown is supported',
-    'general_help_text' => 'Користувацькі поля зберігають додаткову інформацію, не охоплену стандартними полями активів. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Користувацькі поля зберігають додаткову інформацію, не охоплену стандартними полями активів. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

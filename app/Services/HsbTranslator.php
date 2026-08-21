@@ -16,7 +16,7 @@ use Illuminate\Translation\Translator;
  *
  * This method is called by the trans_choice() helper, which we *do* use a lot.
  ***************************************************************/
-class SnipeTranslator extends Translator {
+class HsbTranslator extends Translator {
 
     static $legacy_translation_namespaces = [
         "backup::" //Spatie backup uses 'legacy' locale names

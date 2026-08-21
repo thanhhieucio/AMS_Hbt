@@ -13,14 +13,14 @@ class MoveUploadsToNewDisk extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:move-uploads {delete_local?}';
+    protected $signature = 'hsbit:move-uploads {delete_local?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will move your locally uploaded files to whatever your current disk is.';
+    protected $description = 'Di chuyển các tệp đã tải lên cục bộ sang ổ đĩa hiện đang cấu hình.';
 
     /**
      * Create a new command instance.
@@ -41,7 +41,7 @@ class MoveUploadsToNewDisk extends Command
     {
         if (config('filesystems.default') == 'local') {
             $this->error('Your current disk is set to local so we cannot proceed.');
-            $this->warn("Please configure your .env settings for S3. \nChange your PUBLIC_FILESYSTEM_DISK value to 's3_public' and your PRIVATE_FILESYSTEM_DISK to s3_private.");
+            $this->warn("Vui lòng cấu hình .env cho S3. \nĐổi PUBLIC_FILESYSTEM_DISK thành 's3_public' và PRIVATE_FILESYSTEM_DISK thành s3_private.");
 
             return false;
         }
@@ -126,10 +126,10 @@ class MoveUploadsToNewDisk extends Command
 
                 $this->info("\n\n");
                 $this->error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                $this->warn("\nTHIS WILL DELETE ALL OF YOUR LOCAL UPLOADED FILES. \n\nThis cannot be undone, so you should take a backup of your system before you proceed.\n");
+                $this->warn("\nTHAO TÁC NÀY SẼ XÓA TOÀN BỘ TỆP TẢI LÊN CỤC BỘ. \n\nKhông thể hoàn tác, hãy sao lưu hệ thống trước khi tiếp tục.\n");
                 $this->error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
-                if ($this->confirm('Do you wish to continue?')) {
+                if ($this->confirm('Bạn có muốn tiếp tục?')) {
                     foreach ($public_uploads as $public_type => $public_upload) {
                         for ($i = 0; $i < count($public_upload); $i++) {
                             $filename = $public_upload[$i];

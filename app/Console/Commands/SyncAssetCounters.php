@@ -13,14 +13,14 @@ class SyncAssetCounters extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:counter-sync';
+    protected $signature = 'hsbit:counter-sync';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Syncs checkedout, checked in, and requested counters for assets';
+    protected $description = 'Đồng bộ bộ đếm tài sản đã cấp phát, đã thu hồi và đang được yêu cầu.';
 
     /**
      * Create a new command instance.

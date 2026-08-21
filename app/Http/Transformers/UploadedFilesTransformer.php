@@ -24,13 +24,13 @@ class UploadedFilesTransformer
 
     public function transformFile(Actionlog $file)
     {
-        $snipeModel = $file->item_type;
+        $hsbModel = $file->item_type;
         $item = null;
 
-        if (is_string($snipeModel) && class_exists($snipeModel)) {
-            $itemQuery = $snipeModel::query();
+        if (is_string($hsbModel) && class_exists($hsbModel)) {
+            $itemQuery = $hsbModel::query();
 
-            if (in_array(SoftDeletes::class, class_uses_recursive($snipeModel), true)) {
+            if (in_array(SoftDeletes::class, class_uses_recursive($hsbModel), true)) {
                 $itemQuery->withTrashed();
             }
 
@@ -61,7 +61,7 @@ class UploadedFilesTransformer
         ];
 
         $permissions_array['available_actions'] = [
-            'delete' => (Gate::allows('update', $item ?? $snipeModel) && ($file->deleted_at == '')),
+            'delete' => (Gate::allows('update', $item ?? $hsbModel) && ($file->deleted_at == '')),
         ];
 
         $array += $permissions_array;

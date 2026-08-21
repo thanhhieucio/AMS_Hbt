@@ -46,7 +46,7 @@ class EditMaintenanceTest extends TestCase
                 'file' => [UploadedFile::fake()->create('maintenance-update.pdf', 64, 'application/pdf')],
                 'cost' => '100.99',
                 'notes' => 'A note',
-                'url' => 'https://snipeitapp.com',
+                'url' => 'https://hsb.edu.vn',
             ])
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('maintenances.index'));
@@ -77,7 +77,7 @@ class EditMaintenanceTest extends TestCase
             'start_date' => '2021-01-01 00:00:00',
             'expected_completion_date' => '2021-01-10 00:00:00',
             'notes' => 'A note',
-            'url' => 'https://snipeitapp.com',
+            'url' => 'https://hsb.edu.vn',
             'cost' => '100.99',
         ]);
 

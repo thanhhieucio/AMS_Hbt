@@ -176,7 +176,7 @@ class BulkUpdateAssetsTest extends TestCase
     public function test_custom_field_can_be_updated_across_assets_sharing_a_model()
     {
         // Regression: pre-fix, MayContainCustomFields on the bulk path set
-        // $asset_model = null and flagged EVERY _snipeit_* field as not-on-model,
+        // $asset_model = null and flagged EVERY _hsbit_* field as not-on-model,
         // failing request-level validation. Fix: on bulk, skip the per-model
         // membership check and defer to per-row save behavior.
         $this->markIncompleteIfMySQL('Custom Field Tests do not work in MySQL');
@@ -240,14 +240,14 @@ class BulkUpdateAssetsTest extends TestCase
         $response = $this->actingAsForApi(User::factory()->editAssets()->create())
             ->patchJson($this->bulkUrl(), [
                 'ids' => [$a->id, $b->id],
-                '_snipeit_totally_bogus_9999' => 'nope',
+                '_hsbit_totally_bogus_9999' => 'nope',
             ])
             ->assertJsonPath('status', 'error');
 
         $rows = collect($response->json('results'))->keyBy('id');
         foreach ([$a->id, $b->id] as $id) {
             $this->assertSame('error', $rows[$id]['status']);
-            $this->assertArrayHasKey('_snipeit_totally_bogus_9999', $rows[$id]['messages']);
+            $this->assertArrayHasKey('_hsbit_totally_bogus_9999', $rows[$id]['messages']);
         }
     }
 

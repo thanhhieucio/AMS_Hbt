@@ -13,14 +13,14 @@ class ValidateAssets extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:validate-assets {--all : Display the valid assets in your table output as well} ';
+    protected $signature = 'hsbit:validate-assets {--all : Display the valid assets in your table output as well} ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This runs through the list of assets and checks for any validation errors that would prevent it from being updated or checked in or out. ';
+    protected $description = 'Duyệt danh sách tài sản và kiểm tra lỗi xác thực có thể khiến tài sản không cập nhật, không thu hồi hoặc không cấp phát được.';
 
     /**
      * Execute the console command.

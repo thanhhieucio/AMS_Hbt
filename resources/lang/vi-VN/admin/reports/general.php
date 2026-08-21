@@ -19,7 +19,7 @@ return [
     ],
     'open_saved_template' => 'Open Saved Template',
     'save_template' => 'Save Template',
-    'select_a_template' => 'Select a Template',
+    'select_a_template' => 'Chọn mẫu',
     'template_name' => 'Template Name',
     'update_template' => 'Update Template',
     'share_template' => 'Share This Template',

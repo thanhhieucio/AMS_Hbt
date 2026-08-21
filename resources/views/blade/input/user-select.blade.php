@@ -2,7 +2,7 @@
 
 {{-- companyId scopes the ajax lookup to a specific company (via
      data-company-ids consumed by the js-data-ajax initializer in
-     snipeit.js). excludeId hides a specific user from the list — used
+     hsbit.js). excludeId hides a specific user from the list — used
      by the users/edit page's manager picker so a user can't select
      themselves as their own manager. wrapperId and id default to the
      legacy "assigned_user" / "assigned_user_select" values so pages
@@ -69,7 +69,7 @@
         </div>
     @endunless
 
-    @if ($snipeSettings->full_multiple_companies_support == '1')
+    @if ($hsbSettings->full_multiple_companies_support == '1')
         @cannot('superadmin')
             <div class="col-md-7 col-md-offset-3">
                 <p class="help-block"><x-icon type="tip" /> {{ trans('general.fmcs_select_note') }}</p>

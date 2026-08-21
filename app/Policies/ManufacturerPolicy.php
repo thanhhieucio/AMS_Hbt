@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class ManufacturerPolicy extends SnipePermissionsPolicy
+class ManufacturerPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

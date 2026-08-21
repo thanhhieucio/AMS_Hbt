@@ -101,8 +101,8 @@ $qr_size = ($settings->alt_barcode_enabled=='1') && ($settings->label2_1d_type!=
             padding-bottom: 15px;
         }
     }
-    @if ($snipeSettings->custom_css)
-        {!! $snipeSettings->show_custom_css() !!}
+    @if ($hsbSettings->custom_css)
+        {!! $hsbSettings->show_custom_css() !!}
     @endif
 </style>
 
@@ -119,7 +119,7 @@ $qr_size = ($settings->alt_barcode_enabled=='1') && ($settings->label2_1d_type!=
         <div class="qr_text">
             @if ($settings->label_logo)
                 <div class="label-logo">
-                    <img class="label-logo" src="{{ Storage::disk('public')->url('').e($snipeSettings->label_logo) }}" alt="">
+                    <img class="label-logo" src="{{ Storage::disk('public')->url('').e($hsbSettings->label_logo) }}" alt="">
                 </div>
             @endif
             @if ($settings->qr_text!='')

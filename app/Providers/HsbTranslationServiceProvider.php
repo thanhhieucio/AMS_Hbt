@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\SnipeTranslator;
+use App\Services\HsbTranslator;
 use Illuminate\Translation\TranslationServiceProvider;
 
-class SnipeTranslationServiceProvider extends TranslationServiceProvider
+class HsbTranslationServiceProvider extends TranslationServiceProvider
 {
     /**
      * Register services.
@@ -25,7 +25,7 @@ class SnipeTranslationServiceProvider extends TranslationServiceProvider
             // configuration so we can easily get both of these values from there.
             $locale = $app['config']['app.locale'];
 
-            $trans = new SnipeTranslator($loader, $locale); // the ONLY changed line
+            $trans = new HsbTranslator($loader, $locale); // the ONLY changed line
 
             $trans->setFallback($app['config']['app.fallback_locale']);
 

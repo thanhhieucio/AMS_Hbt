@@ -1,5 +1,5 @@
 ARG ENVIRONMENT=production
-ARG SNIPEIT_RELEASE=6.1.0
+ARG HSBIT_RELEASE=6.1.0
 ARG PHP_VERSION=8.2
 ARG PHP_ALPINE_VERSION=3.17
 ARG COMPOSER_VERSION=2
@@ -20,8 +20,8 @@ ARG DEV_PACKAGES="\
 "
 ARG ENVIRONMENT
 ENV ENVIRONMENT ${ENVIRONMENT}
-ARG SNIPEIT_RELEASE
-ENV SNIPEIT_RELEASE ${SNIPEIT_RELEASE}
+ARG HSBIT_RELEASE
+ENV HSBIT_RELEASE ${HSBIT_RELEASE}
 
 # Cribbed from wordpress-fpm-alpine image
 # set recommended PHP.ini settings
@@ -70,10 +70,10 @@ RUN set -eux; \
 COPY --from=composer /usr/bin/composer /usr/local/bin
 ARG COMPOSER_ALLOW_SUPERUSER=1
 RUN set -eux; \
-# Download and extract snipeit tarball
-	curl -o snipeit.tar.gz -fL "https://github.com/grokability/snipe-it/archive/v$SNIPEIT_RELEASE.tar.gz"; \
-	tar -xzf snipeit.tar.gz --strip-components=1 -C /var/www/html/; \
-	rm snipeit.tar.gz; \
+# Download and extract hsbit tarball
+	curl -o hsbit.tar.gz -fL "https://github.com/thanhhieucio/HSB-IT/archive/v$HSBIT_RELEASE.tar.gz"; \
+	tar -xzf hsbit.tar.gz --strip-components=1 -C /var/www/html/; \
+	rm hsbit.tar.gz; \
 # Install composer php dependencies
     if [ "$ENVIRONMENT" = "production" ]; then \
         echo "production environment detected!"; \
@@ -95,7 +95,7 @@ RUN set -eux; \
 	rm -f /usr/local/bin/composer; \
 	chown -R www-data:www-data /var/www/html;
 
-VOLUME [ "/var/lib/snipeit" ]
+VOLUME [ "/var/lib/hsbit" ]
 
 COPY --chown=www-data:www-data docker/docker-secrets.env /var/www/html/.env
 COPY --chmod=655 docker/startup_alpine_fpm.sh /startup.sh

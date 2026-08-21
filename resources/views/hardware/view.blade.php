@@ -140,7 +140,7 @@
                                 </x-data-row>
 
                                 <x-data-row :label="trans('admin/hardware/table.current_value')" copy_what="current_value">
-                                    {{ (($asset->id) && ($asset->location) ? $asset->location->currency : $snipeSettings->default_currency) }}
+                                    {{ (($asset->id) && ($asset->location) ? $asset->location->currency : $hsbSettings->default_currency) }}
                                     {{ Helper::formatCurrencyOutput($asset->getDepreciatedValue() )}}
                                 </x-data-row>
 
@@ -320,7 +320,7 @@
 
 
 
-                            @if ($snipeSettings->isQrEnabled())
+                            @if ($hsbSettings->isQrEnabled())
                                 <div class="col-md-12 text-center asset-qr-img" style="padding-top: 15px;">
                                     <img src="{{ route('qr_code/common', ['object_type' => 'hardware', 'id' => $asset->id]) }}" class="img-thumbnail" style="height: 150px; width: 150px; margin-right: 10px;" alt="QR code for {{ $asset->getDisplayNameAttribute() }}">
                                 </div>

@@ -693,7 +693,7 @@ class UpdateAssetTest extends TestCase
 
         // custom field does not exist
         $this->actingAsForApi($user)->patchJson(route('api.assets.update', $asset->id), [
-            '_snipeit_non_existent_custom_field_50' => 'test attribute',
+            '_hsbit_non_existent_custom_field_50' => 'test attribute',
         ])->assertStatusMessageIs('error');
     }
 

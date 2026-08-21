@@ -17,14 +17,14 @@ class RestoreDeletedUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:restore-users {--start_date=} {--end_date=}';
+    protected $signature = 'hsbit:restore-users {--start_date=} {--end_date=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Restore users, and any associated assets and license checkouts.';
+    protected $description = 'Khôi phục người dùng cùng tài sản và license đã cấp phát liên quan.';
 
     /**
      * Create a new command instance.
@@ -50,7 +50,7 @@ class RestoreDeletedUsers extends Command
         $user_count = 0;
 
         if (($start_date == '') || ($end_date == '')) {
-            $this->info('ERROR: All fields are required.');
+            $this->info('LỖI: Tất cả trường đều bắt buộc.');
 
             return false;
         }
@@ -90,7 +90,7 @@ class RestoreDeletedUsers extends Command
                             ->where('id', $avail_seat->id)
                             ->update(['assigned_to' => $user->id]);
                     } else {
-                        $this->warn('ERROR: No available seats for '.$user_log->item->name);
+                        $this->warn('LỖI: Không còn ghế khả dụng cho '.$user_log->item->name);
                     }
                 }
             }

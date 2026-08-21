@@ -28,7 +28,7 @@
                         data-url="{{ route('api.depreciation-report.index') }}"
                         data-mobile-responsive="true"
                         {{-- data-toggle="table" --}}
-                        class="table table-striped snipe-table"
+                        class="table table-striped hsb-table"
                         data-columns="{{ \App\Presenters\DepreciationReportPresenter::dataTableLayout() }}"
                         data-export-options='{
                           "fileName": "depreciation-report-{{ date('Y-m-d') }}",

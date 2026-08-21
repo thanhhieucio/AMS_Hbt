@@ -22,9 +22,9 @@ return [
     'delete_disabled' => 'This license cannot be deleted yet because some seats are still checked out.',
     'bulk' => [
         'checkin_all' => [
-            'button' => 'Checkin All Seats',
+            'button' => 'Thu hồi tất cả chỗ',
             'modal' => 'This action will checkin one seat. | This action will checkin all :checkedout_seats_count seats for this license.',
-            'enabled_tooltip' => 'Checkin ALL seats for this license from both users and assets',
+            'enabled_tooltip' => 'Thu hồi TẤT CẢ chỗ của giấy phép này khỏi cả người dùng và tài sản',
             'disabled_tooltip' => 'This is disabled because there are no seats currently checked out',
             'disabled_tooltip_reassignable' => 'This is disabled because the License is not reassignable',
             'success' => 'License successfully checked in! | All licenses were successfully checked in!',
@@ -37,9 +37,9 @@ return [
         ],
 
         'checkout_all' => [
-            'button' => 'Checkout All Seats',
+            'button' => 'Cấp phát tất cả chỗ',
             'modal' => 'This action will checkout one seat to the first available user. | This action will checkout all :available_seats_count seats to the first available users. A user is considered available for this seat if they do not already have this license checked out to them, and the Auto-Assign License property is enabled on their user account.',
-            'enabled_tooltip' => 'Checkout ALL seats (or as many as are available) to ALL users',
+            'enabled_tooltip' => 'Cấp phát TẤT CẢ chỗ (hoặc số chỗ còn có thể dùng) cho TẤT CẢ người dùng',
             'disabled_tooltip' => 'This is disabled because there are no seats currently available',
             'success' => 'License successfully checked out! | :count licenses were successfully checked out!',
             'error_no_seats' => 'There are no remaining seats left for this license.',

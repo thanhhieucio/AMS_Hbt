@@ -17,7 +17,7 @@
                 data-sort-order="asc"
                 data-url="{{ route('api.labels.index') }}"
                 id="label2TemplateTable"
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
             ></table>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {

@@ -38,7 +38,7 @@
                 <option value="delete">{{ trans('general.bulk_delete') }}</option>
             @endcan
 
-            <option value="labels" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=l" : ''}}>{{ trans_choice('button.generate_labels', 2) }}</option>
+            <option value="labels" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=l" : ''}}>{{ trans_choice('button.generate_labels', 2) }}</option>
         @endif
     </select>
 

@@ -12,14 +12,14 @@ class FixUpAssignedTypeWithoutAssignedTo extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:assigned-type-fixup';
+    protected $signature = 'hsbit:assigned-type-fixup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fixes up assets that have an assigned_type but no assigned_to';
+    protected $description = 'Sửa tài sản có assigned_type nhưng thiếu assigned_to.';
 
     /**
      * Execute the console command.

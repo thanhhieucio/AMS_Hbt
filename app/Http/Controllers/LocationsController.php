@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * This controller handles all actions related to Locations for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */
@@ -33,7 +33,7 @@ class LocationsController extends Controller
      * Returns a view that invokes the ajax tables which actually contains
      * the content for the locations listing, which is generated in getDatatable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LocationsController::getDatatable() method that generates the JSON response
      * @since [v1.0]
@@ -50,7 +50,7 @@ class LocationsController extends Controller
     /**
      * Returns a form view used to create a new location.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LocationsController::postCreate() method that validates and stores the data
      * @since [v1.0]
@@ -68,7 +68,7 @@ class LocationsController extends Controller
      *
      * @todo Check if a Form Request would work better here.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LocationsController::getCreate() method that makes the form
      * @since [v1.0]
@@ -135,7 +135,7 @@ class LocationsController extends Controller
     /**
      * Makes a form view to edit location information.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LocationsController::postCreate() method that validates and stores
      *
@@ -153,7 +153,7 @@ class LocationsController extends Controller
     /**
      * Validates and stores updated location data from edit form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LocationsController::getEdit() method that makes the form view
      *
@@ -221,7 +221,7 @@ class LocationsController extends Controller
     /**
      * Validates and deletes selected location.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $locationId
      *
@@ -249,7 +249,7 @@ class LocationsController extends Controller
         if ($location->isDeletable()) {
 
             // Note: the image file is deliberately preserved across this
-            // soft-delete. Snipe-IT's `snipeit:purge` command permanently
+            // soft-delete. HSB-IT's `hsbit:purge` command permanently
             // removes it later when the row is force-deleted. Keeping
             // the file here means a restored soft-deleted row still has
             // its image.
@@ -266,7 +266,7 @@ class LocationsController extends Controller
      * Returns a view that invokes the ajax tables which actually contains
      * the content for the locations detail page.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $id
      *
@@ -352,7 +352,7 @@ class LocationsController extends Controller
     /**
      * Returns a view that presents a form to clone a location.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $locationId
      *
@@ -381,7 +381,7 @@ class LocationsController extends Controller
     /**
      * Restore a given Asset Model (mark as un-deleted)
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -413,7 +413,7 @@ class LocationsController extends Controller
     /**
      * Returns a view that allows the user to bulk delete locations
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.3.1]
      */
@@ -458,7 +458,7 @@ class LocationsController extends Controller
     /**
      * Checks that locations can be deleted and deletes them if they can
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.3.1]
      */

@@ -18,7 +18,7 @@ class ReplaceUserWithMalformedKeyTest extends TestCase
      *   Tmilos\ScimFilterParser\Error\FilterException [Syntax Error]
      *   line 0, col 0: Error: Expected attribute path, got '['
      *
-     * SnipeSCIMConfig::add() and ::replace() now wrap the Parser::parse
+     * HsbSCIMConfig::add() and ::replace() now wrap the Parser::parse
      * calls in try/catch and rethrow as SCIMException, so the client sees
      * a 400 pointing at the malformed key instead of an uncaught 500.
      */
@@ -42,7 +42,7 @@ class ReplaceUserWithMalformedKeyTest extends TestCase
     public function test_patch_with_malformed_add_value_key_returns_400_not_500(): void
     {
         // Same malformed key shape but arriving through the PATCH add()
-        // path (SnipeRootComplex::add()) instead of PUT replace(). Azure
+        // path (HsbRootComplex::add()) instead of PUT replace(). Azure
         // and Entra send add/replace ops without a top-level path field
         // and put attribute keys inside `value`, so this exercises the
         // sibling try/catch we added.

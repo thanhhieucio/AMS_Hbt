@@ -69,5 +69,5 @@ return [
         'radio' => 'Botones de radio',
     ],
     'markdown_supported' => 'Markdown is supported',
-    'general_help_text' => 'Los campos personalizados guardan información adicional no cubierta por los campos predeterminados de los activos. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Los campos personalizados guardan información adicional no cubierta por los campos predeterminados de los activos. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

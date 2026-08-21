@@ -60,7 +60,7 @@
                                     data-bulk-button-id="#dueAssetEditButton"
                                     data-bulk-form-id="#dueAssetEditForm"
                                     id="#dueAssetAuditListing"
-                                    class="table table-striped snipe-table"
+                                    class="table table-striped hsb-table"
                                     data-url="{{ route('api.assets.list-upcoming', ['action' => 'audits', 'upcoming_status' => 'due']) }}"
                                     data-export-options='{
                                         "fileName": "export-assets-due-audit-{{ date('Y-m-d') }}",
@@ -93,7 +93,7 @@
                                         data-bulk-button-id="#overdueAssetEditButton"
                                         data-bulk-form-id="#overdueAssetEditForm"
                                         id="#overdueAssetAuditListing"
-                                        class="table table-striped snipe-table"
+                                        class="table table-striped hsb-table"
                                         data-url="{{ route('api.assets.list-upcoming', ['action' => 'audits', 'upcoming_status' => 'overdue']) }}"
                                         data-export-options='{
             "fileName": "export-assets-overdue-audit-{{ date('Y-m-d') }}",

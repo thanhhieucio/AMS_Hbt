@@ -20,7 +20,7 @@ class DepartmentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @author [Godfrey Martinez] [<snipe@snipe.net>]
+     * @author [Godfrey Martinez] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -105,7 +105,7 @@ class DepartmentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -132,7 +132,7 @@ class DepartmentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -149,7 +149,7 @@ class DepartmentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.0]
      *
@@ -173,7 +173,7 @@ class DepartmentsController extends Controller
     /**
      * Validates and deletes selected department.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $locationId
      *
@@ -198,7 +198,7 @@ class DepartmentsController extends Controller
     /**
      * Gets a paginated collection for the select2 menus
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0.16]
      * @see SelectlistTransformer

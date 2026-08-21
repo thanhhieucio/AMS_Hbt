@@ -20,7 +20,7 @@ class LabelsController extends Controller
     /**
      * Returns the Label view with test data
      *
-     * @author Grant Le Roux <grant.leroux+snipe-it@gmail.com>
+     * @author Grant Le Roux <grant.leroux+hsb-it@gmail.com>
      */
     public function show(string $labelName)
     {

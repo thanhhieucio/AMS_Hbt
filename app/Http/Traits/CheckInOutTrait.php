@@ -4,7 +4,7 @@ namespace App\Http\Traits;
 
 use App\Models\Asset;
 use App\Models\Location;
-use App\Models\SnipeModel;
+use App\Models\HsbModel;
 use App\Models\User;
 
 trait CheckInOutTrait
@@ -12,7 +12,7 @@ trait CheckInOutTrait
     /**
      * Find target for checkout
      */
-    protected function determineCheckoutTarget(): ?SnipeModel
+    protected function determineCheckoutTarget(): ?HsbModel
     {
         // This item is checked out to a location
         switch (request('checkout_to_type')) {
@@ -31,7 +31,7 @@ trait CheckInOutTrait
      * Update the location of the asset passed in.
      *
      * @param  Asset  $asset  Asset being updated
-     * @param  SnipeModel  $target  Target with location
+     * @param  HsbModel  $target  Target with location
      * @return Asset Asset being updated
      */
     protected function updateAssetLocation($asset, $target): Asset

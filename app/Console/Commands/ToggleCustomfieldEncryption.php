@@ -14,7 +14,7 @@ class ToggleCustomfieldEncryption extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:customfield-encryption
+    protected $signature = 'hsbit:customfield-encryption
                              {fieldname : the db_column_name of the field}';
 
     /**
@@ -22,7 +22,7 @@ class ToggleCustomfieldEncryption extends Command
      *
      * @var string
      */
-    protected $description = 'This command should be used to convert an unencrypted custom field into a custom field and encrypt the associated data in the assets table for that column.';
+    protected $description = 'Chuyển một trường tùy chỉnh chưa mã hóa sang dạng mã hóa và mã hóa dữ liệu tương ứng trong bảng tài sản.';
 
     /**
      * Create a new command instance.
@@ -68,7 +68,7 @@ class ToggleCustomfieldEncryption extends Command
 
             // No matching column name found
         } else {
-            $this->error('No matching results for unencrypted custom fields with db_column name: '.$fieldname.'. Please check the fieldname.');
+            $this->error('Không tìm thấy trường tùy chỉnh chưa mã hóa có tên db_column: '.$fieldname.'. Vui lòng kiểm tra lại tên trường.');
         }
 
     }

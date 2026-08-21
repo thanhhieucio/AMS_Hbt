@@ -350,7 +350,7 @@
           <!-- row -->
           <div class="row">
             <div class="col-md-2">
-              <strong>{{ trans('admin/settings/general.snipe_version') }}:</strong>
+              <strong>{{ trans('admin/settings/general.hsb_version') }}:</strong>
             </div>
             <div class="col-md-4">
               {{ config('version.app_version') }}  build {{ config('version.build_version') }} ({{ config('version.hash_version') }})
@@ -380,7 +380,7 @@
               <strong>{{ trans('admin/settings/general.laravel') }}:</strong>
             </div>
             <div class="col-md-4">
-              {{ $snipeSettings->lar_ver() }}
+              {{ $hsbSettings->lar_ver() }}
             </div>
           </div>
 
@@ -427,7 +427,7 @@
                 </div>
                 <div class="col-md-4">
                     <code>{{ url('/api/v1') }}{!! trans('account/general.api_base_url_endpoint') !!}</code>
-                    <a href="https://snipe-it.readme.io/reference/api-overview" target="_blank" data-tooltip="true" title="{{ trans('general.documentation') }}"><x-icon type="external-link" /></a>
+                    <a href="https://docs.hsb.edu.vn/hsb-it/reference/api-overview" target="_blank" data-tooltip="true" title="{{ trans('general.documentation') }}"><x-icon type="external-link" /></a>
 
                 </div>
 
@@ -436,7 +436,7 @@
                 </div>
                 <div class="col-md-4">
                     <code>{{ config('app.url') }}/scim/v2/</code>
-                    <a href="https://snipe-it.readme.io/docs/scim" target="_blank" data-tooltip="true" title="{{ trans('general.documentation') }}"><x-icon type="external-link" /></a>
+                    <a href="https://docs.hsb.edu.vn/hsb-it/docs/scim" target="_blank" data-tooltip="true" title="{{ trans('general.documentation') }}"><x-icon type="external-link" /></a>
 
                 </div>
             </div>

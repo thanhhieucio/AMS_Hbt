@@ -31,12 +31,12 @@
                 data-msg-pattern="{{ trans('general.purchase_cost_invalid') }}"
             />
             <span class="input-group-addon">
-                {{ $currencyType ?? $snipeSettings->default_currency }}
+                {{ $currencyType ?? $hsbSettings->default_currency }}
             </span>
         </div>
         <div class="col-md-9" style="padding-left: 0">
             <x-form.error :name="$name" />
-            <p class="help-block">{{ trans('general.purchase_cost_format_help', ['format' => $snipeSettings->digit_separator]) }}</p>
+            <p class="help-block">{{ trans('general.purchase_cost_format_help', ['format' => $hsbSettings->digit_separator]) }}</p>
         </div>
     </div>
 </div>

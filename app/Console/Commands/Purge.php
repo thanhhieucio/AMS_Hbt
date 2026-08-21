@@ -39,11 +39,11 @@ class Purge extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:purge
+    protected $signature = 'hsbit:purge
         {--force=false : Skip the confirmation prompt (accepts "true").}
         {--dry-run : Report what would be purged without deleting anything.}';
 
-    protected $description = 'Purge all soft-deleted records in the database. Walks every model that uses the SoftDeletes trait, DELETEs the trashed rows, cleans up their polymorphic action_log children, and removes their uploaded files and image assets from disk. No undo.';
+    protected $description = 'Xóa vĩnh viễn toàn bộ bản ghi đã xóa mềm, dọn action_log liên quan và xóa tệp upload/tệp ảnh khỏi đĩa. Không thể hoàn tác.';
 
     public function handle(): int
     {
@@ -51,7 +51,7 @@ class Purge extends Command
         $dryRun = (bool) $this->option('dry-run');
 
         if (! $force) {
-            warning('This will PERMANENTLY delete every soft-deleted record in the database. There is no undo.');
+            warning('Thao tác này sẽ XÓA VĨNH VIỄN mọi bản ghi đã xóa mềm trong cơ sở dữ liệu. Không thể hoàn tác.');
 
             if (! confirm('Continue with the purge?', default: false)) {
                 $this->info('Cancelled. Nothing was purged.');
@@ -76,13 +76,13 @@ class Purge extends Command
         if ($dryRun) {
             $this->components->info('Dry run complete. No records were deleted.');
         } else {
-            $this->components->info('Purge complete.');
+            $this->components->info('Xóa vĩnh viễn hoàn tất.');
         }
 
         if (empty($summary)) {
             $this->info('Nothing to purge.');
         } else {
-            $this->table(['Resource', $dryRun ? 'Would purge' : 'Purged'], $summary);
+            $this->table(['Tài nguyên', $dryRun ? 'Sẽ xóa vĩnh viễn' : 'Đã xóa vĩnh viễn'], $summary);
         }
 
         $this->info(sprintf('Elapsed: %.3fs   Peak memory: %s MB',
@@ -299,7 +299,7 @@ class Purge extends Command
                     }
                 } catch (\Exception $e) {
                     Log::info(sprintf(
-                        'snipeit:purge - error deleting %s file %s for %s: %s',
+                        'hsbit:purge - error deleting %s file %s for %s: %s',
                         $column, $filename, $modelClass, $e->getMessage()
                     ));
                 }
@@ -429,7 +429,7 @@ class Purge extends Command
                 Storage::delete($key);
             }
         } catch (\Exception $e) {
-            Log::info('snipeit:purge - error deleting '.$key.': '.$e->getMessage());
+            Log::info('hsbit:purge - error deleting '.$key.': '.$e->getMessage());
         }
     }
 }

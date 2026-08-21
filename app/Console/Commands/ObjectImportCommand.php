@@ -18,14 +18,14 @@ class ObjectImportCommand extends Command
      *
      * @var string
      */
-    protected $name = 'snipeit:import';
+    protected $name = 'hsbit:import';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Items from CSV';
+    protected $description = 'Nhập hạng mục từ tệp CSV.';
 
     /**
      * The progress indicator instance.
@@ -78,7 +78,7 @@ class ObjectImportCommand extends Command
 
         $importer->import();
 
-        $this->progressIndicator->finish('Import finished.');
+        $this->progressIndicator->finish('Nhập dữ liệu hoàn tất.');
     }
 
     public function errorCallback($item, $field, $error)

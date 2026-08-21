@@ -56,13 +56,13 @@ class GoogleAuthController extends Controller
 
         if ($user) {
             if (! $user->activated) {
-                Log::debug('Google user '.$socialUser->getEmail().' is deactivated in Snipe-IT');
+                Log::debug('Google user '.$socialUser->getEmail().' is deactivated in HSB-IT');
 
                 return redirect()->route('login')
                     ->withErrors(['username' => [trans('auth/message.account_not_activated')]]);
             }
 
-            Log::debug('Google user '.$socialUser->getEmail().' found in Snipe-IT');
+            Log::debug('Google user '.$socialUser->getEmail().' found in HSB-IT');
             $user->update([
                 'avatar' => $socialUser->avatar,
                 'last_login' => \Carbon::now(),
@@ -73,7 +73,7 @@ class GoogleAuthController extends Controller
             return redirect()->route('home');
         }
 
-        Log::debug('Google user '.$socialUser->getEmail().' NOT found in Snipe-IT');
+        Log::debug('Google user '.$socialUser->getEmail().' NOT found in HSB-IT');
 
         return redirect()->route('login')
             ->withErrors(

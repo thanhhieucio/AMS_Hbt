@@ -34,11 +34,11 @@ use function Laravel\Prompts\warning;
 
 class BulkDelete extends Command
 {
-    protected $signature = 'snipeit:checkin-delete-items';
+    protected $signature = 'hsbit:checkin-delete-items';
 
-    protected $description = 'Interactively check in and/or delete items by company and type';
+    protected $description = 'Thu hồi hoặc xóa hạng mục theo công ty và loại bằng chế độ tương tác.';
 
-    private const CHECKIN_NOTE = 'Checked in via bulk CLI operation';
+    private const CHECKIN_NOTE = 'Thu hồi bằng thao tác CLI hàng loạt';
 
     private array $reportLines = [];
 
@@ -46,10 +46,10 @@ class BulkDelete extends Command
     {
         // Step 1: Dry run?
         $dryRun = confirm(
-            label: 'Is this a dry run?',
+            label: 'Đây có phải lần chạy thử không?',
             default: true,
-            yes: 'Yes — preview only, no changes will be made',
-            no: 'No — LIVE RUN, changes WILL be made',
+            yes: 'Có - chỉ xem trước, không ghi thay đổi',
+            no: 'Không - CHẠY THẬT, sẽ ghi thay đổi',
         );
 
         // Step 2: Who are you?
@@ -74,7 +74,7 @@ class BulkDelete extends Command
                     ->mapWithKeys(fn (User $u) => [$u->id => "{$u->first_name} {$u->last_name} ({$u->username})"])
                     ->toArray();
             },
-            validate: fn (mixed $value) => ! $value ? 'A valid active user is required.' : null,
+            validate: fn (mixed $value) => ! $value ? 'Bắt buộc chọn một người dùng đang hoạt động hợp lệ.' : null,
         );
 
         /** @var User $admin */
@@ -82,19 +82,19 @@ class BulkDelete extends Command
 
         // Step 3: Which companies?
         if (! Company::exists()) {
-            error('No companies found. Please create at least one company before using this command.');
+            error('Không tìm thấy công ty nào. Hãy tạo ít nhất một công ty trước khi dùng lệnh này.');
 
             return 1;
         }
 
         $selectedCompanyKeys = multisearch(
-            label: 'Which companies would you like to check in and delete items for?',
-            placeholder: 'Type to search companies...',
+            label: 'Bạn muốn thu hồi và xóa hạng mục cho công ty nào?',
+            placeholder: 'Nhập để tìm công ty...',
             options: function (string $value): array {
                 $results = [];
 
                 if ($value === '' || str_contains('(no company / unassigned)', strtolower($value))) {
-                    $results['__null__'] = '(No Company / Unassigned)';
+                    $results['__null__'] = '(Không có công ty / Chưa gán)';
                 }
 
                 $query = Company::orderBy('name');
@@ -109,7 +109,7 @@ class BulkDelete extends Command
                 return $results;
             },
             scroll: 10,
-            required: 'Please select at least one company.',
+            required: 'Vui lòng chọn ít nhất một công ty.',
             hint: 'If you\'re searching on several differently named companies, use the up-arrow to go back to the search box to search again. ',
         );
 
@@ -121,24 +121,24 @@ class BulkDelete extends Command
 
         $companyNamesById = Company::whereIn('id', $selectedCompanyIds)->pluck('name', 'id')->toArray();
         $selectedCompanyNames = array_map(
-            fn ($id) => $id === '__null__' ? '(No Company)' : ($companyNamesById[$id] ?? "(ID: {$id})"),
+            fn ($id) => $id === '__null__' ? '(Không có công ty)' : ($companyNamesById[$id] ?? "(ID: {$id})"),
             $selectedCompanyKeys
         );
 
         // Step 4: Which item types?
         $rawTypeSelection = multiselect(
-            label: 'What item types would you like to check in and delete?',
+            label: 'Bạn muốn thu hồi và xóa loại hạng mục nào?',
             options: [
-                'all' => 'All Items (assets, licenses, accessories, components, consumables, users)',
-                'assets' => 'Assets',
-                'licenses' => 'Licenses',
-                'accessories' => 'Accessories',
-                'components' => 'Components',
-                'consumables' => 'Consumables',
-                'users' => 'Users',
+                'all' => 'Tất cả hạng mục (tài sản, license, phụ kiện, linh kiện, vật tư, người dùng)',
+                'assets' => 'Tài sản',
+                'licenses' => 'License',
+                'accessories' => 'Phụ kiện',
+                'components' => 'Linh kiện',
+                'consumables' => 'Vật tư',
+                'users' => 'Người dùng',
             ],
-            required: 'Please select at least one item type.',
-            hint: 'Select "All Items" to process every supported type.',
+            required: 'Vui lòng chọn ít nhất một loại hạng mục.',
+            hint: 'Chọn "Tất cả hạng mục" để xử lý mọi loại được hỗ trợ.',
         );
 
         $allSubTypes = ['assets', 'licenses', 'accessories', 'components', 'consumables', 'users'];
@@ -173,11 +173,11 @@ class BulkDelete extends Command
 
         // Step 5: Hard delete, soft delete, or no delete?
         $deleteType = select(
-            label: 'How should items be deleted?',
+            label: 'Xóa hạng mục theo cách nào?',
             options: [
-                'soft' => 'Soft delete — items moved to trash (recoverable)',
-                'hard' => 'Hard delete — permanently removed (cannot be recovered)',
-                'none' => 'No delete — check in only, items remain in inventory',
+                'soft' => 'Xóa mềm - chuyển vào thùng rác (có thể khôi phục)',
+                'hard' => 'Xóa vĩnh viễn - không thể khôi phục',
+                'none' => 'Không xóa - chỉ thu hồi, hạng mục vẫn nằm trong kho',
             ],
             default: 'soft',
         );
@@ -188,26 +188,26 @@ class BulkDelete extends Command
 
         if (! empty($notifiableTypes)) {
             $sendNotifications = confirm(
-                label: 'Should we send checkin notifications?',
+                label: 'Có gửi thông báo thu hồi không?',
                 default: true,
-                hint: 'Applies to: '.implode(', ', $notifiableTypes).'. Users and consumables are excluded.',
+                hint: 'Áp dụng cho: '.implode(', ', $notifiableTypes).'. Người dùng and consumables are excluded.',
             );
         }
 
         // Step 7: Clear related action_logs?
         $clearLogs = confirm(
-            label: 'Should we clear related action logs?',
+            label: 'Có xóa nhật ký thao tác liên quan không?',
             default: false,
-            hint: 'This removes all history for affected items, as if the data never existed.',
+            hint: 'Việc này xóa toàn bộ lịch sử của các hạng mục bị ảnh hưởng, như thể dữ liệu chưa từng tồn tại.',
         );
 
         // Step 8: Delete associated files?
         $deleteFiles = false;
         if ($deleteType !== 'none') {
             $deleteFiles = confirm(
-                label: 'Should we also delete associated image and upload files?',
+                label: 'Có xóa cả ảnh và tệp upload liên quan không?',
                 default: $deleteType === 'hard',
-                hint: 'Permanently removes images, avatars, signatures, EULAs, and action log uploads from disk.',
+                hint: 'Xóa vĩnh viễn ảnh, avatar, chữ ký, EULA và tệp upload của nhật ký khỏi ổ đĩa.',
             );
         }
 
@@ -215,11 +215,11 @@ class BulkDelete extends Command
         $deleteCompanyType = 'keep';
         if (! empty($selectedCompanyIds)) {
             $deleteCompanyType = select(
-                label: 'Should the selected companies also be deleted?',
+                label: 'Có xóa cả các công ty đã chọn không?',
                 options: [
-                    'keep' => 'Keep — do not delete the companies',
-                    'soft' => 'Soft delete — companies moved to trash (recoverable)',
-                    'hard' => 'Hard delete — permanently removed (cannot be recovered)',
+                    'keep' => 'Giữ lại - không xóa công ty',
+                    'soft' => 'Xóa mềm - chuyển công ty vào thùng rác (có thể khôi phục)',
+                    'hard' => 'Xóa vĩnh viễn - không thể khôi phục',
                 ],
                 default: 'keep',
             );
@@ -227,9 +227,9 @@ class BulkDelete extends Command
 
         // Step 10: Backup first?
         $doBackup = confirm(
-            label: 'Should we run a backup before proceeding?',
+            label: 'Có chạy sao lưu trước khi tiếp tục không?',
             default: true,
-            hint: 'Strongly recommended. Saved as backup-before-bulk-delete-cli-[datetime].zip',
+            hint: 'Rất khuyến nghị. Bản sao lưu sẽ lưu dạng backup-before-bulk-delete-cli-[datetime].zip',
         );
 
         // Step 11: Summary + final confirmation
@@ -237,18 +237,18 @@ class BulkDelete extends Command
         $this->line('  ════════════════════════════════════════════════════');
         $this->line('   SUMMARY OF ACTIONS');
         $this->line('  ════════════════════════════════════════════════════');
-        $this->line("   Admin user:      {$admin->first_name} {$admin->last_name} ({$admin->username})");
-        $this->line('   Companies:       '.implode(', ', $selectedCompanyNames));
-        $this->line('   Item types:      '.implode(', ', $selectedTypes));
-        $this->line("   Delete mode:     {$deleteType}");
-        $this->line('   Notifications:   '.($sendNotifications ? 'Yes' : 'No'));
-        $this->line('   Clear logs:      '.($clearLogs ? 'Yes' : 'No'));
-        $this->line('   Delete files:    '.($deleteFiles ? 'Yes' : 'No'));
-        $this->line('   Delete companies: '.($deleteCompanyType === 'keep' ? 'No' : ucfirst($deleteCompanyType).' delete'));
-        $this->line('   Backup first:    '.($doBackup ? 'Yes' : 'No'));
-        $this->line('   Dry run:         '.($dryRun ? 'Yes' : 'No'));
+        $this->line("   Người quản trị: {$admin->first_name} {$admin->last_name} ({$admin->username})");
+        $this->line('   Công ty:         '.implode(', ', $selectedCompanyNames));
+        $this->line('   Loại hạng mục:   '.implode(', ', $selectedTypes));
+        $this->line("   Chế độ xóa:      {$deleteType}");
+        $this->line('   Thông báo:       '.($sendNotifications ? 'Có' : 'Không'));
+        $this->line('   Xóa nhật ký:     '.($clearLogs ? 'Có' : 'Không'));
+        $this->line('   Xóa tệp:         '.($deleteFiles ? 'Có' : 'Không'));
+        $this->line('   Xóa công ty:     '.($deleteCompanyType === 'keep' ? 'Không' : ucfirst($deleteCompanyType).' delete'));
+        $this->line('   Sao lưu trước:   '.($doBackup ? 'Có' : 'Không'));
+        $this->line('   Chạy thử:        '.($dryRun ? 'Có' : 'Không'));
         $this->line('');
-        $this->line('   Items to be processed:');
+        $this->line('   Hạng mục sẽ xử lý:');
         foreach ($counts as $type => $count) {
             $this->line(sprintf('     %-14s %d', ucfirst($type).':', $count));
         }
@@ -262,20 +262,20 @@ class BulkDelete extends Command
         $sendEmailReport = false;
         if ($admin->email) {
             $sendEmailReport = confirm(
-                label: "Send an email report to {$admin->email}?",
+                label: "Gửi báo cáo email tới {$admin->email}?",
                 default: false,
-                hint: 'A summary of all '.($dryRun ? 'would-be ' : '').'actions will be emailed to you.',
+                hint: 'Tóm tắt toàn bộ '.($dryRun ? 'dự kiến ' : '').'thao tác sẽ được gửi qua email cho bạn.',
             );
         }
 
         if (! $dryRun) {
             $confirmed = confirm(
-                label: 'Are you sure you want to proceed? This cannot be undone.',
+                label: 'Bạn có chắc muốn tiếp tục? Không thể hoàn tác.',
                 default: false,
             );
 
             if (! $confirmed) {
-                info('Aborted. No changes were made.');
+                info('Đã hủy. Chưa có thay đổi nào được thực hiện.');
 
                 return 0;
             }
@@ -284,10 +284,10 @@ class BulkDelete extends Command
         // Run backup if requested
         if ($doBackup && ! $dryRun) {
             $backupFilename = 'backup-before-bulk-delete-cli-'.now()->format('Y-m-d-H-i-s');
-            info("Running backup ({$backupFilename}.zip)...");
-            $result = $this->callSilently('snipeit:backup', ['--filename' => $backupFilename]);
+            info("Đang chạy sao lưu ({$backupFilename}.zip)...");
+            $result = $this->callSilently('hsbit:backup', ['--filename' => $backupFilename]);
             if ($result === 0) {
-                info("Backup completed: {$backupFilename}.zip");
+                info("Sao lưu hoàn tất: {$backupFilename}.zip");
             } else {
                 warning("Backup may have failed (exit code {$result}). Proceeding anyway.");
             }
@@ -297,7 +297,7 @@ class BulkDelete extends Command
         $totalItems = array_sum($counts);
         $bar = $this->output->createProgressBar($totalItems > 0 ? $totalItems : 1);
         $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %message%');
-        $bar->setMessage('Starting...');
+        $bar->setMessage('Đang bắt đầu...');
         $bar->start();
 
         foreach ($selectedTypes as $type) {
@@ -311,7 +311,7 @@ class BulkDelete extends Command
             };
         }
 
-        $bar->setMessage('Done.');
+        $bar->setMessage('Hoàn tất.');
         $bar->finish();
         $this->line('');
         $this->line('');
@@ -321,8 +321,8 @@ class BulkDelete extends Command
             $companies = Company::whereIn('id', $selectedCompanyIds)->get();
             foreach ($companies as $company) {
                 if ($dryRun) {
-                    $this->line("  [dry-run] Would {$deleteCompanyType}-delete company {$company->name}");
-                    $this->reportLines[] = "Would {$deleteCompanyType}-delete company {$company->name}";
+                    $this->line("  [dry-run] Sẽ {$deleteCompanyType}-delete công ty {$company->name}");
+                    $this->reportLines[] = "Sẽ {$deleteCompanyType}-delete công ty {$company->name}";
                 } else {
                     if ($deleteCompanyType === 'soft') {
                         $company->delete();
@@ -353,7 +353,7 @@ class BulkDelete extends Command
                 reportLines: $this->reportLines,
                 runAt: now(),
             ));
-            info("Report sent to {$admin->email}.");
+            info("Đã gửi báo cáo tới {$admin->email}.");
         }
 
         return 0;
@@ -427,12 +427,12 @@ class BulkDelete extends Command
         $assets = $this->buildCompanyQuery(Asset::query(), $companyIds, $includeNull)->get();
 
         foreach ($assets as $asset) {
-            $bar->setMessage("Assets: {$asset->asset_tag}");
+            $bar->setMessage("Tài sản: {$asset->asset_tag}");
 
             if ($asset->assignedTo) {
                 if ($dryRun) {
-                    $this->line("  [dry-run] Would check in asset {$asset->asset_tag} from {$asset->assignedTo->name}");
-                    $this->reportLines[] = "Would check in asset {$asset->asset_tag} (assigned to {$asset->assignedTo->name})";
+                    $this->line("  [dry-run] Sẽ thu hồi tài sản {$asset->asset_tag} từ {$asset->assignedTo->name}");
+                    $this->reportLines[] = "Sẽ thu hồi tài sản {$asset->asset_tag} (đang gán cho {$asset->assignedTo->name})";
                 } else {
                     $target = $asset->assignedTo;
                     $checkinAt = now()->format('Y-m-d H:i:s');
@@ -446,7 +446,7 @@ class BulkDelete extends Command
                         $asset->logCheckin($target, self::CHECKIN_NOTE, $checkinAt, $originalValues);
                     }
 
-                    $this->reportLines[] = "Checked in asset {$asset->asset_tag} from {$target->name}";
+                    $this->reportLines[] = "Đã thu hồi tài sản {$asset->asset_tag} từ {$target->name}";
                     $asset->licenseseats()->update(['assigned_to' => null]);
 
                     CheckoutAcceptance::where('checkoutable_type', Asset::class)
@@ -460,7 +460,7 @@ class BulkDelete extends Command
             if (! $dryRun) {
                 // Collect action log file paths before logs may be cleared
                 $actionLogPaths = $deleteFiles
-                    ? $asset->assetlog()->whereNotNull('filename')->get()
+                    ? $asset->assetlog()->whereKhôngtNull('filename')->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
                         ->values()
@@ -484,7 +484,7 @@ class BulkDelete extends Command
                 if ($deleteType === 'hard') {
                     if ($deleteFiles) {
                         $maintenanceImages = $asset->maintenances()
-                            ->whereNotNull('image')
+                            ->whereKhôngtNull('image')
                             ->pluck('image')
                             ->toArray();
                     }
@@ -524,8 +524,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete asset {$asset->asset_tag}");
-                $this->reportLines[] = "Would {$deleteType}-delete asset {$asset->asset_tag}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete tài sản {$asset->asset_tag}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete tài sản {$asset->asset_tag}";
             }
 
             $bar->advance();
@@ -546,24 +546,24 @@ class BulkDelete extends Command
         $licenses = $this->buildCompanyQuery(License::query(), $companyIds, $includeNull)->get();
 
         foreach ($licenses as $license) {
-            $bar->setMessage("Licenses: {$license->name}");
+            $bar->setMessage("License: {$license->name}");
 
             $seats = LicenseSeat::where('license_id', $license->id)
-                ->where(fn ($q) => $q->whereNotNull('assigned_to')->orWhereNotNull('asset_id'))
+                ->where(fn ($q) => $q->whereKhôngtNull('assigned_to')->orWhereKhôngtNull('asset_id'))
                 ->get();
 
             foreach ($seats as $seat) {
                 $target = $seat->assigned_to ? $seat->user : $seat->asset;
 
                 if ($dryRun) {
-                    $this->line("  [dry-run] Would check in license seat for {$license->name} from ".($target?->name ?? $target?->asset_tag ?? 'unknown'));
-                    $this->reportLines[] = "Would check in license seat for {$license->name} from ".($target?->name ?? $target?->asset_tag ?? 'unknown');
+                    $this->line("  [dry-run] Sẽ thu hồi ghế license của {$license->name} từ ".($target?->name ?? $target?->asset_tag ?? 'không rõ'));
+                    $this->reportLines[] = "Sẽ thu hồi ghế license của {$license->name} từ ".($target?->name ?? $target?->asset_tag ?? 'không rõ');
                 } else {
                     $seat->assigned_to = null;
                     $seat->asset_id = null;
                     $seat->save();
 
-                    $this->reportLines[] = "Checked in license seat for {$license->name} from ".($target?->name ?? $target?->asset_tag ?? 'unknown');
+                    $this->reportLines[] = "Đã thu hồi ghế license của {$license->name} từ ".($target?->name ?? $target?->asset_tag ?? 'không rõ');
 
                     if ($target) {
                         if ($sendNotifications) {
@@ -578,7 +578,7 @@ class BulkDelete extends Command
             if (! $dryRun) {
                 // Collect action log file paths before logs may be cleared
                 $actionLogPaths = $deleteFiles
-                    ? $license->assetlog()->whereNotNull('filename')->get()
+                    ? $license->assetlog()->whereKhôngtNull('filename')->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
                         ->values()
@@ -588,7 +588,7 @@ class BulkDelete extends Command
                 if ($deleteType === 'soft') {
                     $license->licenseseats()->delete();
                     $license->delete();
-                    $this->reportLines[] = "Soft-deleted license {$license->name}";
+                    $this->reportLines[] = "Đã xóa mềm license {$license->name}";
                 } elseif ($deleteType === 'hard') {
                     $seatIds = $license->licenseseats()->pluck('id');
                     if ($deleteFiles) {
@@ -603,7 +603,7 @@ class BulkDelete extends Command
                     $license->licenseseats()->forceDelete();
                     DB::table('kits_licenses')->where('license_id', $license->id)->delete();
                     $license->forceDelete();
-                    $this->reportLines[] = "Hard-deleted license {$license->name}";
+                    $this->reportLines[] = "Đã xóa vĩnh viễn license {$license->name}";
                 }
 
                 if ($clearLogs) {
@@ -616,8 +616,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete license {$license->name}");
-                $this->reportLines[] = "Would {$deleteType}-delete license {$license->name}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete license {$license->name}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete license {$license->name}";
             }
 
             $bar->advance();
@@ -638,7 +638,7 @@ class BulkDelete extends Command
         $accessories = $this->buildCompanyQuery(Accessory::query(), $companyIds, $includeNull)->get();
 
         foreach ($accessories as $accessory) {
-            $bar->setMessage("Accessories: {$accessory->name}");
+            $bar->setMessage("Phụ kiện: {$accessory->name}");
 
             $checkouts = AccessoryCheckout::where('accessory_id', $accessory->id)->get();
 
@@ -646,13 +646,13 @@ class BulkDelete extends Command
                 $target = $checkout->assignedTo;
 
                 if ($dryRun) {
-                    $this->line("  [dry-run] Would check in accessory {$accessory->name} from ".($target?->name ?? 'unknown'));
-                    $this->reportLines[] = "Would check in accessory {$accessory->name} from ".($target?->name ?? 'unknown');
+                    $this->line("  [dry-run] Sẽ thu hồi phụ kiện {$accessory->name} từ ".($target?->name ?? 'không rõ'));
+                    $this->reportLines[] = "Sẽ thu hồi phụ kiện {$accessory->name} từ ".($target?->name ?? 'không rõ');
                 } else {
                     $checkinAt = now()->format('Y-m-d H:i:s');
                     $checkout->delete();
 
-                    $this->reportLines[] = "Checked in accessory {$accessory->name} from ".($target?->name ?? 'unknown');
+                    $this->reportLines[] = "Đã thu hồi phụ kiện {$accessory->name} từ ".($target?->name ?? 'không rõ');
 
                     if ($target) {
                         if ($sendNotifications) {
@@ -667,7 +667,7 @@ class BulkDelete extends Command
             if (! $dryRun) {
                 // Collect action log file paths before logs may be cleared
                 $actionLogPaths = $deleteFiles
-                    ? $accessory->assetlog()->whereNotNull('filename')->get()
+                    ? $accessory->assetlog()->whereKhôngtNull('filename')->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
                         ->values()
@@ -701,8 +701,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete accessory {$accessory->name}");
-                $this->reportLines[] = "Would {$deleteType}-delete accessory {$accessory->name}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete phụ kiện {$accessory->name}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete phụ kiện {$accessory->name}";
             }
 
             $bar->advance();
@@ -723,7 +723,7 @@ class BulkDelete extends Command
         $components = $this->buildCompanyQuery(Component::query(), $companyIds, $includeNull)->get();
 
         foreach ($components as $component) {
-            $bar->setMessage("Components: {$component->name}");
+            $bar->setMessage("Linh kiện: {$component->name}");
 
             $assignments = DB::table('components_assets')
                 ->where('component_id', $component->id)
@@ -733,13 +733,13 @@ class BulkDelete extends Command
                 $asset = Asset::find($assignment->asset_id);
 
                 if ($dryRun) {
-                    $this->line("  [dry-run] Would check in component {$component->name} from asset ".($asset?->asset_tag ?? 'unknown'));
-                    $this->reportLines[] = "Would check in component {$component->name} from asset ".($asset?->asset_tag ?? 'unknown');
+                    $this->line("  [dry-run] Sẽ thu hồi linh kiện {$component->name} từ tài sản ".($asset?->asset_tag ?? 'không rõ'));
+                    $this->reportLines[] = "Sẽ thu hồi linh kiện {$component->name} từ tài sản ".($asset?->asset_tag ?? 'không rõ');
                 } else {
                     $checkinAt = now()->format('Y-m-d H:i:s');
                     DB::table('components_assets')->where('id', $assignment->id)->delete();
 
-                    $this->reportLines[] = "Checked in component {$component->name} from asset ".($asset?->asset_tag ?? 'unknown');
+                    $this->reportLines[] = "Đã thu hồi linh kiện {$component->name} từ tài sản ".($asset?->asset_tag ?? 'không rõ');
 
                     if ($asset) {
                         if ($sendNotifications) {
@@ -754,7 +754,7 @@ class BulkDelete extends Command
             if (! $dryRun) {
                 // Collect action log file paths before logs may be cleared
                 $actionLogPaths = $deleteFiles
-                    ? $component->assetlog()->whereNotNull('filename')->get()
+                    ? $component->assetlog()->whereKhôngtNull('filename')->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
                         ->values()
@@ -784,8 +784,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete component {$component->name}");
-                $this->reportLines[] = "Would {$deleteType}-delete component {$component->name}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete linh kiện {$component->name}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete linh kiện {$component->name}";
             }
 
             $bar->advance();
@@ -804,12 +804,12 @@ class BulkDelete extends Command
         $consumables = $this->buildCompanyQuery(Consumable::query(), $companyIds, $includeNull)->get();
 
         foreach ($consumables as $consumable) {
-            $bar->setMessage("Consumables: {$consumable->name}");
+            $bar->setMessage("Vật tư: {$consumable->name}");
 
             if (! $dryRun) {
                 // Collect action log file paths before logs may be cleared
                 $actionLogPaths = $deleteFiles
-                    ? $consumable->assetlog()->whereNotNull('filename')->get()
+                    ? $consumable->assetlog()->whereKhôngtNull('filename')->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
                         ->values()
@@ -843,8 +843,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete consumable {$consumable->name}");
-                $this->reportLines[] = "Would {$deleteType}-delete consumable {$consumable->name}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete vật tư {$consumable->name}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete vật tư {$consumable->name}";
             }
 
             $bar->advance();
@@ -869,7 +869,7 @@ class BulkDelete extends Command
                 continue;
             }
 
-            $bar->setMessage("Users: {$user->username}");
+            $bar->setMessage("Người dùng: {$user->username}");
 
             // If real companies were selected, check whether this user also belongs to
             // companies outside the selected scope. If so, only remove the selected-company
@@ -886,8 +886,8 @@ class BulkDelete extends Command
                     $outsideNames = Company::whereIn('id', $outsideCompanyIds)->pluck('name')->implode(', ');
 
                     if ($dryRun) {
-                        $this->line("  [dry-run] Would partially disassociate user {$user->username} (also belongs to: {$outsideNames})");
-                        $this->reportLines[] = "Would partially disassociate user {$user->username} — also belongs to: {$outsideNames}";
+                        $this->line("  [dry-run] Sẽ gỡ liên kết một phần người dùng {$user->username} (cũng thuộc: {$outsideNames})");
+                        $this->reportLines[] = "Sẽ gỡ liên kết một phần người dùng {$user->username} - cũng thuộc: {$outsideNames}";
                     } else {
                         $user->companies()->detach($companyIds);
                         $user->syncLegacyCompanyIdMirror();
@@ -911,7 +911,7 @@ class BulkDelete extends Command
                     ? Actionlog::where('item_type', User::class)
                         ->where('item_id', $user->id)
                         ->where('action_type', 'uploaded')
-                        ->whereNotNull('filename')
+                        ->whereKhôngtNull('filename')
                         ->get()
                         ->map(fn (Actionlog $log) => $log->uploads_file_path())
                         ->filter()
@@ -954,8 +954,8 @@ class BulkDelete extends Command
                     }
                 }
             } elseif ($deleteType !== 'none') {
-                $this->line("  [dry-run] Would {$deleteType}-delete user {$user->username}");
-                $this->reportLines[] = "Would {$deleteType}-delete user {$user->username}";
+                $this->line("  [dry-run] Sẽ {$deleteType}-delete người dùng {$user->username}");
+                $this->reportLines[] = "Sẽ {$deleteType}-delete người dùng {$user->username}";
             }
 
             $bar->advance();

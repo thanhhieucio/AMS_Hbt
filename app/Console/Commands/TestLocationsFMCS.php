@@ -12,22 +12,22 @@ class TestLocationsFMCS extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:test-locations-fmcs {--location_id=}';
+    protected $signature = 'hsbit:test-locations-fmcs {--location_id=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Test for company ID inconsistencies if FullMultipleCompanySupport with scoped locations will be used.';
+    protected $description = 'Kiểm tra sai lệch ID công ty khi dùng FullMultipleCompanySupport với địa điểm theo phạm vi.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->info('This script checks for company ID inconsistencies if Full Multiple Company Support with scoped locations will be used.');
-        $this->info('This could take a few moments if have a very large dataset.');
+        $this->info('Script này kiểm tra sai lệch ID công ty khi dùng Full Multiple Company Support với địa điểm theo phạm vi.');
+        $this->info('Quá trình này có thể mất một lúc nếu tập dữ liệu rất lớn.');
         $this->newLine();
 
         // if parameter location_id is set, only test this location

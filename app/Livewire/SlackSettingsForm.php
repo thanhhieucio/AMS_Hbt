@@ -291,8 +291,8 @@ class SlackSettingsForm extends Component
                     [
                         '@type' => 'MessageCard',
                         '@context' => 'http://schema.org/extensions',
-                        'summary' => trans('mail.snipe_webhook_summary'),
-                        'title' => trans('mail.snipe_webhook_test'),
+                        'summary' => trans('mail.hsb_webhook_summary'),
+                        'title' => trans('mail.hsb_webhook_test'),
                         'text' => trans('general.webhook_test_msg', ['app' => $this->webhook_name]),
                     ];
                 $response = Http::withHeaders([

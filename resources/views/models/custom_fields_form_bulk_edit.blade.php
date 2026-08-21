@@ -192,7 +192,7 @@
           <?php
           $errormessage=$errors->first($field->db_column_name());
           if ($errormessage) {
-              $errormessage=preg_replace('/ snipeit /', '', $errormessage);
+              $errormessage=preg_replace('/ hsbit /', '', $errormessage);
               print('<span class="alert-msg" role="alert" aria-live="assertive">'.$errormessage.'</span>');
           }
             ?>

@@ -14,7 +14,7 @@ class PurgeEulaPDFs extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:purge-eula-pdfs  
+    protected $signature = 'hsbit:purge-eula-pdfs  
                             {--older-than-days= : The number of days we should delete before }
                             {--company-id= : Only purge acceptances for users in this company}
                             {--only-deleted-users : Only purge acceptances for deleted users, including soft-deleted or missing users}
@@ -27,7 +27,7 @@ class PurgeEulaPDFs extends Command
      *
      * @var string
      */
-    protected $description = 'This purges signature files and EULAs from the system if they are older than the date passed with --older-than-days=.';
+    protected $description = 'Xóa tệp chữ ký và EULA cũ hơn số ngày truyền vào bằng --older-than-days=.';
 
     /**
      * Execute the console command.
@@ -38,7 +38,7 @@ class PurgeEulaPDFs extends Command
         $before = $this->option('older-than-days');
 
         if (($before == '') || (! is_numeric($before))) {
-            return $this->error('ERROR: You must pass a valid number for --older-than-days (example: snipeit:purge-eula-pdfs --older-than-days=365.)');
+            return $this->error('LỖI: Bạn phải truyền một số hợp lệ cho --older-than-days (ví dụ: hsbit:purge-eula-pdfs --older-than-days=365.)');
         }
 
         $interval_date = Carbon::now()->subDays($before);
@@ -54,7 +54,7 @@ class PurgeEulaPDFs extends Command
         }
 
         if ($this->option('dryrun')) {
-            $this->info('This script is being run with the --dryrun option. No files or records will be deleted.');
+            $this->info('Script đang chạy với tùy chọn --dryrun. Không tệp hoặc bản ghi nào bị xóa.');
 
         }
         $companyId = $this->option('company-id');
@@ -87,7 +87,7 @@ class PurgeEulaPDFs extends Command
         $acceptances = $query->get();
 
         if (! $this->option('force')) {
-            if ($this->confirm("\n****************************************************\nTHIS WILL DELETE ALL OF THE SIGNATURES AND EULA PDF FILES SINCE $interval_date. \nThere is NO undo! \n****************************************************\n\nDo you wish to continue? No backsies! [y|N]")) {
+            if ($this->confirm("\n****************************************************\nTHAO TÁC NÀY SẼ XÓA TOÀN BỘ CHỮ KÝ VÀ TỆP PDF EULA TỪ $interval_date. \nKhông thể hoàn tác! \n****************************************************\n\nBạn có muốn tiếp tục? Không thể hoàn tác! [y|N]")) {
             }
         }
 

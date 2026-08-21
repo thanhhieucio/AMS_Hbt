@@ -34,7 +34,7 @@ trait MayContainCustomFields
         // collect the custom fields in the request
         $validator->after(function ($validator) use ($asset_model) {
             $request_fields = $this->collect()->keys()->filter(function ($attributes) {
-                return str_starts_with($attributes, '_snipeit_');
+                return str_starts_with($attributes, '_hsbit_');
             });
 
             if ($request_fields->isEmpty() || ! $validator->errors()->isEmpty()) {

@@ -151,9 +151,9 @@ class CustomField extends Model
      * Convert the custom field's name property to a db-safe string.
      *
      * We could probably have used str_slug() here but not sure what it would
-     * do with previously existing values. - @snipe
+     * do with previously existing values. - @hsb
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -161,7 +161,7 @@ class CustomField extends Model
      */
     public static function name_to_db_name($name)
     {
-        return '_snipeit_'.preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($name));
+        return '_hsbit_'.preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($name));
     }
 
     /**
@@ -307,7 +307,7 @@ class CustomField extends Model
      * if they have changed, so we handle that here so that we don't have to remember
      * to do it in the controllers.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -442,7 +442,7 @@ class CustomField extends Model
     /**
      * Establishes the customfield -> fieldset relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -500,7 +500,7 @@ class CustomField extends Model
     /**
      * Establishes the customfield -> admin user relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -548,7 +548,7 @@ class CustomField extends Model
     /**
      * Checks the format of the attribute
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  $value  string
      *
@@ -564,7 +564,7 @@ class CustomField extends Model
     /**
      * Gets the DB column name.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -582,7 +582,7 @@ class CustomField extends Model
      * validator strings in the database but still return the
      * user-friendly text in the dropdowns, and in the custom fields display.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -620,7 +620,7 @@ class CustomField extends Model
     /**
      * Format a value string as an array for select boxes and checkboxes.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -638,7 +638,7 @@ class CustomField extends Model
     /**
      * Format a value string as an array for select boxes and checkboxes.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -670,7 +670,7 @@ class CustomField extends Model
     /**
      * Check whether the field is encrypted
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -689,7 +689,7 @@ class CustomField extends Model
      * Convert non-UTF-8 or weirdly encoded text into something that
      * won't break the database.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.4]
      *
@@ -701,9 +701,9 @@ class CustomField extends Model
         $id = $this->id ? $this->id : 'xx';
 
         if (! function_exists('transliterator_transliterate')) {
-            $long_slug = '_snipeit_'.str_slug(mb_convert_encoding(trim($name), 'UTF-8'), '_');
+            $long_slug = '_hsbit_'.str_slug(mb_convert_encoding(trim($name), 'UTF-8'), '_');
         } else {
-            $long_slug = '_snipeit_'.Utf8Slugger::slugify($name, '_');
+            $long_slug = '_hsbit_'.Utf8Slugger::slugify($name, '_');
         }
 
         return substr($long_slug, 0, 50).'_'.$id;
@@ -732,7 +732,7 @@ class CustomField extends Model
     /**
      * Check to see if there is a custom regex format type
      *
-     * @see https://github.com/grokability/snipe-it/issues/5896
+     * @see https://github.com/thanhhieucio/HSB-IT/issues/5896
      *
      * @author Wes Hulette <jwhulette@gmail.com>
      *

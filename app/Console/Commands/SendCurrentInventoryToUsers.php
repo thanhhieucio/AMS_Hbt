@@ -13,14 +13,14 @@ class SendCurrentInventoryToUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:user-inventory';
+    protected $signature = 'hsbit:user-inventory';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will send users a report of all of the items currently checked out to them.';
+    protected $description = 'Gửi cho người dùng báo cáo toàn bộ hạng mục hiện đang được cấp phát cho họ.';
 
     /**
      * Create a new command instance.

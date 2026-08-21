@@ -8,7 +8,7 @@ use Tests\TestCase;
 /**
  * Coverage for User::verifyExactUsernameMatch, the SSO/federated-auth ATO
  * guard against DB collation folding. The MySQL/MariaDB default collation
- * utf8mb4_unicode_ci treats snipeitreport3 and snípeitreport3 as equal, so
+ * utf8mb4_unicode_ci treats hsbitreport3 and snípeitreport3 as equal, so
  * `WHERE username = ?` can return the wrong row for an attacker-controlled
  * external identifier. The helper re-checks the resolved user's username
  * against the caller-provided identifier every federated auth callsite
@@ -37,19 +37,19 @@ class VerifyExactUsernameMatchTest extends TestCase
 
     public function test_exact_byte_match_returns_the_user()
     {
-        $user = new User(['username' => 'snipeitreport3']);
+        $user = new User(['username' => 'hsbitreport3']);
 
-        $this->assertSame($user, User::verifyExactUsernameMatch($user, 'snipeitreport3'));
+        $this->assertSame($user, User::verifyExactUsernameMatch($user, 'hsbitreport3'));
     }
 
     /**
      * The literal customer-report scenario: MySQL's utf8mb4_unicode_ci returns
-     * the snipeitreport3 row when the query is snípeitreport3 (accented i).
+     * the hsbitreport3 row when the query is snípeitreport3 (accented i).
      * The helper must reject that row so SAML/LDAP/etc. cannot log in as it.
      */
     public function test_accented_variant_is_rejected()
     {
-        $user = new User(['username' => 'snipeitreport3']);
+        $user = new User(['username' => 'hsbitreport3']);
 
         $this->assertNull(User::verifyExactUsernameMatch($user, 'snípeitreport3'));
     }
@@ -57,7 +57,7 @@ class VerifyExactUsernameMatchTest extends TestCase
     /**
      * Deliberate compromise: most IdPs treat usernames case-insensitively,
      * and admins were locking themselves out when the case in their IdP
-     * didn't match the case in their Snipe-IT user row. The helper now
+     * didn't match the case in their HSB-IT user row. The helper now
      * lowercases both sides before comparing, so `Admin` and `ADMIN` from
      * a SAML/LDAP assertion resolve to the local `admin` row. Accent-,
      * whitespace-, and lookalike-character folding are still rejected
@@ -85,16 +85,16 @@ class VerifyExactUsernameMatchTest extends TestCase
      */
     public function test_trailing_whitespace_variant_is_rejected()
     {
-        $user = new User(['username' => 'snipeitreport3']);
+        $user = new User(['username' => 'hsbitreport3']);
 
-        $this->assertNull(User::verifyExactUsernameMatch($user, 'snipeitreport3 '));
+        $this->assertNull(User::verifyExactUsernameMatch($user, 'hsbitreport3 '));
     }
 
     public function test_leading_whitespace_variant_is_rejected()
     {
-        $user = new User(['username' => 'snipeitreport3']);
+        $user = new User(['username' => 'hsbitreport3']);
 
-        $this->assertNull(User::verifyExactUsernameMatch($user, ' snipeitreport3'));
+        $this->assertNull(User::verifyExactUsernameMatch($user, ' hsbitreport3'));
     }
 
     public function test_different_length_variant_is_rejected()

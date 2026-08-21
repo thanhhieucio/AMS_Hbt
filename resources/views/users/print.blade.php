@@ -8,7 +8,7 @@
         <title>{{ trans('admin/users/general.print_assigned') }} - {{ date('Y-m-d H:i', time()) }}</title>
     @endisset
 
-    <link rel="shortcut icon" type="image/ico" href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->favicon)) : config('app.url').'/favicon.ico' }}">
+    <link rel="shortcut icon" type="image/ico" href="{{ ($hsbSettings) && ($hsbSettings->favicon!='') ?  Storage::disk('public')->url(e($hsbSettings->favicon)) : config('app.url').'/favicon.ico' }}">
 
     <link rel="stylesheet" href="{{ url(mix('css/dist/bootstrap-table.css')) }}">
 
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
 
     <script nonce="{{ csrf_token() }}">
-        window.snipeit = {
+        window.hsbit = {
             settings: {
                 "per_page": 50
             }
@@ -71,21 +71,21 @@
     </div>
 @endif
 
-@if ($snipeSettings->logo_print_assets=='1')
-    @if ($snipeSettings->brand == '3')
+@if ($hsbSettings->logo_print_assets=='1')
+    @if ($hsbSettings->brand == '3')
 
         <h2>
-            @if ($snipeSettings->acceptance_pdf_logo!='')
-                <img class="print-logo" src="{{ Storage::disk('public')->url($snipeSettings->acceptance_pdf_logo) }}" alt="">
+            @if ($hsbSettings->acceptance_pdf_logo!='')
+                <img class="print-logo" src="{{ Storage::disk('public')->url($hsbSettings->acceptance_pdf_logo) }}" alt="">
             @endif
-            {{ $snipeSettings->site_name }}
+            {{ $hsbSettings->site_name }}
         </h2>
-    @elseif ($snipeSettings->brand == '2')
-        @if ($snipeSettings->acceptance_pdf_logo!='')
-            <img class="print-logo" src="{{ Storage::disk('public')->url($snipeSettings->acceptance_pdf_logo) }}" alt="">
+    @elseif ($hsbSettings->brand == '2')
+        @if ($hsbSettings->acceptance_pdf_logo!='')
+            <img class="print-logo" src="{{ Storage::disk('public')->url($hsbSettings->acceptance_pdf_logo) }}" alt="">
         @endif
     @else
-        <h2>{{ $snipeSettings->site_name }}</h2>
+        <h2>{{ $hsbSettings->site_name }}</h2>
     @endif
 @endif
 
@@ -117,7 +117,7 @@
         </div>
 
         <table
-            class="snipe-table table table-striped inventory"
+            class="hsb-table table table-striped inventory"
             id="AssetsAssigned"
             data-pagination="false"
             data-id-table="AssetsAssigned"
@@ -185,7 +185,7 @@
         </div>
 
         <table
-            class="snipe-table table table-striped inventory"
+            class="hsb-table table table-striped inventory"
             id="licensessAssigned"
             data-toolbar="#licenses-toolbar"
             data-pagination="false"
@@ -249,7 +249,7 @@
         </div>
 
         <table
-            class="snipe-table table table-striped inventory"
+            class="hsb-table table table-striped inventory"
             id="accessoriesAssigned"
             data-toolbar="#accessories-toolbar"
             data-pagination="false"
@@ -315,7 +315,7 @@
         </div>
 
         <table
-            class="snipe-table table table-striped inventory"
+            class="hsb-table table table-striped inventory"
             id="consumablesAssigned"
             data-pagination="false"
             data-toolbar="#consumables-toolbar"
@@ -379,7 +379,7 @@
             <h4>{{ $indirectItemsCount.' '.trans('mail.assigned_to_assets') }}</h4>
         </div>
         <table
-                class="snipe-table table table-striped inventory"
+                class="hsb-table table table-striped inventory"
                 id="indirect-assignments"
                 data-pagination="false"
                 data-toolbar="#indirect-assignments-toolbar"
@@ -532,7 +532,7 @@
 <script src="{{ url(mix('js/dist/bootstrap-table-en-US.min.js')) }}"></script>
 
 <script>
-    $('.snipe-table').bootstrapTable('destroy').each(function () {
+    $('.hsb-table').bootstrapTable('destroy').each(function () {
         console.log('BS table loaded');
 
         data_export_options = $(this).attr('data-export-options');
@@ -572,7 +572,7 @@
             paginationPreText: "{{ trans('general.previous') }}",
             paginationNextText: "{{ trans('general.next') }}",
             pageList: ['10','20', '30','50','100','150','200'{!! ((config('app.max_results') > 200) ? ",'500'" : '') !!}{!! ((config('app.max_results') > 500) ? ",'".config('app.max_results')."'" : '') !!}],
-            pageSize: {{  (($snipeSettings->per_page!='') && ($snipeSettings->per_page > 0)) ? $snipeSettings->per_page : 20 }},
+            pageSize: {{  (($hsbSettings->per_page!='') && ($hsbSettings->per_page > 0)) ? $hsbSettings->per_page : 20 }},
             paginationVAlign: 'both',
             queryParams: function (params) {
                 var newParams = {};

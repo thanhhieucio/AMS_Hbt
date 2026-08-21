@@ -20,7 +20,7 @@
                                 data-sort-order="asc"
                                 id="accessoriesReport"
                                 data-advanced-search="false"
-                                class="table table-striped snipe-table"
+                                class="table table-striped hsb-table"
                                 data-url="{{ route('api.accessories.index') }}"
                                 data-export-options='{
                         "fileName": "accessory-report-{{ date('Y-m-d') }}",

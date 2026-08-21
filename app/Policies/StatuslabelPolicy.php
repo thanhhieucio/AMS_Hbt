@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class StatuslabelPolicy extends SnipePermissionsPolicy
+class StatuslabelPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

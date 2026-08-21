@@ -17,7 +17,7 @@
 
     <x-form route="{{ route('components.checkin.store', [$component_assets->id, 'backto' => 'asset']) }}">
 
-        <x-box header="{{ $snipe_component->name }}">
+        <x-box header="{{ $hsb_component->name }}">
 
             <x-form.static :label="trans('general.checkin_from')">{{ $asset->present()->fullName }}</x-form.static>
 
@@ -32,7 +32,7 @@
 
             <x-form.row
                 :label="trans('admin/hardware/form.notes')"
-                :item="$snipe_component"
+                :item="$hsb_component"
                 name="note"
                 type="textarea"
             />

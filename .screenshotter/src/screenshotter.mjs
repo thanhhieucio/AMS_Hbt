@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * Screenshotter: Playwright-driven UI walkthrough that writes PNGs to
  * `.screenshotter/screenshots/`. See `.screenshotter/README.md` for a
@@ -9,7 +9,7 @@
  *   node .screenshotter/src/screenshotter.mjs
  *
  * Env overrides:
- *   BASE_URL         (default: https://snipe-it.test)
+ *   BASE_URL         (default: https://hsb-it.test)
  *   USERNAME         (default: admin)
  *   PASSWORD         (default: password)
  *   OUT              (default: .screenshotter/screenshots, gitignored)
@@ -58,7 +58,7 @@ import {dirname, resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {parseArgs} from 'node:util';
 
-const BASE_URL = process.env.BASE_URL ?? 'https://snipe-it.test';
+const BASE_URL = process.env.BASE_URL ?? 'https://hsb-it.test';
 const USERNAME = process.env.USERNAME ?? 'admin';
 const PASSWORD = process.env.PASSWORD ?? 'password';
 const OUT = resolve(process.env.OUT ?? '.screenshotter/screenshots');
@@ -85,7 +85,7 @@ const SUBMIT_FORMS = process.env.SUBMIT_FORMS !== 'false';
 const TABS = process.env.TABS === 'true';
 // Color scheme: "light" (default), "dark", or "no-preference". Passed
 // through to Playwright's emulateMedia which sets prefers-color-scheme.
-// Snipe-IT honors the OS preference for dark mode when the user's
+// HSB-IT honors the OS preference for dark mode when the user's
 // account preference is set to "system".
 const COLOR_SCHEME = process.env.COLOR_SCHEME ?? 'light';
 
@@ -151,7 +151,7 @@ const context = await browser.newContext({
     viewport: VIEWPORT,
     // Herd's local .test domains use self-signed certs.
     ignoreHTTPSErrors: true,
-    // Set prefers-color-scheme so apps that honor it (Snipe-IT, when
+    // Set prefers-color-scheme so apps that honor it (HSB-IT, when
     // the user's theme preference is "system") render in the requested
     // scheme without needing to click any in-app toggle.
     colorScheme: COLOR_SCHEME,
@@ -160,7 +160,7 @@ const context = await browser.newContext({
 // Block debugbar / telescope / clockwork asset requests at the network
 // level. If their JS never loads, their overlays can never render, and
 // we don't have to fight CSS specificity to hide them (which was the
-// approach in an earlier version and broke on Snipe-IT error pages
+// approach in an earlier version and broke on HSB-IT error pages
 // where debugbar rendered visible JSON collector panels that our
 // CSS selectors couldn't reach). Belt-and-suspenders: we also inject
 // the hiding CSS via addInitScript below for any dev-tool asset paths
@@ -219,7 +219,7 @@ async function shot(name, opts = {}) {
     // explicit waitForTable() calls. Post-submit redirects and other
     // "arrived here without knowing there's a table" flows would
     // otherwise render at the user's persisted per-page preference
-    // (often 20 or 25). Safe no-op on pages without a snipe-table.
+    // (often 20 or 25). Safe no-op on pages without a hsb-table.
     await capPagination();
     // Capture the current URL path for the frame address bar (relative
     // path only, so the frame doesn't leak / dumb-look the local .test
@@ -235,9 +235,9 @@ async function shot(name, opts = {}) {
     shotCount++;
     if (FRAME) {
         await frameLocally(path, addressBar);
-        console.log(`  ✓ ${name}-${RUN_TIMESTAMP}.png (framed)`);
+        console.log(`  âœ“ ${name}-${RUN_TIMESTAMP}.png (framed)`);
     } else {
-        console.log(`  ✓ ${name}-${RUN_TIMESTAMP}.png`);
+        console.log(`  âœ“ ${name}-${RUN_TIMESTAMP}.png`);
     }
 }
 
@@ -376,7 +376,7 @@ function pngSize(buf) {
 async function capPagination() {
     const shrank = await page.evaluate((pageSize) => {
         if (!window.jQuery || !window.jQuery.fn.bootstrapTable) return false;
-        const $tables = window.jQuery('table.snipe-table');
+        const $tables = window.jQuery('table.hsb-table');
         if (!$tables.length) return false;
         $tables.bootstrapTable('refreshOptions', {pageSize});
         return true;
@@ -404,7 +404,7 @@ async function waitForTable() {
  * that change on reseed.
  */
 async function getFirstEntityId(segment) {
-    const href = await page.locator(`table.snipe-table tbody a[href*="/${segment}/"]`).filter({
+    const href = await page.locator(`table.hsb-table tbody a[href*="/${segment}/"]`).filter({
         hasNot: page.locator('[href*="/edit"], [href*="/checkout"], [href*="/checkin"], [href*="/clone"], [href*="/delete"], [href*="/restore"]'),
     }).first().getAttribute('href').catch(() => null);
     if (!href) return null;
@@ -428,7 +428,7 @@ async function getFirstEntityId(segment) {
  */
 async function shootIndexViewEdit({segment, name, hasView = true, hasEdit = true, hasCheckout = false, viewer}) {
     const who = viewer ?? USERNAME;
-    console.log(`→ ${name} (as ${who})`);
+    console.log(`â†’ ${name} (as ${who})`);
     await page.goto(`${BASE_URL}/${segment}`);
     await waitForTable();
     await shot(`${name}/${who}-${name}-index`);
@@ -533,7 +533,7 @@ async function walkTabs(basename) {
 async function submitEditForm(outName) {
     if (!SUBMIT_FORMS) return;
     // Force redirect_option=index so the post-submit destination is
-    // always the section's index page. Without this, Snipe-IT's
+    // always the section's index page. Without this, HSB-IT's
     // Helper::getRedirectOption reads redirect_option=back (the form
     // default) and uses session's url.intended, which for pages whose
     // view template embeds a `<img src=".../qr_code">` gets set to the
@@ -551,7 +551,7 @@ async function submitEditForm(outName) {
     //     naively clicked.
     //   - Exclude the hidden logout form's submit that also lives in the
     //     header.
-    //   - Prefer `.last()`: on Snipe-IT edit forms the Save button is
+    //   - Prefer `.last()`: on HSB-IT edit forms the Save button is
     //     rendered at the bottom of the form, after any inline widget
     //     submit buttons the form might contain.
     // Refactored forms wrap up with `<x-box.footer />` which always
@@ -562,7 +562,7 @@ async function submitEditForm(outName) {
     if (!(await submit.count().catch(() => 0))) {
         // Legacy forms that haven't been refactored to <x-box.footer />
         // fall back to a visible, non-topbar submit button. `.last()`
-        // because Snipe-IT edit forms put Save at the bottom of the
+        // because HSB-IT edit forms put Save at the bottom of the
         // form, after any inline widget submits.
         submit = page
             .locator('form button[type="submit"]:visible, form input[type="submit"]:visible')
@@ -610,7 +610,7 @@ async function loginAs(username, password = PASSWORD) {
  * inside get captured under that session.
  */
 async function asUser(username, fn, password) {
-    console.log(`→ session: ${username}`);
+    console.log(`â†’ session: ${username}`);
     await loginAs(username, password);
     await fn();
 }
@@ -668,10 +668,10 @@ if (ONE_SHOT) {
         : '';
     const outName = `adhoc/${asUsername}-${baseName}${tabSuffix}`;
 
-    console.log(`→ logging in as ${asUsername}`);
+    console.log(`â†’ logging in as ${asUsername}`);
     await loginAs(asUsername, PASSWORD);
 
-    console.log(`→ ${BASE_URL}/${uri}`);
+    console.log(`â†’ ${BASE_URL}/${uri}`);
     await page.goto(`${BASE_URL}/${uri}`, {waitUntil: 'domcontentloaded'});
     await page.waitForLoadState('networkidle').catch(() => {});
     await capPagination();
@@ -696,7 +696,7 @@ if (ONE_SHOT) {
                 await page.waitForTimeout(400);
                 await capPagination();
                 matched = true;
-                console.log(`  ↪ tab: "${label}"`);
+                console.log(`  â†ª tab: "${label}"`);
                 break;
             }
         }
@@ -723,12 +723,12 @@ if (ONE_SHOT) {
 // Capture the login page BEFORE authenticating so the auth cookie
 // does not redirect us straight to dashboard. Fresh session, no
 // login flow, just goto the URL and shoot.
-console.log('→ login page (unauthenticated)');
+console.log('â†’ login page (unauthenticated)');
 await context.clearCookies();
 await page.goto(`${BASE_URL}/login`, {waitUntil: 'domcontentloaded'});
 await shot('auth/login');
 
-console.log('→ logging in');
+console.log('â†’ logging in');
 await loginAs(USERNAME, PASSWORD);
 
 // First-class objects: index + view + edit for each.
@@ -761,7 +761,7 @@ for (const obj of firstClassObjects) {
 
 // Extras: create form, status-dropdown interaction, bulk pages.
 if (includesSection('assets')) {
-    console.log('→ assets extras');
+    console.log('â†’ assets extras');
     await page.goto(`${BASE_URL}/hardware/create`);
     await shot(`assets/${USERNAME}-assets-create`);
 
@@ -782,12 +782,12 @@ if (includesSection('assets')) {
 // Extra create forms for users and licenses (bundled with those sections
 // so `--section users` includes the users create shot).
 if (includesSection('users')) {
-    console.log('→ users extras');
+    console.log('â†’ users extras');
     await page.goto(`${BASE_URL}/users/create`);
     await shot(`users/${USERNAME}-users-create`);
 }
 if (includesSection('licenses')) {
-    console.log('→ licenses extras');
+    console.log('â†’ licenses extras');
     await page.goto(`${BASE_URL}/licenses/create`);
     await shot(`licenses/${USERNAME}-licenses-create`);
 }
@@ -805,7 +805,7 @@ const standaloneSections = [
 ];
 for (const section of standaloneSections) {
     if (!includesSection(section.name)) continue;
-    console.log(`→ ${section.name}`);
+    console.log(`â†’ ${section.name}`);
     for (const p of section.pages) {
         await page.goto(`${BASE_URL}${p.path}`);
         await shot(`${section.name}/${USERNAME}-${section.name}-${p.suffix}`);
@@ -834,7 +834,7 @@ for (const mgr of managers) {
 // All-routes superuser sweep
 // -------------------------------------------------------------------
 if (ALL_ROUTES && !SECTION_FILTER) {
-    console.log('→ all-routes sweep (superuser)');
+    console.log('â†’ all-routes sweep (superuser)');
 
     const proc = spawnSync('php', ['artisan', 'route:list', '--json'], {
         encoding: 'utf8',
@@ -890,7 +890,7 @@ if (ALL_ROUTES && !SECTION_FILTER) {
 // mis-typed a URL) and unauthenticated (external visitor hit a bad
 // link) because the layouts/basic.blade.php header differs by auth
 // state (logo becomes a home link when signed in).
-console.log('→ error pages');
+console.log('â†’ error pages');
 const missingUrl = `${BASE_URL}/this-page-does-not-exist-${Date.now()}`;
 
 await page.goto(missingUrl, {waitUntil: 'domcontentloaded', timeout: 20_000}).catch(() => {});

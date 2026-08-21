@@ -20,5 +20,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-          repository: snipe/snipe-it
+          repository: hieubt/hsb-it
           readme-filepath: ./README.md

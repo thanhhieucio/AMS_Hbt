@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class MaintenanceTypePolicy extends SnipePermissionsPolicy
+class MaintenanceTypePolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

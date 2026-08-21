@@ -6,7 +6,7 @@
     <title>
         @section('title')
         @show
-        :: {{ $snipeSettings->site_name }}
+        :: {{ $hsbSettings->site_name }}
     </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -15,18 +15,18 @@
 
 
     <link rel="apple-touch-icon"
-          href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->logo)) :  config('app.url').'/img/snipe-logo-bug.png' }}">
+          href="{{ ($hsbSettings) && ($hsbSettings->favicon!='') ?  Storage::disk('public')->url(e($hsbSettings->logo)) :  config('app.url').'/img/hsb-logo-bug.png' }}">
     <link rel="apple-touch-startup-image"
-          href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->logo)) :  config('app.url').'/img/snipe-logo-bug.png' }}">
+          href="{{ ($hsbSettings) && ($hsbSettings->favicon!='') ?  Storage::disk('public')->url(e($hsbSettings->logo)) :  config('app.url').'/img/hsb-logo-bug.png' }}">
     <link rel="shortcut icon" type="image/ico"
-          href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->favicon)) : config('app.url').'/favicon.ico' }}">
+          href="{{ ($hsbSettings) && ($hsbSettings->favicon!='') ?  Storage::disk('public')->url(e($hsbSettings->favicon)) : config('app.url').'/favicon.ico' }}">
 
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="language" content="{{ Helper::mapBackToLegacyLocale(app()->getLocale()) }}">
     <meta name="language-direction" content="{{ Helper::determineLanguageDirection() }}">
     <meta name="baseUrl" content="{{ config('app.url') }}/">
-    <meta name="theme-color" content="{{ $snipeSettings->header_color ?? '#5fa4cc' }}">
+    <meta name="theme-color" content="{{ $hsbSettings->header_color ?? '#5fa4cc' }}">
 
     <script nonce="{{ csrf_token() }}">
         window.Laravel = {csrfToken: '{{ csrf_token() }}'};
@@ -44,18 +44,18 @@
     @include('partials.theme-mode-tenant-vars')
 
     {{-- Custom CSS --}}
-    @if (($snipeSettings) && ($snipeSettings->custom_css))
+    @if (($hsbSettings) && ($hsbSettings->custom_css))
         <style>
-            {!! $snipeSettings->show_custom_css() !!}
+            {!! $hsbSettings->show_custom_css() !!}
         </style>
     @endif
 
 
     <script nonce="{{ csrf_token() }}">
-        window.snipeit = {
+        window.hsbit = {
             settings: {
-                "per_page": {{ $snipeSettings->per_page }},
-                "first_day_of_week": {{ (int) $snipeSettings->week_start }}
+                "per_page": {{ $hsbSettings->per_page }},
+                "first_day_of_week": {{ (int) $hsbSettings->week_start }}
             }
         };
     </script>
@@ -85,27 +85,27 @@
                     </a>
                     <div class="nav navbar-nav navbar-left">
                         <div class="left-navblock">
-                            @if ($snipeSettings->brand == '3')
+                            @if ($hsbSettings->brand == '3')
                                 <a class="logo navbar-brand no-hover" href="{{ config('app.url') }}">
-                                    @if ($snipeSettings->logo!='')
+                                    @if ($hsbSettings->logo!='')
                                         <img class="navbar-brand-img"
-                                             src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
-                                             alt="{{ $snipeSettings->site_name }} logo">
+                                             src="{{ Storage::disk('public')->url($hsbSettings->logo) }}"
+                                             alt="{{ $hsbSettings->site_name }} logo">
                                     @endif
-                                    {{ $snipeSettings->site_name }}
+                                    {{ $hsbSettings->site_name }}
                                 </a>
-                            @elseif ($snipeSettings->brand == '2')
+                            @elseif ($hsbSettings->brand == '2')
                                 <a class="logo navbar-brand no-hover" href="{{ config('app.url') }}">
-                                    @if ($snipeSettings->logo!='')
+                                    @if ($hsbSettings->logo!='')
                                         <img class="navbar-brand-img"
-                                             src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
-                                             alt="{{ $snipeSettings->site_name }} logo">
+                                             src="{{ Storage::disk('public')->url($hsbSettings->logo) }}"
+                                             alt="{{ $hsbSettings->site_name }} logo">
                                     @endif
-                                    <span class="sr-only">{{ $snipeSettings->site_name }}</span>
+                                    <span class="sr-only">{{ $hsbSettings->site_name }}</span>
                                 </a>
                             @else
                                 <a class="logo navbar-brand no-hover" href="{{ config('app.url') }}">
-                                    {{ $snipeSettings->site_name }}
+                                    {{ $hsbSettings->site_name }}
                                 </a>
                             @endif
                         </div>
@@ -126,7 +126,7 @@
 
                             @can('index', \App\Models\Asset::class)
                                 <li aria-hidden="true"{!! (request()->is('hardware*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ url('hardware') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=1" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.assets') }}">
+                                    <a href="{{ url('hardware') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=1" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.assets') }}">
                                         <x-icon type="assets" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.assets') }}</span>
                                     </a>
@@ -134,7 +134,7 @@
                             @endcan
                             @can('view', \App\Models\License::class)
                                 <li aria-hidden="true"{!! (request()->is('licenses*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ route('licenses.index') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=2" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.licenses') }}">
+                                    <a href="{{ route('licenses.index') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=2" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.licenses') }}">
                                         <x-icon type="licenses" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.licenses') }}</span>
                                     </a>
@@ -142,7 +142,7 @@
                             @endcan
                             @can('index', \App\Models\Accessory::class)
                                 <li aria-hidden="true"{!! (request()->is('accessories*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ route('accessories.index') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=3" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.accessories') }}">
+                                    <a href="{{ route('accessories.index') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=3" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.accessories') }}">
                                         <x-icon type="accessories" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.accessories') }}</span>
                                     </a>
@@ -150,7 +150,7 @@
                             @endcan
                             @can('index', \App\Models\Consumable::class)
                                 <li aria-hidden="true"{!! (request()->is('consumables*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ url('consumables') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=4" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.consumables') }}">
+                                    <a href="{{ url('consumables') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=4" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.consumables') }}">
                                         <x-icon type="consumables" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.consumables') }}</span>
                                     </a>
@@ -158,7 +158,7 @@
                             @endcan
                             @can('view', \App\Models\Component::class)
                                 <li aria-hidden="true"{!! (request()->is('components*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ route('components.index') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=5" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.components') }}">
+                                    <a href="{{ route('components.index') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=5" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.components') }}">
                                         <x-icon type="components" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.components') }}</span>
                                     </a>
@@ -167,7 +167,7 @@
 
                             @can('index', \App\Models\User::class)
                                 <li aria-hidden="true"{!! (request()->is('users*') ? ' class="active" aria-current="page"' : '') !!}>
-                                    <a href="{{ route('users.index') }}" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=6" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.users') }}">
+                                    <a href="{{ route('users.index') }}" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=6" : ''}} tabindex="-1" data-tooltip="true" data-placement="bottom" data-title="{{ trans('general.users') }}">
                                         <x-icon type="users" class="fa-fw" />
                                         <span class="sr-only">{{ trans('general.users') }}</span>
                                     </a>
@@ -256,7 +256,7 @@
                             @endcan
 
                             @can('admin')
-                                @if ($snipeSettings->show_alerts_in_menu == '1')
+                                @if ($hsbSettings->show_alerts_in_menu == '1')
                                     <livewire:alert-menu/>
                                 @endif
                             @endcan
@@ -583,7 +583,7 @@
 
                         @can('view', \App\Models\User::class)
                                 <li class="treeview{{ (request()->is('users*') ? ' active' : '') }}" id="users-sidenav-option">
-                                    <a href="#" {{$snipeSettings->shortcuts_enabled == 1 ? "accesskey=6" : ''}}>
+                                    <a href="#" {{$hsbSettings->shortcuts_enabled == 1 ? "accesskey=6" : ''}}>
                                         <x-icon type="users" class="fa-fw" />
                                         <span>{{ trans('general.people') }}</span>
                                         <x-icon type="angle-left" class="pull-right fa-fw"/>
@@ -921,8 +921,8 @@
                     <div class="pull-left footer-links">
                     </div>
                     <div class="pull-right">
-                    @if ($snipeSettings->version_footer!='off')
-                        @if (($snipeSettings->version_footer=='on') || (($snipeSettings->version_footer=='admin') && (Auth::user()->isSuperUser()=='1')))
+                    @if ($hsbSettings->version_footer!='off')
+                        @if (($hsbSettings->version_footer=='on') || (($hsbSettings->version_footer=='admin') && (Auth::user()->isSuperUser()=='1')))
                             &nbsp; {{ trans('general.version') }} {{ config('version.app_version') }} -
                             {{ trans('general.build') }} {{ config('version.build_version') }} ({{ config('version.branch') }})
                         @endif
@@ -935,26 +935,26 @@
 
 
 
-                    @if ($snipeSettings->support_footer!='off')
-                        @if (($snipeSettings->support_footer=='on') || (($snipeSettings->support_footer=='admin') && (Auth::user()->isSuperUser()=='1')))
+                    @if ($hsbSettings->support_footer!='off')
+                        @if (($hsbSettings->support_footer=='on') || (($hsbSettings->support_footer=='admin') && (Auth::user()->isSuperUser()=='1')))
                             <a target="_blank" class="label label-default"
-                               href="https://snipe-it.readme.io/docs/overview"
+                               href="https://docs.hsb.edu.vn/hsb-it/docs/overview"
                                rel="noopener">{{ trans('general.user_manual') }}</a>
                             <a target="_blank" class="label label-default" href="mailto:hieubt@hsb.edu.vn"
                                rel="noopener">{{ trans('general.bug_report') }}</a>
                         @endif
                     @endif
 
-                    @if ($snipeSettings->privacy_policy_link!='')
+                    @if ($hsbSettings->privacy_policy_link!='')
                         <a target="_blank" class="label label-default" rel="noopener"
-                           href="{{  $snipeSettings->privacy_policy_link }}"
+                           href="{{  $hsbSettings->privacy_policy_link }}"
                            target="_new">{{ trans('admin/settings/general.privacy_policy') }}</a>
                     @endif
                     </div>
                     <br>
-                    @if ($snipeSettings->footer_text!='')
+                    @if ($hsbSettings->footer_text!='')
                         <div class="pull-left">
-                            {!!  Helper::parseEscapedMarkedown($snipeSettings->footer_text)  !!}
+                            {!!  Helper::parseEscapedMarkedown($hsbSettings->footer_text)  !!}
                         </div>
                     @endif
                 </div>
@@ -1030,10 +1030,10 @@
         <script nonce="{{ csrf_token() }}">
 
             // Handle the first selected tabs regardless of permissions
-            if ($('li.snipetab').is(':first-of-type')) {
-                var hash = $('li.snipetab:first-of-type').children().attr('href');
-                $('li.snipetab:first-of-type').addClass('active');
-                $('div'+hash+'.snipetab-pane').addClass('in active');
+            if ($('li.hsbtab').is(':first-of-type')) {
+                var hash = $('li.hsbtab:first-of-type').children().attr('href');
+                $('li.hsbtab:first-of-type').addClass('active');
+                $('div'+hash+'.hsbtab-pane').addClass('in active');
             }
 
 
@@ -1057,7 +1057,7 @@
             // the anti-double-submit id used by the six checkout flows. Both
             // need the same error styling + select2 error placement, so we
             // init in a loop instead of duplicating the options block.
-            var snipeValidatorOptions = {
+            var hsbValidatorOptions = {
                 ignore: 'input[type=hidden]',
                 errorClass: 'alert-msg',
                 errorElement: 'div',
@@ -1105,7 +1105,7 @@
             };
 
             $('#create-form, #checkout_form, #userForm').each(function () {
-                $(this).validate(snipeValidatorOptions);
+                $(this).validate(hsbValidatorOptions);
             });
 
             $.extend($.validator.messages, {

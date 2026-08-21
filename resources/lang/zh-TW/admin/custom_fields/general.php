@@ -69,5 +69,5 @@ return [
         'radio' => '單選按鈕',
     ],
     'markdown_supported' => '支援 Markdown',
-    'general_help_text' => '自訂欄位儲存預設資產欄位未涵蓋的附加資訊。<a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>。',
+    'general_help_text' => '自訂欄位儲存預設資產欄位未涵蓋的附加資訊。<a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>。',
 ];

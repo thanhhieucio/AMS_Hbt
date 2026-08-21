@@ -19,7 +19,7 @@
     <td> {{ $asset->serial }} </td>
     <td> {{ $asset->model->category->name }}</td>
     <td> {{ ($asset->location) ? $asset->location->name : '' }} </td>
-    @if (($snipeSettings->show_images_in_email =='1') && $asset->getImageUrl())
+    @if (($hsbSettings->show_images_in_email =='1') && $asset->getImageUrl())
     <td>
         <img src="{{ asset($asset->getImageUrl()) }}" alt="Asset" style="max-width: 64px;">
     </td>
@@ -37,7 +37,7 @@
 @foreach($accessories as $accessory)
 <tr>
     <td>{{ $accessory->name }}</td>
-    @if (($snipeSettings->show_images_in_email =='1') && $accessory->getImageUrl())
+    @if (($hsbSettings->show_images_in_email =='1') && $accessory->getImageUrl())
     <td>
         <img src="{{ asset($accessory->getImageUrl()) }}" alt="Accessory" style="max-width: 64px;">
     </td>

@@ -38,7 +38,7 @@ class UploadFileValidationTest extends TestCase
 
     private function realUpload(string $clientName, string $content): UploadedFile
     {
-        $path = tempnam(sys_get_temp_dir(), 'snipeit_upload_');
+        $path = tempnam(sys_get_temp_dir(), 'hsbit_upload_');
         file_put_contents($path, $content);
         $this->tempFiles[] = $path;
 

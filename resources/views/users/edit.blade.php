@@ -17,7 +17,7 @@
 
     <x-container class="col-md-8 col-md-offset-2">
         {{-- novalidate: this form is wired to jQuery Validate (see the
-             snipeValidatorOptions block in layouts/default.blade.php) which
+             hsbValidatorOptions block in layouts/default.blade.php) which
              handles required, url, email, and complexity rules. Without
              novalidate the browser's HTML5 native validation fires FIRST on
              type=url / type=email fields and blocks submission with its own
@@ -89,7 +89,7 @@
               <!-- Activation Status (Can the user login?) -->
               {{-- Rendered ABOVE the password fields so the activated checkbox
                    sits above the password inputs whose visibility it controls.
-                   snipeit.js hides the password rows when this checkbox is
+                   hsbit.js hides the password rows when this checkbox is
                    unchecked. Keeping the checkbox above avoids the layout
                    jump caused by rows above the toggle appearing/disappearing. --}}
                         @if (((!Gate::allows('editableOnDemo'))  && ($user->id)) || (!Gate::allows('canEditAuthFields', $user)) || ($user->id == auth()->user()->id))
@@ -135,7 +135,7 @@
                 {{-- Inline display style pre-hides the row when the user is
                      landing on the form with activated unchecked (typical for
                      new-user create). Avoids the FOUC that would happen if we
-                     rendered the fields visible and let snipeit.js hide them
+                     rendered the fields visible and let hsbit.js hide them
                      on document-ready. JS still toggles visibility on
                      subsequent changes to the activated checkbox. The wand
                      generator button sits in the row's after_input slot
@@ -154,7 +154,7 @@
                                  only combination that hides the wand. --}}
                             @if (Gate::allows('canEditAuthFields', $user) && $user->ldap_import != '1' && (! $user->id || Gate::allows('editableOnDemo')))
                                 <x-slot:after_input>
-                                    <a href="#" class="btn btn-sm btn-theme" id="genPassword" data-password-length="{{ $snipeSettings->pwd_secure_min + 9 }}" data-tooltip="true" title="{{ trans('admin/users/general.generate_password') }}">
+                                    <a href="#" class="btn btn-sm btn-theme" id="genPassword" data-password-length="{{ $hsbSettings->pwd_secure_min + 9 }}" data-tooltip="true" title="{{ trans('admin/users/general.generate_password') }}">
                                         <i class="fa-solid fa-wand-magic-sparkles fa-fw"></i>
                                     </a>
                                 </x-slot:after_input>
@@ -207,7 +207,7 @@
                                         <span class="input-group-addon">
                                             {{-- Shares the same multi-selector data-toggle as the password
                                                  field's eye so both eyes and both fields stay in sync — see
-                                                 the .toggle-password handler in snipeit.js. --}}
+                                                 the .toggle-password handler in hsbit.js. --}}
                                             <i data-toggle="#password, #password_confirm" class="fa fa-fw fa-eye toggle-password" aria-hidden="true"></i>
                                             <span class="sr-only">{{ trans('general.toggle_password_visibility') }}</span>
                                         </span>
@@ -245,7 +245,7 @@
                         </x-form.row>
 
                         <!-- Send welcome email to user -->
-                        {{-- Starts disabled. snipeit.js flips it enabled once the
+                        {{-- Starts disabled. hsbit.js flips it enabled once the
                              #email input has more than 5 chars, via the
                              data-toggles-checkbox attribute we render on #email
                              below. When app.lock_passwords is on we don't render
@@ -340,7 +340,7 @@
                                               @endforeach
                                           </select>
 
-                                          @if ($snipeSettings->full_multiple_companies_support == '1')
+                                          @if ($hsbSettings->full_multiple_companies_support == '1')
                                               @cannot('superadmin')
                                                   <x-form.help name="company_ids-fmcs-note">
                                                       <x-icon type="tip" class="text-info"/> {{ trans('general.fmcs_company_select_note') }}
@@ -554,8 +554,8 @@
                                   :rows="5"
                               />
 
-                              @if ($snipeSettings->two_factor_enabled!='')
-                                  @if ($snipeSettings->two_factor_enabled=='1')
+                              @if ($hsbSettings->two_factor_enabled!='')
+                                  @if ($hsbSettings->two_factor_enabled=='1')
                                       <x-form.checkbox-row
                                           name="two_factor_optin"
                                           :label="trans('admin/settings/general.two_factor')"

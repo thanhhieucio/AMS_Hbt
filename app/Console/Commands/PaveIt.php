@@ -14,14 +14,14 @@ class PaveIt extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:pave  {--force : Skip the interactive yes/no prompt for confirmation}';
+    protected $signature = 'hsbit:pave  {--force : Skip the interactive yes/no prompt for confirmation}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clear the database tables, leaving all migrations, table structure, and the first user in place. (It is primarily a quick tool for developers.) If you want to destroy all tables as well, use php artisan db:wipe.';
+    protected $description = 'Dọn dữ liệu trong các bảng, giữ lại migration, cấu trúc bảng và người dùng đầu tiên. Chủ yếu dùng nhanh cho môi trường phát triển. Muốn xóa cả bảng, dùng php artisan db:wipe.';
 
     /**
      * Create a new command instance.
@@ -42,7 +42,7 @@ class PaveIt extends Command
     {
 
         if (! $this->option('force')) {
-            $confirmation = $this->confirm("\n****************************************************\nTHIS WILL DELETE ALL OF THE DATA IN YOUR DATABASE. \nThere is NO undo. This WILL destroy ALL of your data, \nINCLUDING ANY non-Snipe-IT tables you have in this database. \n****************************************************\n\nDo you wish to continue? No backsies! ");
+            $confirmation = $this->confirm("\n****************************************************\nTHAO TÁC NÀY SẼ XÓA TOÀN BỘ DỮ LIỆU TRONG CƠ SỞ DỮ LIỆU. \nKhông thể hoàn tác. Toàn bộ dữ liệu sẽ bị xóa, \nBAO GỒM cả các bảng không thuộc HSB-IT trong cơ sở dữ liệu này. \n****************************************************\n\nBạn có muốn tiếp tục? Không thể hoàn tác! ");
             if (! $confirmation) {
                 $this->error('ABORTING');
                 exit(-1);

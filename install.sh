@@ -8,6 +8,6 @@ if [ "$(id -u)" != "0" ]; then
     fi
 fi
 
-wget https://raw.githubusercontent.com/grokability/snipe-it/master/snipeit.sh
-chmod 744 snipeit.sh
-./snipeit.sh 2>&1 | tee -a /var/log/snipeit-install.log
+wget https://raw.githubusercontent.com/thanhhieucio/HSB-IT/master/hsbit.sh
+chmod 744 hsbit.sh
+./hsbit.sh 2>&1 | tee -a /var/log/hsbit-install.log

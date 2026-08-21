@@ -8,7 +8,7 @@ use App\Http\Requests\StoreAssetModelRequest;
 use App\Models\Actionlog;
 use App\Models\AssetModel;
 use App\Models\CustomField;
-use App\Models\SnipeModel;
+use App\Models\HsbModel;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -20,11 +20,11 @@ use Illuminate\Support\MessageBag;
 
 /**
  * This class controls all actions related to asset models for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  *
- * @author [A. Gianotto] [<snipe@snipe.net>]
+ * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
  */
 class AssetModelsController extends Controller
 {
@@ -34,7 +34,7 @@ class AssetModelsController extends Controller
      * Returns a view that invokes the ajax tables which actually contains
      * the content for the accessories listing, which is generated in getDatatable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -48,7 +48,7 @@ class AssetModelsController extends Controller
     /**
      * Returns a view containing the asset model creation form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -64,7 +64,7 @@ class AssetModelsController extends Controller
     /**
      * Validate and process the new Asset Model data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -120,7 +120,7 @@ class AssetModelsController extends Controller
     /**
      * Returns a view containing the asset model edit form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -138,7 +138,7 @@ class AssetModelsController extends Controller
      * Validates and processes form data from the edit
      * Asset Model form based on the model ID passed.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -194,7 +194,7 @@ class AssetModelsController extends Controller
      * Validate and delete the given Asset Model. An Asset Model
      * cannot be deleted if there are associated assets.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -219,7 +219,7 @@ class AssetModelsController extends Controller
     /**
      * Restore a given Asset Model (mark as un-deleted)
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -263,7 +263,7 @@ class AssetModelsController extends Controller
     /**
      * Get the model information to present to the model view page
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -279,7 +279,7 @@ class AssetModelsController extends Controller
     /**
      * Get the clone page to clone a model
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -323,7 +323,7 @@ class AssetModelsController extends Controller
     /**
      * Returns a view that allows the user to bulk edit model attributes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.7]
      */
@@ -370,7 +370,7 @@ class AssetModelsController extends Controller
     /**
      * Returns a view that allows the user to bulk edit model attrbutes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.7]
      */
@@ -407,7 +407,7 @@ class AssetModelsController extends Controller
      * Validate and delete the given Asset Models. An Asset Model
      * cannot be deleted if there are associated assets.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -462,7 +462,7 @@ class AssetModelsController extends Controller
      *
      * @param  AssetModel  $model
      */
-    private function assignCustomFieldsDefaultValues(AssetModel|SnipeModel $model, array $defaultValues): bool
+    private function assignCustomFieldsDefaultValues(AssetModel|HsbModel $model, array $defaultValues): bool
     {
         $data = [];
         foreach ($defaultValues as $customFieldId => $defaultValue) {
@@ -486,7 +486,7 @@ class AssetModelsController extends Controller
 
         $attributes = [];
         foreach ($model->fieldset->fields as $field) {
-            $attributes[$field->db_column] = trim(preg_replace('/_+|snipeit|\d+/', ' ', $field->db_column));
+            $attributes[$field->db_column] = trim(preg_replace('/_+|hsbit|\d+/', ' ', $field->db_column));
         }
 
         $validator = Validator::make($data, $rules)->setAttributeNames($attributes);
@@ -511,7 +511,7 @@ class AssetModelsController extends Controller
     /**
      * Removes all default values
      */
-    private function removeCustomFieldsDefaultValues(AssetModel|SnipeModel $model): void
+    private function removeCustomFieldsDefaultValues(AssetModel|HsbModel $model): void
     {
         $model->defaultValues()->detach();
     }

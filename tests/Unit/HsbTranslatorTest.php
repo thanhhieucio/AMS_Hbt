@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-class SnipeTranslatorTest extends TestCase
+class HsbTranslatorTest extends TestCase
 {
     // the 'meatiest' of these tests will explicitly choose non-English as the language, because otherwise
     // the fallback-logic (which is to fall-back to 'en-US') will be conflated in with the translation logic

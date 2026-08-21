@@ -6,12 +6,12 @@
          tag-remove pills, we want the label chip's white text to stay
          white on hover (they already carry a colored background). --}}
     <style>
-        .snipe-advanced-search-tags .snipe-advanced-search-tags-clear-all,
-        .snipe-advanced-search-tags .snipe-advanced-search-tags-clear-all:hover,
-        .snipe-advanced-search-tags .snipe-advanced-search-tags-clear-all:focus,
-        .snipe-advanced-search-tags .snipe-advanced-search-tag-remove,
-        .snipe-advanced-search-tags .snipe-advanced-search-tag-remove:hover,
-        .snipe-advanced-search-tags .snipe-advanced-search-tag-remove:focus {
+        .hsb-advanced-search-tags .hsb-advanced-search-tags-clear-all,
+        .hsb-advanced-search-tags .hsb-advanced-search-tags-clear-all:hover,
+        .hsb-advanced-search-tags .hsb-advanced-search-tags-clear-all:focus,
+        .hsb-advanced-search-tags .hsb-advanced-search-tag-remove,
+        .hsb-advanced-search-tags .hsb-advanced-search-tag-remove:hover,
+        .hsb-advanced-search-tags .hsb-advanced-search-tag-remove:focus {
             color: #fff !important;
             text-decoration: none !important;
         }
@@ -29,11 +29,11 @@
 <script nonce="{{ csrf_token() }}">
     $(function () {
 
-        if (!$.fn.bootstrapTable || $.fn.bootstrapTable.__snipeAdvancedSearchPatched) {
+        if (!$.fn.bootstrapTable || $.fn.bootstrapTable.__hsbAdvancedSearchPatched) {
             return;
         }
 
-        $.fn.bootstrapTable.__snipeAdvancedSearchPatched = true;
+        $.fn.bootstrapTable.__hsbAdvancedSearchPatched = true;
 
         var BootstrapTable = $.BootstrapTable;
         var baseBootstrapTablePrototype = Object.getPrototypeOf(BootstrapTable.prototype);
@@ -45,7 +45,7 @@
         var advancedSearchAndText = @json(trans('general.and'));
         var advancedSearchOrText = @json(trans('general.or'));
         var advancedSearchClearAllText = @json(trans('general.clear_all_filters'));
-        var advancedSearchOperatorStorageKey = 'snipeit.bs.table.advancedSearchOperator';
+        var advancedSearchOperatorStorageKey = 'hsbit.bs.table.advancedSearchOperator';
 
         var normalizeAdvancedSearchOperator = function (operator) {
             return (operator || defaultAdvancedSearchOperator).toString().toLowerCase() === 'or' ? 'or' : 'and';
@@ -83,7 +83,7 @@
             // Insert below the advanced-search pill container if it's present
             // (populated by an active filter), otherwise below the toolbar.
             // Either way the banner ends up above .fixed-table-container.
-            var $tagContainer = $wrap.children('.snipe-advanced-search-tags');
+            var $tagContainer = $wrap.children('.hsb-advanced-search-tags');
             var $anchor = $tagContainer.length && $tagContainer.children().length
                 ? $tagContainer
                 : $wrap.find('.fixed-table-toolbar').first();
@@ -215,10 +215,10 @@
                     return $();
                 }
 
-                var $container = $tableWrapper.children('.snipe-advanced-search-tags');
+                var $container = $tableWrapper.children('.hsb-advanced-search-tags');
 
                 if (!$container.length) {
-                    $container = $('<div class="snipe-advanced-search-tags" style="margin: 8px 0;"></div>');
+                    $container = $('<div class="hsb-advanced-search-tags" style="margin: 8px 0;"></div>');
 
                     if ($tableWrapper.children('.fixed-table-container').length) {
                         $container.insertBefore($tableWrapper.children('.fixed-table-container').first());
@@ -277,7 +277,7 @@
                 Object.keys(filters).forEach(f => {
                     html += '<span class="label label-primary" style="font-size: 11px; margin-right:6px;display:inline-block;margin-bottom:6px;"><b>' +
                         (colMap[f] || f).replace(/<[^>]*>/g, '') + ':</b> ' + escapeAdvancedSearchValue(filters[f]) +
-                        ' <a href="javascript:void(0)" class="snipe-advanced-search-tag-remove" data-field="' + f +
+                        ' <a href="javascript:void(0)" class="hsb-advanced-search-tag-remove" data-field="' + f +
                         '" style="color:#fff;margin-left:6px;text-decoration:none;">&times;</a></span>';
                 });
 
@@ -285,7 +285,7 @@
                 // the cancel button, but done from the tags row so the user doesn't
                 // have to open the modal just to wipe every filter.
                 var safeClearAllLabel = escapeAdvancedSearchValue(advancedSearchClearAllText);
-                html += '<a href="javascript:void(0)" class="label label-danger snipe-advanced-search-tags-clear-all"' +
+                html += '<a href="javascript:void(0)" class="label label-danger hsb-advanced-search-tags-clear-all"' +
                     ' title="' + safeClearAllLabel + '"' +
                     ' aria-label="' + safeClearAllLabel + '"' +
                     ' style="font-size: 11px; margin-right:6px; display:inline-block; margin-bottom:6px; color:#fff; text-decoration:none; cursor:pointer;">' +
@@ -294,8 +294,8 @@
 
                 $tagContainer
                     .html(html)
-                    .off('click.snipeAdvancedSearchTags')
-                    .on('click.snipeAdvancedSearchTags', '.snipe-advanced-search-tag-remove', function (e) {
+                    .off('click.hsbAdvancedSearchTags')
+                    .on('click.hsbAdvancedSearchTags', '.hsb-advanced-search-tag-remove', function (e) {
                         e.preventDefault();
                         var field = $(this).data('field');
                         if (field && _this.filterColumnsPartial) {
@@ -308,7 +308,7 @@
                             _this.renderAdvancedSearchTags();
                         }
                     })
-                    .on('click.snipeAdvancedSearchTags', '.snipe-advanced-search-tags-clear-all', function (e) {
+                    .on('click.hsbAdvancedSearchTags', '.hsb-advanced-search-tags-clear-all', function (e) {
                         e.preventDefault();
                         // Reuse cancelAdvancedSearch: it already wipes filterColumnsPartial,
                         // resets the modal's inputs (in case the user opens it later), fires
@@ -483,8 +483,8 @@
 
                 // Let Enter keypresses reuse the same submit path so keyboard users can apply filters quickly.
                 this.$toolbarModal.find('.toolbar-model-form')
-                    .off('keydown.snipeAdvancedSearch')
-                    .on('keydown.snipeAdvancedSearch', ':input', function (event) {
+                    .off('keydown.hsbAdvancedSearch')
+                    .on('keydown.hsbAdvancedSearch', ':input', function (event) {
                         if (event.key !== 'Enter' || $(event.target).is('textarea')) {
                             return;
                         }
@@ -610,7 +610,7 @@
             });
         };
 
-        $('.snipe-table').bootstrapTable('destroy').each(function () {
+        $('.hsb-table').bootstrapTable('destroy').each(function () {
 
             data_export_options = $(this).attr('data-export-options');
             export_options = data_export_options ? JSON.parse(data_export_options) : {};
@@ -746,7 +746,7 @@
                     'fullscreen',
                     'advancedSearch',
                 ],
-                classes: 'table table-responsive table-striped snipe-table table-no-bordered',
+                classes: 'table table-responsive table-striped hsb-table table-no-bordered',
                 clickToSelect: data_with_default('click-to-select', true),
                 cookie: true,
                 cookieExpire: '2y',
@@ -780,7 +780,7 @@
                 trimOnSearch: false,
                 undefinedText: '',
                 pageList: ['10', '20', '30', '50', '100', '150', '200'{!! ((config('app.max_results') > 200) ? ",'500'" : '') !!}{!! ((config('app.max_results') > 500) ? ",'".config('app.max_results')."'" : '') !!}],
-                pageSize: {{  (($snipeSettings->per_page!='') && ($snipeSettings->per_page > 0)) ? $snipeSettings->per_page : 20 }},
+                pageSize: {{  (($hsbSettings->per_page!='') && ($hsbSettings->per_page > 0)) ? $hsbSettings->per_page : 20 }},
                 paginationVAlign: 'both',
                 queryParams: function (params) {
                     var newParams = {};
@@ -850,7 +850,7 @@
                 },
                 onLoadError: function (status, jqXHR) {
                     // Fires on any real transport-level failure (500, 502, 504, network
-                    // error, 419 CSRF expiry, 401 unauthenticated, etc). Snipe's API
+                    // error, 419 CSRF expiry, 401 unauthenticated, etc). Hsb's API
                     // convention is to return {status: "error"} at HTTP 200 for
                     // validation/business errors, so anything reaching this callback
                     // is a genuine "the request itself failed" case that would
@@ -1007,7 +1007,7 @@
             //
             // Two interacting quirks make this non-trivial:
             //
-            // 1. Snipe's override of applyAdvancedSearch (this file, line ~220)
+            // 1. Hsb's override of applyAdvancedSearch (this file, line ~220)
             //    is a no-op for sidePagination='server' beyond setting state
             //    and rendering pills — it never refetches, and never fires the
             //    `column-advanced-search` event. So a `on('column-advanced-search')`
@@ -1021,7 +1021,7 @@
             //
             // Fix: patch two methods on this specific plugin instance.
             //
-            //   - applyAdvancedSearch: after Snipe's version runs, force a
+            //   - applyAdvancedSearch: after Hsb's version runs, force a
             //     refetch + fire the event on server-side. That triggers the
             //     addrbar → updateHistoryState path, which we've also patched.
             //
@@ -1204,7 +1204,7 @@
             attributes: {
                 title: '{{ trans('general.create') }}',
                 class: 'btn-warning',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1263,7 +1263,7 @@
 
                 title: '{{ trans('general.create') }}',
                 class: 'btn-warning',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             },
@@ -1284,7 +1284,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1306,7 +1306,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1328,7 +1328,7 @@
             attributes: {
                 title: '{{ trans('general.create') }}',
                 class: 'btn-warning',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1386,7 +1386,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1419,7 +1419,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1439,7 +1439,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1459,7 +1459,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1480,7 +1480,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1500,7 +1500,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1530,7 +1530,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1550,7 +1550,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             },
@@ -1583,7 +1583,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1603,7 +1603,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1623,7 +1623,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1643,7 +1643,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('button.add_maintenance') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1701,7 +1701,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1721,7 +1721,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1741,7 +1741,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1773,7 +1773,7 @@
             attributes: {
                 class: 'btn-info',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             }
@@ -1794,7 +1794,7 @@
             attributes: {
                 class: 'btn-warning',
                 title: '{{ trans('general.create') }}',
-                @if ($snipeSettings->shortcuts_enabled == 1)
+                @if ($hsbSettings->shortcuts_enabled == 1)
                 accesskey: 'n'
                 @endif
             },
@@ -1844,7 +1844,7 @@
 
 
     function dateRowCheckStyle(value) {
-        if ((value.days_to_next_audit) && (value.days_to_next_audit < {{ $snipeSettings->audit_warning_days ?: 0 }})) {
+        if ((value.days_to_next_audit) && (value.days_to_next_audit < {{ $hsbSettings->audit_warning_days ?: 0 }})) {
             return { classes : "danger" }
         }
         return {};
@@ -1873,7 +1873,7 @@
         }
     }
 
-    $('.snipe-table').on('post-body.bs.table', function () {
+    $('.hsb-table').on('post-body.bs.table', function () {
         var countId = $(this).data('selected-count-id');
         if (!countId) return;
         var rawCountId = countId.charAt(0) === '#' ? countId.substring(1) : countId;
@@ -1895,7 +1895,7 @@
     });
 
     // These methods dynamically add/remove hidden input values in the bulk actions form
-    $('.snipe-table').on('check.bs.table .btSelectItem', function (row, $element) {
+    $('.hsb-table').on('check.bs.table .btSelectItem', function (row, $element) {
         var buttonName =  $(this).data('bulk-button-id');
         var tableId =  $(this).data('id-table');
 
@@ -1909,7 +1909,7 @@
         updateSelectedCount(this);
     });
 
-    $('.snipe-table').on('check-all.bs.table', function (event, rowsAfter) {
+    $('.hsb-table').on('check-all.bs.table', function (event, rowsAfter) {
 
         var buttonName =  $(this).data('bulk-button-id');
         var tableId =  $(this).data('id-table');
@@ -1933,7 +1933,7 @@
     });
 
 
-    $('.snipe-table').on('uncheck.bs.table .btSelectItem', function (row, $element) {
+    $('.hsb-table').on('uncheck.bs.table .btSelectItem', function (row, $element) {
         var tableId =  $(this).data('id-table');
         $( "#" + tableId + "_checkbox_" + $element.id).remove();
         updateSelectedCount(this);
@@ -1941,7 +1941,7 @@
 
 
     // Handle whether the edit button should be disabled
-    $('.snipe-table').on('uncheck.bs.table', function () {
+    $('.hsb-table').on('uncheck.bs.table', function () {
         var buttonName =  $(this).data('bulk-button-id');
 
         if ($(this).bootstrapTable('getSelections').length == 0) {
@@ -1950,7 +1950,7 @@
         }
     });
 
-    $('.snipe-table').on('uncheck-all.bs.table', function (event, rowsAfter, rowsBefore) {
+    $('.hsb-table').on('uncheck-all.bs.table', function (event, rowsAfter, rowsBefore) {
 
         var buttonName =  $(this).data('bulk-button-id');
         $(buttonName).attr('disabled', 'disabled');
@@ -1963,8 +1963,8 @@
 
     });
 
-    // Initialize sort-order for bulk actions (label-generation) for snipe-tables
-    $('.snipe-table').each(function (i, table) {
+    // Initialize sort-order for bulk actions (label-generation) for hsb-tables
+    $('.hsb-table').each(function (i, table) {
         table_cookie_segment = $(table).data('cookie-id-table');
         sort = '';
         order = '';
@@ -1989,7 +1989,7 @@
     });
 
     // If sort order changes, update the sort-order for bulk-actions (for label-generation)
-    $('.snipe-table').on('sort.bs.table', function (event, name, order) {
+    $('.hsb-table').on('sort.bs.table', function (event, name, order) {
        domnode = $($(this).data('bulk-form-id')).get(0);
        // make safe in case there isn't a bulk-form-id, or it's not found, or has no 'sort' element
        if ( domnode && domnode.elements && domnode.elements.sort ) {
@@ -2588,8 +2588,8 @@
 
 
                 // Check if it's a custom field
-                if (index.startsWith('_snipeit_')) {
-                    pretty_index = index.replace("_snipeit_", "Custom:_");
+                if (index.startsWith('_hsbit_')) {
+                    pretty_index = index.replace("_hsbit_", "Custom:_");
                 } else {
                     pretty_index = index;
                 }
@@ -2846,7 +2846,7 @@
 
     function auditImageFormatter(value, row) {
         if ((row) && (row.file) && (row.file.url)) {
-            return '<a href="' + row.file.url + '" data-toggle="lightbox" data-type="image"><img src="' + row.file.url + '" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt=""></a>'
+            return '<a href="' + row.file.url + '" data-toggle="lightbox" data-type="image"><img src="' + row.file.url + '" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt=""></a>'
         }
     }
 
@@ -2865,7 +2865,7 @@
             else if ((row) && (row.model)) {
                 var altName = row.model.name;
            }
-            return '<a href="' + value + '" data-toggle="lightbox" data-type="image"><img src="' + value + '" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="' + altName + '"></a>';
+            return '<a href="' + value + '" data-toggle="lightbox" data-type="image"><img src="' + value + '" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="' + altName + '"></a>';
         }
     }
 
@@ -2918,9 +2918,9 @@
         if ((value) && (value.url) && (value.inlineable)) {
 
             if (value.mediatype == 'image') {
-                return '<a href="' + value.url + '?inline=true" data-toggle="lightbox" data-type="image"><img src="' + value.url + '" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt=""></a>';
+                return '<a href="' + value.url + '?inline=true" data-toggle="lightbox" data-type="image"><img src="' + value.url + '" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt=""></a>';
             } else if (value.mediatype == 'video') {
-                return '<a href="' + value.url + '?inline=true" data-toggle="lightbox" data-type="video"><video style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive"><source src="' + value.url + '?inline=true"></video></a>';
+                return '<a href="' + value.url + '?inline=true" data-toggle="lightbox" data-type="video"><video style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive"><source src="' + value.url + '?inline=true"></video></a>';
             } else if (value.mediatype == 'audio') {
                 return '<audio controls><source src="' + value.url + '?inline=true" type="audio/mp3">Your browser does not support the audio element.</audio>';
             }
@@ -3075,7 +3075,7 @@
 
     function labelRadioFormatter(value, row, index, field) {
         if (row) {
-            return row.name == '{{ str_replace("\\", "\\\\", $snipeSettings->label2_template) }}';
+            return row.name == '{{ str_replace("\\", "\\\\", $hsbSettings->label2_template) }}';
         }
     }
 
@@ -3089,7 +3089,7 @@
         if(!number) { // in a JavaScript context, meaning, if it's null or zero or unset
             return 0.0;
         }
-        if ("{{$snipeSettings->digit_separator}}" == "1.234,56") {
+        if ("{{$hsbSettings->digit_separator}}" == "1.234,56") {
             // yank periods, change commas to periods
             periodless = number.toString().replace(/\./g,"");
             decimalfixed = periodless.replace(/,/g,".");
@@ -3153,7 +3153,7 @@
 
     function numberWithCommas(value) {
         
-        if ((value) && ("{{$snipeSettings->digit_separator}}" == "1.234,56")){
+        if ((value) && ("{{$hsbSettings->digit_separator}}" == "1.234,56")){
             var parts = value.toString().split(".");
              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
              return parts.join(",");
@@ -3167,7 +3167,7 @@
 
     function bindBulkEditSelectionHandler() {
         $('#bulkEdit').click(function () {
-            var selectedIds = $('.snipe-table').bootstrapTable('getSelections');
+            var selectedIds = $('.hsb-table').bootstrapTable('getSelections');
             $.each(selectedIds, function(key,value) {
                 $( "#bulkForm" ).append($('<input type="hidden" name="ids[' + value.id + ']" value="' + value.id + '">' ));
             });
@@ -3215,10 +3215,10 @@
         // wenzhixin/bootstrap-table formatters. The measurement handlers
         // (post-body + shown.bs.tab) are registered at script parse time
         // below, outside this ready wrapper, so they're active before
-        // snipeit.js's URL-hash-driven .tab('show') fires. This tooltip
+        // hsbit.js's URL-hash-driven .tab('show') fires. This tooltip
         // hook can stay in the ready wrapper because it doesn't depend on
         // handler-timing.
-        $(document).on('post-body.bs.table', '.snipe-table', function () {
+        $(document).on('post-body.bs.table', '.hsb-table', function () {
             $('[data-tooltip="true"]').tooltip({
                 container: 'body'
             });
@@ -3230,8 +3230,8 @@
     //
     // Both function definitions AND both delegated handlers below are
     // deliberately at script parse time (outside the $(function () { })
-    // wrapper). Reason: snipeit.js's URL-hash-to-tab logic
-    // (assets/js/snipeit.js) calls .tab('show') from its own
+    // wrapper). Reason: hsbit.js's URL-hash-to-tab logic
+    // (assets/js/hsbit.js) calls .tab('show') from its own
     // document.ready, which fires 'shown.bs.tab' synchronously. If our
     // handler is registered inside a later document.ready callback, we
     // miss that first firing and the top-scrollbar's inner width stays at
@@ -3249,7 +3249,7 @@
     // edge. The offsets are per-column and can change on column-toggle
     // and window resize, so recompute after every render + resize.
     function updateStickyColumnOffsets(root) {
-        var $targets = root ? $(root).filter('.snipe-table') : $('.snipe-table');
+        var $targets = root ? $(root).filter('.hsb-table') : $('.hsb-table');
         $targets.each(function () {
             var el = this;
             var $t = $(this);
@@ -3257,7 +3257,7 @@
             var $ths = $t.find('> thead > tr').first().children('th');
             var count = $ths.length;
 
-            var mR = /\bsnipe-table--sticky-right-(\d+)\b/.exec(cls);
+            var mR = /\bhsb-table--sticky-right-(\d+)\b/.exec(cls);
             if (mR) {
                 var nR = Math.min(parseInt(mR[1], 10), count);
                 var offR = 0;
@@ -3267,7 +3267,7 @@
                 }
             }
 
-            var mL = /\bsnipe-table--sticky-left-(\d+)\b/.exec(cls);
+            var mL = /\bhsb-table--sticky-left-(\d+)\b/.exec(cls);
             if (mL) {
                 var nL = Math.min(parseInt(mL[1], 10), count);
                 var offL = 0;
@@ -3287,12 +3287,12 @@
     // table actually overflows horizontally, so tables that fit in their
     // container get no extra chrome.
     function updateTopScrollbar(root) {
-        var $targets = root ? $(root).filter('.snipe-table') : $('.snipe-table');
+        var $targets = root ? $(root).filter('.hsb-table') : $('.hsb-table');
         // Track which outer .bootstrap-table wrappers have already been
         // processed this pass. Bootstrap-table's fixed-columns extension
         // (and some other add-ons) clone the table into extra inner
         // wrappers inside a single .bootstrap-table container. Iterating
-        // .snipe-table naively then produced one top scrollbar per clone
+        // .hsb-table naively then produced one top scrollbar per clone
         // stacked above the same table, and none of them tracked the
         // primary .fixed-table-body's actual scroll width — visible on
         // /hardware and /locations as two mis-sized top scrollbars.
@@ -3318,7 +3318,7 @@
             var $primaryBody = $primaryContainer.find('.fixed-table-body').first();
             if (! $primaryBody.length) return;
             var primaryBody = $primaryBody[0];
-            var $primaryTable = $primaryBody.find('table.snipe-table').first();
+            var $primaryTable = $primaryBody.find('table.hsb-table').first();
             if (! $primaryTable.length) return;
             var primaryTable = $primaryTable[0];
 
@@ -3326,7 +3326,7 @@
             // already show their bottom scrollbar within the box they
             // live in, so the top scrollbar adds noise without benefit.
             if ($(tbl).is('[data-height]')) {
-                $primaryContainer.children('.snipe-top-scrollbar').remove();
+                $primaryContainer.children('.hsb-top-scrollbar').remove();
                 return;
             }
 
@@ -3335,7 +3335,7 @@
             // primary .fixed-table-container, sitting immediately above
             // .fixed-table-body so it hugs the top of the table the same
             // way the native scrollbar hugs the bottom of it.
-            var $topScroll = $primaryContainer.children('.snipe-top-scrollbar');
+            var $topScroll = $primaryContainer.children('.hsb-top-scrollbar');
 
             if (! overflows) {
                 $topScroll.remove();
@@ -3343,7 +3343,7 @@
             }
 
             if (! $topScroll.length) {
-                $topScroll = $('<div class="snipe-top-scrollbar" aria-hidden="true"><div class="snipe-top-scrollbar-inner"></div></div>');
+                $topScroll = $('<div class="hsb-top-scrollbar" aria-hidden="true"><div class="hsb-top-scrollbar-inner"></div></div>');
                 $primaryBody.before($topScroll);
             }
 
@@ -3354,20 +3354,20 @@
             // we may have attached before; .on() reattaches.
             var top = $topScroll[0];
             var syncing = false;
-            $topScroll.off('scroll.snipeScrollSync').on('scroll.snipeScrollSync', function () {
+            $topScroll.off('scroll.hsbScrollSync').on('scroll.hsbScrollSync', function () {
                 if (syncing) return;
                 syncing = true;
                 primaryBody.scrollLeft = top.scrollLeft;
                 syncing = false;
             });
-            $primaryBody.off('scroll.snipeScrollSync').on('scroll.snipeScrollSync', function () {
+            $primaryBody.off('scroll.hsbScrollSync').on('scroll.hsbScrollSync', function () {
                 if (syncing) return;
                 syncing = true;
                 top.scrollLeft = primaryBody.scrollLeft;
                 syncing = false;
             });
 
-            $topScroll.children('.snipe-top-scrollbar-inner').css('width', primaryTable.scrollWidth + 'px');
+            $topScroll.children('.hsb-top-scrollbar-inner').css('width', primaryTable.scrollWidth + 'px');
         });
     }
 
@@ -3379,7 +3379,7 @@
     // against both:
     //   - browsers where RAF fires before the paint that finalizes layout
     //     of a just-un-hidden pane, and
-    //   - the resetView path in snipeit.js that runs on the same tick as
+    //   - the resetView path in hsbit.js that runs on the same tick as
     //     shown.bs.tab and adjusts column widths after us.
     function deferAfterLayout(fn) {
         var raf = window.requestAnimationFrame || function (cb) { return window.setTimeout(cb, 0); };
@@ -3393,7 +3393,7 @@
 
     // Re-measure after every bootstrap-table render. Delegated on document
     // so it catches tables that init after this handler was attached.
-    $(document).on('post-body.bs.table', '.snipe-table', function () {
+    $(document).on('post-body.bs.table', '.hsb-table', function () {
         var tbl = this;
         deferAfterLayout(function () {
             updateStickyColumnOffsets(tbl);
@@ -3405,11 +3405,11 @@
     // .tab-pane elements with display:none, so any bootstrap-table that was
     // rendered inside a hidden tab measured its container width as 0 at
     // post-body time. shown.bs.tab fires on the tab trigger after the pane
-    // has been made visible; a zero-arg call re-measures all snipe-tables
+    // has been made visible; a zero-arg call re-measures all hsb-tables
     // on the page.
     //
     // Also listen for reset-view.bs.table, which bootstrap-table fires
-    // when snipeit.js calls `.bootstrapTable('resetView')` from its own
+    // when hsbit.js calls `.bootstrapTable('resetView')` from its own
     // shown.bs.tab handler (that path recomputes column widths after us
     // and can leave scrollWidth stale if we measured on the same tick).
     $(document).on('shown.bs.tab', function () {
@@ -3419,7 +3419,7 @@
         });
     });
 
-    $(document).on('reset-view.bs.table', '.snipe-table', function () {
+    $(document).on('reset-view.bs.table', '.hsb-table', function () {
         var tbl = this;
         deferAfterLayout(function () {
             updateStickyColumnOffsets(tbl);

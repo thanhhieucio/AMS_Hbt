@@ -17,7 +17,7 @@
 
                 <div class="col-md-4 col-md-offset-4">
 
-                    @if (($snipeSettings->google_login=='1') && ($snipeSettings->google_client_id!='') && ($snipeSettings->google_client_secret!=''))
+                    @if (($hsbSettings->google_login=='1') && ($hsbSettings->google_client_id!='') && ($hsbSettings->google_client_secret!=''))
 
                         <br><br>
                         <a href="{{ route('google.redirect')  }}" class="btn btn-block btn-social btn-google btn-lg">
@@ -38,10 +38,10 @@
                         <div class="login-box-body">
                             <div class="row">
 
-                                @if ($snipeSettings->login_note)
+                                @if ($hsbSettings->login_note)
                                     <div class="col-md-12">
                                         <x-alert type="info">
-                                            {!!  Helper::parseEscapedMarkedown($snipeSettings->login_note)  !!}
+                                            {!!  Helper::parseEscapedMarkedown($hsbSettings->login_note)  !!}
                                         </x-alert>
                                     </div>
                                 @endif
@@ -93,7 +93,7 @@
                                 @endif
                             </div> <!-- end row -->
 
-                            @if (!config('app.require_saml') && $snipeSettings->saml_enabled)
+                            @if (!config('app.require_saml') && $hsbSettings->saml_enabled)
                             <div class="row">
                                 <div class="text-right col-md-12">
                                     <a href="{{ route('saml.login')  }}">{{ trans('auth/general.saml_login')  }}</a>
@@ -110,9 +110,9 @@
                                 </button>
                             @endif
 
-                            @if ($snipeSettings->custom_forgot_pass_url)
+                            @if ($hsbSettings->custom_forgot_pass_url)
                                 <div class="col-md-12 text-right" style="padding-top: 15px;">
-                                    <a href="{{ $snipeSettings->custom_forgot_pass_url  }}" rel="noopener">{{ trans('auth/general.forgot_password')  }}</a>
+                                    <a href="{{ $hsbSettings->custom_forgot_pass_url  }}" rel="noopener">{{ trans('auth/general.forgot_password')  }}</a>
                                 </div>
                             @elseif (!config('app.require_saml'))
                                 <div class="col-md-12 text-right" style="padding-top: 15px;">

@@ -28,7 +28,7 @@ class LicenseCheckoutController extends Controller
      * because licenses themselves are never checked out to anyone,
      * only the seats associated with them.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -71,7 +71,7 @@ class LicenseCheckoutController extends Controller
     /**
      * Validates and stores the license checkout action.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      *
@@ -247,7 +247,7 @@ class LicenseCheckoutController extends Controller
     /**
      * Bulk checkin all license seats
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see LicenseCheckinController::create() method that provides the form view
      * @since [v6.1.1]

@@ -123,6 +123,9 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
+            // 'require' when connecting to Cloud SQL for PostgreSQL over its public IP;
+            // leave as 'prefer' (or unset) when going through the Cloud SQL Auth Proxy on localhost.
+            'sslmode' => env('DB_SSLMODE', 'prefer'),
         ],
 
         'sqlsrv' => [

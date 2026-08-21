@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Depreciation extends SnipeModel
+class Depreciation extends HsbModel
 {
     use HasFactory;
 
@@ -78,7 +78,7 @@ class Depreciation extends SnipeModel
     /**
      * Establishes the depreciation -> models relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v5.0]
      *
@@ -92,7 +92,7 @@ class Depreciation extends SnipeModel
     /**
      * Establishes the depreciation -> licenses relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v5.0]
      *
@@ -106,7 +106,7 @@ class Depreciation extends SnipeModel
     /**
      * Establishes the depreciation -> assets relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v5.0]
      *
@@ -120,7 +120,7 @@ class Depreciation extends SnipeModel
     /**
      * Get the user that created the depreciation
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v7.0.13]
      *

@@ -70,7 +70,7 @@ class RequestAssetNotification extends Notification
         $qty = $this->item_quantity;
         $item = $this->item;
         $note = $this->note;
-        $botname = ($this->settings->webhook_botname) ? $this->settings->webhook_botname : 'Snipe-Bot';
+        $botname = ($this->settings->webhook_botname) ? $this->settings->webhook_botname : 'Hsb-Bot';
         $channel = ($this->settings->webhook_channel) ? $this->settings->webhook_channel : '';
 
         $fields = [
@@ -118,7 +118,7 @@ class RequestAssetNotification extends Notification
             ->subject('👀 '.trans('mail.Item_Requested'))
             ->withSymfonyMessage(function (Email $message) {
                 $message->getHeaders()->addTextHeader(
-                    'X-System-Sender', 'Snipe-IT'
+                    'X-System-Sender', 'HSB-IT'
                 );
             });
 

@@ -837,7 +837,7 @@ class StoreAssetTest extends TestCase
         $fields = [$alphaField, $numericField, $emailField];
         $superuser = User::factory()->superuser()->create();
         $assetData = Asset::factory()->hasMultipleCustomFields($fields)->make();
-        $cleaned_name = trim(preg_replace('/_+|snipeit|\d+/', ' ', $alphaField->db_column_name()));
+        $cleaned_name = trim(preg_replace('/_+|hsbit|\d+/', ' ', $alphaField->db_column_name()));
 
         $response = $this->actingAsForApi($superuser)
             ->postJson(route('api.assets.store'), [

@@ -12,14 +12,14 @@ class DisableSAML extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:saml-disable';
+    protected $signature = 'hsbit:saml-disable';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This is a rescue command that can be used to turn off SAML settings in the event that you managed to lock yourself out using bad SAML settings.';
+    protected $description = 'Lệnh cứu hộ để tắt cấu hình SAML khi cấu hình sai khiến bạn không đăng nhập được.';
 
     /**
      * Create a new command instance.
@@ -38,7 +38,7 @@ class DisableSAML extends Command
      */
     public function handle()
     {
-        if ($this->confirm("\n****************************************************\nThis will disable SAML support. You will not be able \nto login with an account that does not exist \nlocally in the Snipe-IT local database. \n****************************************************\n\nDo you wish to continue? [y|N]")) {
+        if ($this->confirm("\n****************************************************\nThao tác này sẽ tắt SAML. Bạn sẽ không thể \nđăng nhập bằng tài khoản chưa tồn tại \ntrong cơ sở dữ liệu cục bộ của HSB-IT. \n****************************************************\n\nBạn có muốn tiếp tục? [y|N]")) {
             $setting = Setting::getSettings();
             $setting->saml_enabled = 0;
             if ($setting->save()) {

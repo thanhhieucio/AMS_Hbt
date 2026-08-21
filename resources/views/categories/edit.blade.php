@@ -48,7 +48,7 @@
 
                 <livewire:category-edit-form
                     :alert-on-response="(bool) old('alert_on_response', $item->alert_on_response)"
-                    :default-eula-text="$snipeSettings->default_eula_text"
+                    :default-eula-text="$hsbSettings->default_eula_text"
                     :eula-text="old('eula_text', $item->eula_text)"
                     :require-acceptance="(bool) old('require_acceptance', $item->require_acceptance)"
                     :send-check-in-email="(bool) old('checkin_email', $item->checkin_email)"
@@ -84,7 +84,7 @@
 
     </x-container>
 
-    @if ($snipeSettings->default_eula_text != '')
+    @if ($hsbSettings->default_eula_text != '')
         {{-- EULA preview modal --}}
         <div class="modal fade" id="eulaModal" tabindex="-1" role="dialog" aria-labelledby="eulaModalLabel" aria-hidden="true">
             <div class="modal-dialog">

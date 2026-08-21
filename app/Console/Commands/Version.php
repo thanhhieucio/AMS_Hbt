@@ -21,7 +21,7 @@ class Version extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Hiển thị thông tin phiên bản HSB-IT.';
 
     /**
      * Create a new command instance.

@@ -34,10 +34,10 @@ class MigrateMacAddress extends Migration
         AssetModel::where(['show_mac_address' => true])->update(['fieldset_id' => $f2->id]);
 
         Schema::table('assets', function (Blueprint $table) {
-            $table->renameColumn('mac_address', '_snipeit_mac_address');
+            $table->renameColumn('mac_address', '_hsbit_mac_address');
         });
 
-        // DB::statement("ALTER TABLE assets CHANGE mac_address _snipeit_mac_address varchar(255)");
+        // DB::statement("ALTER TABLE assets CHANGE mac_address _hsbit_mac_address varchar(255)");
 
         $ans = Schema::table('models', function (Blueprint $table) {
             $table->renameColumn('show_mac_address', 'deprecated_mac_address');
@@ -62,8 +62,8 @@ class MigrateMacAddress extends Migration
             $table->renameColumn('deprecated_mac_address', 'show_mac_address');
         });
 
-        if (Schema::hasColumn('assets', '_snipeit_mac_address')) {
-            DB::statement('ALTER TABLE assets CHANGE _snipeit_mac_address mac_address varchar(255)');
+        if (Schema::hasColumn('assets', '_hsbit_mac_address')) {
+            DB::statement('ALTER TABLE assets CHANGE _hsbit_mac_address mac_address varchar(255)');
         }
     }
 }

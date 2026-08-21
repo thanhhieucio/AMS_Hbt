@@ -69,7 +69,7 @@
                     data-sort-order="desc"
                     data-sort-name="modified_display"
                     id="system-backups"
-                    class="table table-striped snipe-table">
+                    class="table table-striped hsb-table">
             <thead>
               <tr>
               <th scope="col" data-sortable="true">{{ trans('general.file_name') }}</th>

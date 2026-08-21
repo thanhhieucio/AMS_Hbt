@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Traits\ConvertsBase64ToFiles;
-use App\Models\SnipeModel;
+use App\Models\HsbModel;
 use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -66,9 +66,9 @@ class ImageUploadRequest extends Request
     /**
      * Handle and store any images attached to request
      *
-     * @param  SnipeModel  $item  Item the image is associated with
+     * @param  HsbModel  $item  Item the image is associated with
      * @param  string  $path  location for uploaded images, defaults to uploads/plural of item type.
-     * @return SnipeModel Target asset is being checked out to.
+     * @return HsbModel Target asset is being checked out to.
      */
     public function handleImages($item, $w = 600, $form_fieldname = 'image', $path = null, $db_fieldname = 'image')
     {

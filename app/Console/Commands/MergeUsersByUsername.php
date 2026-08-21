@@ -14,14 +14,14 @@ class MergeUsersByUsername extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:merge-users';
+    protected $signature = 'hsbit:merge-users';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command allows you to merge the history of users. It looks for users without an email address as their username and merges them into the version that does have an email username.';
+    protected $description = 'Gộp lịch sử người dùng. Lệnh tìm người dùng dùng username không phải email và gộp vào bản ghi có username là email.';
 
     /**
      * Create a new command instance.

@@ -14,7 +14,7 @@ use Illuminate\Http\RedirectResponse;
 
 /**
  * This class controls all actions related to Components for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */
@@ -24,7 +24,7 @@ class ComponentsController extends Controller
      * Returns a view that invokes the ajax tables which actually contains
      * the content for the components listing, which is generated in getDatatable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::getDatatable() method that generates the JSON response
      * @since [v3.0]
@@ -43,7 +43,7 @@ class ComponentsController extends Controller
     /**
      * Returns a form to create a new component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::postCreate() method that stores the data
      * @since [v3.0]
@@ -63,7 +63,7 @@ class ComponentsController extends Controller
     /**
      * Validate and store data for new component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::getCreate() method that generates the view
      * @since [v3.0]
@@ -111,7 +111,7 @@ class ComponentsController extends Controller
     /**
      * Return a view to edit a component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::postEdit() method that stores the data.
      * @since [v3.0]
@@ -137,7 +137,7 @@ class ComponentsController extends Controller
     /**
      * Return a view to edit a component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::getEdit() method presents the form.
      *
@@ -183,7 +183,7 @@ class ComponentsController extends Controller
     /**
      * Delete a component.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      *
@@ -201,7 +201,7 @@ class ComponentsController extends Controller
         $this->authorize('delete', $component);
 
         // Note: the image file is deliberately preserved across this
-        // soft-delete. Snipe-IT's `snipeit:purge` command permanently
+        // soft-delete. HSB-IT's `hsbit:purge` command permanently
         // removes it later when the row is force-deleted. Keeping the
         // file here means a restored soft-deleted row still has its
         // image.
@@ -217,7 +217,7 @@ class ComponentsController extends Controller
     /**
      * Return a view to display component information.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ComponentsController::getDataView() method that generates the JSON response
      * @since [v3.0]
@@ -231,7 +231,7 @@ class ComponentsController extends Controller
     {
         $this->authorize('view', $component);
 
-        return view('components/view', compact('component'))->with('snipe_component', $component);
+        return view('components/view', compact('component'))->with('hsb_component', $component);
     }
 
     public function getClone(Component $component): View|RedirectResponse

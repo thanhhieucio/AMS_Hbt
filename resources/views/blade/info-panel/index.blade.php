@@ -2,7 +2,7 @@
     'infoPanelObj' => null,
     'img_path' => null,
     'qr_code_url' => null,
-    'snipeSettings' => \App\Models\Setting::getSettings()
+    'hsbSettings' => \App\Models\Setting::getSettings()
 ])
 
 <!-- start side info-box -->
@@ -176,7 +176,7 @@
                 @if ((isset($infoPanelObj->location)) && ($infoPanelObj->location->currency!=''))
                     {{ $infoPanelObj->location->currency }}
                 @else
-                    {{ $snipeSettings->default_currency }}
+                    {{ $hsbSettings->default_currency }}
                 @endif
 
                 <x-copy-to-clipboard copy_what="purchase_cost" class="pull-right">
@@ -192,7 +192,7 @@
                     @if ((isset($infoPanelObj->location)) && ($infoPanelObj->location->currency!=''))
                         {{ $infoPanelObj->location->currency }}
                     @else
-                        {{ $snipeSettings->default_currency }}
+                        {{ $hsbSettings->default_currency }}
                     @endif
 
                     {{ Helper::formatCurrencyOutput($infoPanelObj->totalCostSum()) }}
@@ -636,7 +636,7 @@
             {{ $after_list }}
         @endif
 
-        @if ($qr_code_url && $snipeSettings->isQrEnabled())
+        @if ($qr_code_url && $hsbSettings->isQrEnabled())
             <div class="col-md-12 text-center asset-qr-img" style="padding-top: 15px;">
                 <img src="{{ $qr_code_url }}" class="img-thumbnail" style="height: 150px; width: 150px; margin-right: 10px;" alt="QR code for {{ $infoPanelObj->name }}">
             </div>

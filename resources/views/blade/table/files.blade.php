@@ -25,7 +25,7 @@
         data-show-advanced-search="false"
         data-show-custom-view-button="true"
         data-url="{{ route('api.files.index', ['object_type' => $object_type, 'id' => $object->id]) }}"
-        class="table table-striped snipe-table"
+        class="table table-striped hsb-table"
         data-export-options='{
                 "fileName": "export-uploads-{{ str_slug($object->name) }}-{{ date('Y-m-d') }}",
                 "ignoreColumn": ["image","delete","download","icon"]

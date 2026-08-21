@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 
-class Depreciable extends SnipeModel
+class Depreciable extends HsbModel
 {
     /**
      * Depreciation Relation, and associated helper methods

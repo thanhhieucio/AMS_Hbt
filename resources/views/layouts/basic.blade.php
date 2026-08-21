@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ ($snipeSettings) && ($snipeSettings->site_name) ? $snipeSettings->site_name : 'Snipe-IT' }}</title>
+    <title>{{ ($hsbSettings) && ($hsbSettings->site_name) ? $hsbSettings->site_name : 'HSB-IT' }}</title>
 
-    <link rel="shortcut icon" type="image/ico" href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->favicon)) : config('app.url').'/favicon.ico' }}">
+    <link rel="shortcut icon" type="image/ico" href="{{ ($hsbSettings) && ($hsbSettings->favicon!='') ?  Storage::disk('public')->url(e($hsbSettings->favicon)) : config('app.url').'/favicon.ico' }}">
 
     @include('partials.theme-mode-preflight')
 
@@ -18,7 +18,7 @@
     @include('partials.theme-mode-tenant-vars')
 
     <script nonce="{{ csrf_token() }}">
-        window.snipeit = {
+        window.hsbit = {
             settings: {
                 "per_page": 50
             }
@@ -26,23 +26,23 @@
     </script>
 
 
-    @if (($snipeSettings) && ($snipeSettings->header_color))
+    @if (($hsbSettings) && ($hsbSettings->header_color))
         <style>
         .main-header .navbar, .main-header .logo {
-        background-color: {{ $snipeSettings->header_color }};
-        background: -webkit-linear-gradient(top,  {{ $snipeSettings->header_color }} 0%,{{ $snipeSettings->header_color }} 100%);
-        background: linear-gradient(to bottom, {{ $snipeSettings->header_color }} 0%,{{ $snipeSettings->header_color }} 100%);
-        border-color: {{ $snipeSettings->header_color }};
+        background-color: {{ $hsbSettings->header_color }};
+        background: -webkit-linear-gradient(top,  {{ $hsbSettings->header_color }} 0%,{{ $hsbSettings->header_color }} 100%);
+        background: linear-gradient(to bottom, {{ $hsbSettings->header_color }} 0%,{{ $hsbSettings->header_color }} 100%);
+        border-color: {{ $hsbSettings->header_color }};
         }
         .skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
-        border-left-color: {{ $snipeSettings->header_color }};
+        border-left-color: {{ $hsbSettings->header_color }};
         }
         </style>
     @endif
 
-    @if (($snipeSettings) && ($snipeSettings->custom_css))
+    @if (($hsbSettings) && ($hsbSettings->custom_css))
         <style>
-            {!! $snipeSettings->show_custom_css() !!}
+            {!! $hsbSettings->show_custom_css() !!}
         </style>
     @endif
 
@@ -69,18 +69,18 @@
              logo renders as a non-interactive <span>. --}}
         @auth
             <a href="{{ config('app.url') }}" class="basic-page-header__link">
-                @if (($snipeSettings) && ($snipeSettings->logo!=''))
-                    <img id="login-logo" src="{{ Storage::disk('public')->url('').e($snipeSettings->logo) }}" alt="{{ $snipeSettings->site_name }}">
+                @if (($hsbSettings) && ($hsbSettings->logo!=''))
+                    <img id="login-logo" src="{{ Storage::disk('public')->url('').e($hsbSettings->logo) }}" alt="{{ $hsbSettings->site_name }}">
                 @else
-                    <span class="basic-page-header__site-name">{{ $snipeSettings->site_name ?? 'Snipe-IT' }}</span>
+                    <span class="basic-page-header__site-name">{{ $hsbSettings->site_name ?? 'HSB-IT' }}</span>
                 @endif
             </a>
         @else
             <span class="basic-page-header__link">
-                @if (($snipeSettings) && ($snipeSettings->logo!=''))
-                    <img id="login-logo" src="{{ Storage::disk('public')->url('').e($snipeSettings->logo) }}" alt="{{ $snipeSettings->site_name }}">
+                @if (($hsbSettings) && ($hsbSettings->logo!=''))
+                    <img id="login-logo" src="{{ Storage::disk('public')->url('').e($hsbSettings->logo) }}" alt="{{ $hsbSettings->site_name }}">
                 @else
-                    <span class="basic-page-header__site-name">{{ $snipeSettings->site_name ?? 'Snipe-IT' }}</span>
+                    <span class="basic-page-header__site-name">{{ $hsbSettings->site_name ?? 'HSB-IT' }}</span>
                 @endif
             </span>
         @endauth
@@ -104,8 +104,8 @@
   </main>
 
     <div class="text-center" style="padding-top: 100px;">
-        @if (($snipeSettings) && ($snipeSettings->privacy_policy_link!=''))
-        <a target="_blank" rel="noopener" href="{{  $snipeSettings->privacy_policy_link }}" target="_new">{{ trans('admin/settings/general.privacy_policy') }}</a>
+        @if (($hsbSettings) && ($hsbSettings->privacy_policy_link!=''))
+        <a target="_blank" rel="noopener" href="{{  $hsbSettings->privacy_policy_link }}" target="_new">{{ trans('admin/settings/general.privacy_policy') }}</a>
     @endif
     </div>
 

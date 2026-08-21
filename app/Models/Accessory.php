@@ -22,7 +22,7 @@ use Watson\Validating\ValidatingTrait;
  *
  * @version v1.0
  */
-class Accessory extends SnipeModel
+class Accessory extends HsbModel
 {
     use Acceptable;
     use CompanyableTrait;
@@ -124,7 +124,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> supplier relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -143,7 +143,7 @@ class Accessory extends SnipeModel
     /**
      * Sets the requestable attribute on the accessory
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v4.0]
      *
@@ -169,7 +169,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> company relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -183,7 +183,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> location relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -197,7 +197,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> category relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -211,7 +211,7 @@ class Accessory extends SnipeModel
     /**
      * Returns the action logs associated with the accessory
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -243,7 +243,7 @@ class Accessory extends SnipeModel
      *
      * It's super-mega-assy, but it's the best I could do for now.
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  v5.0.0
      * @see checkedout()
@@ -259,7 +259,7 @@ class Accessory extends SnipeModel
      * @todo this should probably be moved out of the model and into a
      * presenter or service provider
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -278,7 +278,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> users relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -305,7 +305,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> users relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -320,7 +320,7 @@ class Accessory extends SnipeModel
     /**
      * Checks whether or not the accessory has users
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -336,7 +336,7 @@ class Accessory extends SnipeModel
     /**
      * Establishes the accessory -> manufacturer relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -351,7 +351,7 @@ class Accessory extends SnipeModel
      * Determins whether or not an email should be sent for checkin/checkout of this
      * accessory based on the category it belongs to.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -366,7 +366,7 @@ class Accessory extends SnipeModel
      * Determines whether or not the accessory should require the user to
      * accept it via email.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -380,7 +380,7 @@ class Accessory extends SnipeModel
     /**
      * Check how many items within an accessory are checked out
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v5.0]
      *
@@ -398,7 +398,7 @@ class Accessory extends SnipeModel
      * on the eloquent query in the controller, otherwise $this->checkouts_count will be null and
      * bad things happen.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -448,7 +448,7 @@ class Accessory extends SnipeModel
      *
      * This simply checks that there is a value for quantity, and if there isn't, set it to 0.
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  v6.3.4
      *
@@ -546,7 +546,7 @@ class Accessory extends SnipeModel
      *
      * PostgreSQL note: references a SELECT-list alias inside a compound
      * ORDER BY expression, which PostgreSQL rejects per SQL standard.
-     * Snipe-IT officially supports MySQL/MariaDB and tests on SQLite
+     * HSB-IT officially supports MySQL/MariaDB and tests on SQLite
      * (both allow this); moving to PostgreSQL would require inlining
      * the subquery or wrapping the query in an outer SELECT.
      */

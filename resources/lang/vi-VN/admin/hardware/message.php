@@ -115,7 +115,7 @@ return [
         'error' => 'Request was not successful, please try again.',
         'success' => 'Request successfully submitted.',
         'canceled' => 'Request successfully canceled.',
-        'cancel' => 'Cancel this item request',
+        'cancel' => 'Hủy yêu cầu mục này',
     ],
 
 ];

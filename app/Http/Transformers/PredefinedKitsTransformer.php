@@ -5,7 +5,7 @@ namespace App\Http\Transformers;
 use App\Helpers\Helper;
 use App\Models\Asset;
 use App\Models\PredefinedKit;
-use App\Models\SnipeModel;
+use App\Models\HsbModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
 
@@ -69,7 +69,7 @@ class PredefinedKitsTransformer
         return (new DatatablesTransformer)->transformDatatables($array, $total);
     }
 
-    public function transformElement(SnipeModel $element)
+    public function transformElement(HsbModel $element)
     {
         $array = [
             'id' => (int) $element->id,

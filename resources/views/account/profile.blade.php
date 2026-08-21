@@ -120,7 +120,7 @@
                             :selected="old('location_id', $user->location_id)"
                         />
 
-                        @if ($snipeSettings->full_multiple_companies_support == '1' && $snipeSettings->scope_locations_fmcs == '1')
+                        @if ($hsbSettings->full_multiple_companies_support == '1' && $hsbSettings->scope_locations_fmcs == '1')
                             @cannot('superadmin')
                                 <div class="col-md-8 col-md-offset-3">
                                     <x-form.help name="location_id_fmcs" icon="tip">{{ trans('general.fmcs_location_select_note') }}</x-form.help>
@@ -170,7 +170,7 @@
 
 
 
-                    @if ($snipeSettings->two_factor_enabled == '1')
+                    @if ($hsbSettings->two_factor_enabled == '1')
                         <x-form.checkbox-row
                             name="two_factor_optin"
                             :label="trans('admin/settings/general.two_factor_enabled_text')"

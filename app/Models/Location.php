@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Watson\Validating\ValidatingTrait;
 
-class Location extends SnipeModel
+class Location extends HsbModel
 {
     use CompanyableTrait;
     use HasFactory;
@@ -125,7 +125,7 @@ class Location extends SnipeModel
      * This method requires the eager loading of the relationships in order to determine whether
      * it can be deleted. It's tempting to load those here, but that increases the query load considerably.
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -149,7 +149,7 @@ class Location extends SnipeModel
     /**
      * Establishes the user -> location relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -163,7 +163,7 @@ class Location extends SnipeModel
     /**
      * Find assets with this location as their location_id
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -188,7 +188,7 @@ class Location extends SnipeModel
     /**
      * Establishes the  asset -> rtd_location relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -210,7 +210,7 @@ class Location extends SnipeModel
     /**
      * Establishes the consumable -> location relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -224,7 +224,7 @@ class Location extends SnipeModel
     /**
      * Establishes the component -> location relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -238,7 +238,7 @@ class Location extends SnipeModel
     /**
      * Establishes the component -> accessory relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -252,7 +252,7 @@ class Location extends SnipeModel
     /**
      * Find the parent of a location
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v2.0]
      *
@@ -303,7 +303,7 @@ class Location extends SnipeModel
     /**
      * Find the manager of a location
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v2.0]
      *
@@ -317,7 +317,7 @@ class Location extends SnipeModel
     /**
      * Find children of a location
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v2.0]
      *
@@ -332,7 +332,7 @@ class Location extends SnipeModel
     /**
      * Establishes the asset -> location assignment relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *
@@ -346,7 +346,7 @@ class Location extends SnipeModel
     /**
      * Establishes the accessory -> location assignment relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v3.0]
      *

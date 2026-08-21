@@ -88,7 +88,7 @@ class StorageHelper
      * This determines the file types that should be allowed inline and checks their fileinfo extension
      * to determine that they are safe to display inline.
      *
-     * @author <A. Gianotto> [<snipe@snipe.net]>
+     * @author <A. Gianotto> [<hieubt@hsb.edu.vn]>
      *
      * @since  v7.0.14
      *

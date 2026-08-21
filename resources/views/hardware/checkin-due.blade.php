@@ -58,7 +58,7 @@
                                         data-bulk-button-id="#dueAssetEditButton"
                                         data-bulk-form-id="#dueAssetEditForm"
                                         id="#dueAssetcheckinListing"
-                                        class="table table-striped snipe-table"
+                                        class="table table-striped hsb-table"
                                         data-url="{{ route('api.assets.list-upcoming', ['action' => 'checkins', 'upcoming_status' => 'due']) }}"
                                         data-export-options='{
                                             "fileName": "export-assets-due-checkin-{{ date('Y-m-d') }}",
@@ -91,7 +91,7 @@
                                     data-bulk-button-id="#overdueAssetEditButton"
                                     data-bulk-form-id="#overdueAssetEditForm"
                                     id="#overdueAssetcheckinListing"
-                                    class="table table-striped snipe-table"
+                                    class="table table-striped hsb-table"
                                     data-url="{{ route('api.assets.list-upcoming', ['action' => 'checkins', 'upcoming_status' => 'overdue']) }}"
                                     data-export-options='{
                                         "fileName": "export-assets-overdue-checkin-{{ date('Y-m-d') }}",

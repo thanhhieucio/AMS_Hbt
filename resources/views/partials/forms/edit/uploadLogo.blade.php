@@ -29,10 +29,10 @@
 
     <div class="col-md-9 col-md-offset-3">
 
-            @if (($setting->$logoVariable!='') && (Storage::disk('public')->exists(($logoPath ?? ''). $snipeSettings->$logoVariable)))
+            @if (($setting->$logoVariable!='') && (Storage::disk('public')->exists(($logoPath ?? ''). $hsbSettings->$logoVariable)))
                 <div class="pull-left {{ $previewClass ?? '' }}" style="padding-right: 20px;">
-                    <a href="{{ Storage::disk('public')->url(e(($logoPath ?? '').$snipeSettings->$logoVariable)) }}"{!! ($logoVariable!='favicon') ? ' data-toggle="lightbox"' : '' !!} title="Existing logo">
-                        <img style="height: 80px; padding-bottom: 5px;" alt="Current logo" src="{{ Storage::disk('public')->url(e(($logoPath ?? ''). $snipeSettings->$logoVariable)) }}">
+                    <a href="{{ Storage::disk('public')->url(e(($logoPath ?? '').$hsbSettings->$logoVariable)) }}"{!! ($logoVariable!='favicon') ? ' data-toggle="lightbox"' : '' !!} title="Existing logo">
+                        <img style="height: 80px; padding-bottom: 5px;" alt="Current logo" src="{{ Storage::disk('public')->url(e(($logoPath ?? ''). $hsbSettings->$logoVariable)) }}">
                     </a>
                 </div>
             @endif
@@ -44,7 +44,7 @@
 
 
     </div>
-    @if (($setting->$logoVariable!='') && (Storage::disk('public')->exists(($logoPath ?? '').$snipeSettings->$logoVariable)))
+    @if (($setting->$logoVariable!='') && (Storage::disk('public')->exists(($logoPath ?? '').$hsbSettings->$logoVariable)))
 
     <div class="col-md-9 col-md-offset-3">
         <label id="{{ $logoId }}-deleteCheckbox" for="{{ $logoClearVariable }}" style="font-weight: normal" class="form-control">

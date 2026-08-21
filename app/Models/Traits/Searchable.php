@@ -354,7 +354,7 @@ trait Searchable
         }
 
         // Check if this is a custom field (only for Assets - for *now*).
-        // Only db_column keys (e.g. "_snipeit_cpu_4") are accepted to avoid
+        // Only db_column keys (e.g. "_hsbit_cpu_4") are accepted to avoid
         // collisions with standard attributes or relation filter keys.
         if ($this instanceof Asset) {
             $dbColumn = $this->resolveCustomFieldDbColumn($filterKey);
@@ -822,7 +822,7 @@ trait Searchable
                 /**
                  * Making sure to only search in date columns if the search term consists of characters that can make up a MySQL timestamp!
                  *
-                 * @see https://github.com/grokability/snipe-it/issues/4590
+                 * @see https://github.com/thanhhieucio/HSB-IT/issues/4590
                  */
                 if (! preg_match('/^[0-9 :-]++$/', $term) && in_array($column, $this->getDates())) {
                     continue;
@@ -1214,7 +1214,7 @@ trait Searchable
     /**
      * Resolve a filter key to the actual database column name for a custom field.
      *
-     * Accepts only raw db_column slugs (e.g. "_snipeit_cpu_4") as filter keys.
+     * Accepts only raw db_column slugs (e.g. "_hsbit_cpu_4") as filter keys.
      *
      * Returns null when the key cannot be matched to any known custom field.
      *
@@ -1228,7 +1228,7 @@ trait Searchable
 
         $map = $this->buildCustomFieldFilterMap();
 
-        // Exact match on db_column (e.g. "_snipeit_cpu_4") only.
+        // Exact match on db_column (e.g. "_hsbit_cpu_4") only.
         return $map[$filterKey] ?? null;
     }
 
@@ -1236,7 +1236,7 @@ trait Searchable
      * Build a lookup map for custom field filter resolution.
      *
      * The returned array contains db_column entries only:
-     *   - db_column (exact) → db_column, e.g. "_snipeit_cpu_4" => "_snipeit_cpu_4"
+     *   - db_column (exact) → db_column, e.g. "_hsbit_cpu_4" => "_hsbit_cpu_4"
      *
      * Results are cached statically for the duration of the request.
      * Call flushCustomFieldFilterMap() to reset the cache (useful in tests).
@@ -1259,7 +1259,7 @@ trait Searchable
                 ->each(function (CustomField $field) use (&$map): void {
                     $dbColumn = $field->db_column;
 
-                    // Exact db_column key (e.g. "_snipeit_cpu_4")
+                    // Exact db_column key (e.g. "_hsbit_cpu_4")
                     $map[$dbColumn] = $dbColumn;
                 });
         } catch (\Exception $e) {

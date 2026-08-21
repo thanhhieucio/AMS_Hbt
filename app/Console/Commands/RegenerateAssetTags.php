@@ -14,14 +14,14 @@ class RegenerateAssetTags extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:regenerate-tags {--start=} {--output= : info|warn|error|all} ';
+    protected $signature = 'hsbit:regenerate-tags {--start=} {--output= : info|warn|error|all} ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This utility will regenerate all asset tags. THIS IS DATA-DESTRUCTIVE AND SHOULD BE USED WITH CAUTION. ';
+    protected $description = 'Tạo lại toàn bộ thẻ tài sản. Lệnh này có thể phá hủy dữ liệu, cần dùng thận trọng.';
 
     /**
      * Create a new command instance.
@@ -40,7 +40,7 @@ class RegenerateAssetTags extends Command
      */
     public function handle()
     {
-        if ($this->confirm('This will regenerate all of the asset tags within your system. This action is data-destructive and should be used with caution. Do you wish to continue?')) {
+        if ($this->confirm('Thao tác này sẽ tạo lại toàn bộ thẻ tài sản trong hệ thống. Đây là thao tác có thể phá hủy dữ liệu, cần dùng thận trọng. Bạn có muốn tiếp tục?')) {
             $output['info'] = [];
             $output['warn'] = [];
             $output['error'] = [];
@@ -48,7 +48,7 @@ class RegenerateAssetTags extends Command
 
             $start_tag = ($this->option('start')) ? $this->option('start') : (($settings->next_auto_tag_base) ? Setting::getSettings()->next_auto_tag_base : 1);
 
-            $this->info('Starting at '.$start_tag);
+            $this->info('Bắt đầu từ '.$start_tag);
 
             $total_assets = Asset::orderBy('id', 'asc')->get();
             $bar = $this->output->createProgressBar(count($total_assets));

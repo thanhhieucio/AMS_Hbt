@@ -169,7 +169,7 @@ class CustomFieldValidationTest extends TestCase
 
         $fresh = $field->fresh();
         $this->assertNotNull($fresh->db_column, 'db_column must be populated after DATE field creation');
-        $this->assertStringStartsWith('_snipeit_', $fresh->db_column);
+        $this->assertStringStartsWith('_hsbit_', $fresh->db_column);
     }
 
     public function test_datetime_field_creation_persists_db_column(): void
@@ -181,7 +181,7 @@ class CustomFieldValidationTest extends TestCase
 
         $fresh = $field->fresh();
         $this->assertNotNull($fresh->db_column);
-        $this->assertStringStartsWith('_snipeit_', $fresh->db_column);
+        $this->assertStringStartsWith('_hsbit_', $fresh->db_column);
     }
 
     /**

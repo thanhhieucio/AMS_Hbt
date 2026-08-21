@@ -19,7 +19,7 @@
 
             <!-- Personal Access Tokens -->
             <div class="table table-responsive">
-            <table class="table table-striped snipe-table">
+            <table class="table table-striped hsb-table">
                 @if($tokens->count() > 0)
                     <thead>
                     <tr>

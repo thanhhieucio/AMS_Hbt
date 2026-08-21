@@ -65,8 +65,8 @@ class ImpersonationSettingsRowTest extends TestCase
 
     public function test_row_case_insensitively_matches_usernames()
     {
-        $allowed = User::factory()->superuser()->create(['username' => 'SnipeAdmin']);
-        config(['app.user_impersonation_usernames' => ['snipeadmin']]);
+        $allowed = User::factory()->superuser()->create(['username' => 'HsbAdmin']);
+        config(['app.user_impersonation_usernames' => ['hsbadmin']]);
 
         $admin = User::factory()->superuser()->create();
 

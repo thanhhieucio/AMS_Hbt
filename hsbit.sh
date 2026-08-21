@@ -1,21 +1,21 @@
 #!/bin/bash
-#/ Usage: snipeit.sh [-vh]
+#/ Usage: hsbit.sh [-vh]
 #/
-#/ Install Snipe-IT open source asset management.
+#/ Install HSB-IT open source asset management.
 #/
 #/ OPTIONS:
 #/   -v | --verbose    Enable verbose output.
 #/   -h | --help       Show this message.
 
 ######################################################
-#           Snipe-It Install Script                  #
+#           HSB-IT Install Script                  #
 #          Script created by Mike Tucker             #
 #            mtucker6784@gmail.com                   #
 #                                                    #
 # Feel free to modify, but please give               #
 # credit where it's due. Thanks!                     #
 #                                                    #
-#         Updated Snipe-IT Install Script            #
+#         Updated HSB-IT Install Script            #
 #          Update created by Aaron Myers             #
 # Change log                                         #
 # * verify support for Ubuntu 24.04 -> 25.04         #
@@ -86,10 +86,10 @@ fi
 
 clear
 
-readonly APP_USER="snipeitapp"
-readonly APP_NAME="snipeit"
+readonly APP_USER="hsbitapp"
+readonly APP_NAME="hsbit"
 readonly APP_PATH="/var/www/html/$APP_NAME"
-readonly APP_LOG="/var/log/snipeit-install.log"
+readonly APP_LOG="/var/log/hsbit-install.log"
 readonly COMPOSER_PATH="/home/$APP_USER"
 is_mint=false
 
@@ -111,9 +111,9 @@ progress () {
 
 log () {
   if [ -n "$verbose" ]; then
-    eval "$@" |& tee -a /var/log/snipeit-install.log
+    eval "$@" |& tee -a /var/log/hsbit-install.log
   else
-    eval "$@" |& tee -a /var/log/snipeit-install.log >/dev/null 2>&1
+    eval "$@" |& tee -a /var/log/hsbit-install.log >/dev/null 2>&1
   fi
 }
 
@@ -176,12 +176,12 @@ create_virtualhost () {
 }
 
 create_user () {
-  echo "* Creating Snipe-IT user."
+  echo "* Creating HSB-IT user."
 
   if [[ "$distro" == "Ubuntu" ]] || [[ "$distro" == "Debian" ]] || [[ "$distro" == "Raspbian" ]] ; then
-    /usr/sbin/adduser --quiet --disabled-password --gecos 'Snipe-IT User' "$APP_USER"
+    /usr/sbin/adduser --quiet --disabled-password --gecos 'HSB-IT User' "$APP_USER"
   else
-    adduser -c "Snipe-IT User" "$APP_USER"
+    adduser -c "HSB-IT User" "$APP_USER"
   fi
 
   # Add the user to the apache group so the app can write to any files apache
@@ -234,13 +234,13 @@ install_composer () {
   mv "$(eval echo ~$APP_USER)"/composer.phar /usr/local/bin/composer
 }
 
-install_snipeit () {
+install_hsbit () {
   create_user
   echo "* Creating MariaDB Database/User."
-  mysql -u root --execute="CREATE DATABASE snipeit;CREATE USER snipeit_dbuser@localhost IDENTIFIED BY '$mysqluserpw'; GRANT ALL PRIVILEGES ON snipeit.* TO snipeit_dbuser@localhost;"
+  mysql -u root --execute="CREATE DATABASE hsbit;CREATE USER hsbit_dbuser@localhost IDENTIFIED BY '$mysqluserpw'; GRANT ALL PRIVILEGES ON hsbit.* TO hsbit_dbuser@localhost;"
 
-  echo -e "\n\n* Cloning Snipe-IT from github to the web directory."
-  log "git clone https://github.com/grokability/snipe-it $APP_PATH" & pid=$!
+  echo -e "\n\n* Cloning HSB-IT from github to the web directory."
+  log "git clone https://github.com/thanhhieucio/HSB-IT $APP_PATH" & pid=$!
   progress
   pushd $APP_PATH
   git checkout master
@@ -250,11 +250,11 @@ install_snipeit () {
   cp "$APP_PATH/.env.example" "$APP_PATH/.env"
 
   #TODO escape SED delimiter in variables
-  sed -i '1 i\#Created By Snipe-it Installer' "$APP_PATH/.env"
+  sed -i '1 i\#Created By Hsb-it Installer' "$APP_PATH/.env"
   sed -i "s|^\\(APP_TIMEZONE=\\).*|\\1$tzone|" "$APP_PATH/.env"
   sed -i "s|^\\(DB_HOST=\\).*|\\1localhost|" "$APP_PATH/.env"
-  sed -i "s|^\\(DB_DATABASE=\\).*|\\1snipeit|" "$APP_PATH/.env"
-  sed -i "s|^\\(DB_USERNAME=\\).*|\\1snipeit_dbuser|" "$APP_PATH/.env"
+  sed -i "s|^\\(DB_DATABASE=\\).*|\\1hsbit|" "$APP_PATH/.env"
+  sed -i "s|^\\(DB_USERNAME=\\).*|\\1hsbit_dbuser|" "$APP_PATH/.env"
   sed -i "s|^\\(DB_PASSWORD=\\).*|\\1'$mysqluserpw'|" "$APP_PATH/.env"
   sed -i "s|^\\(APP_URL=\\).*|\\1http://$fqdn|" "$APP_PATH/.env"
 
@@ -317,7 +317,7 @@ set_hosts () {
 
 rename_default_vhost () {
     log "mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/111-default.conf"
-    log "mv /etc/apache2/sites-enabled/snipeit.conf /etc/apache2/sites-enabled/000-snipeit.conf"
+    log "mv /etc/apache2/sites-enabled/hsbit.conf /etc/apache2/sites-enabled/000-hsbit.conf"
 }
 
 
@@ -351,7 +351,7 @@ echo '
 '
 
 echo ""
-echo "  Welcome to Snipe-IT Inventory Installer for CentOS, Rocky, Debian, and Ubuntu!"
+echo "  Welcome to HSB-IT Inventory Installer for CentOS, Rocky, Debian, and Ubuntu!"
 echo ""
 echo "  Installation log located: $APP_LOG"
 echo ""
@@ -412,7 +412,7 @@ set_fqdn () {
 set_dbpass () {
    ans=default
    until [[ $ans == "yes" ]] || [[ $ans == "no" ]]; do
-      echo -n "  Q. Do you want to automatically create the SnipeIT database user password? (y/n) "
+      echo -n "  Q. Do you want to automatically create the HSBIT database user password? (y/n) "
       read -r setpw
 
       case $setpw in
@@ -422,7 +422,7 @@ set_dbpass () {
          ans="yes"
       ;;
       [nN] | [n|N][O|o] )
-         echo -n  "  Q. What do you want your snipeit user password to be?"
+         echo -n  "  Q. What do you want your hsbit user password to be?"
          read -rs mysqluserpw
          echo ""
          ans="no"
@@ -462,7 +462,7 @@ case $distro in
 
         set_hosts
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         /usr/sbin/service apache2 restart
@@ -499,7 +499,7 @@ case $distro in
 
         set_hosts
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         /usr/sbin/service apache2 restart
@@ -536,7 +536,7 @@ case $distro in
 
         set_hosts
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         /usr/sbin/service apache2 restart
@@ -573,7 +573,7 @@ case $distro in
 
         set_hosts
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         /usr/sbin/service apache2 restart
@@ -619,7 +619,7 @@ case $distro in
         echo "* Starting MariaDB."
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         log "systemctl restart apache2"
@@ -670,7 +670,7 @@ case $distro in
         echo "* Starting MariaDB."
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         log "systemctl restart apache2"
@@ -711,7 +711,7 @@ case $distro in
         echo "* Starting MariaDB."
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         log "systemctl restart apache2"
@@ -755,7 +755,7 @@ case $distro in
         echo "* Starting MariaDB."
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         log "systemctl restart apache2"
@@ -816,7 +816,7 @@ EOL
         echo "* Securing MariaDB."
         /usr/bin/mysql_secure_installation
 
-        install_snipeit
+        install_hsbit
 
         echo "* Restarting Apache httpd."
         log "systemctl restart apache2"
@@ -850,7 +850,7 @@ EOL
         log "systemctl enable mariadb.service"
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         set_firewall
 
@@ -891,7 +891,7 @@ EOL
         log "systemctl enable mariadb.service"
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         set_firewall
 
@@ -934,7 +934,7 @@ EOL
         log "systemctl enable mariadb.service"
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         set_firewall
 
@@ -977,7 +977,7 @@ EOL
         log "systemctl enable mariadb.service"
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         set_firewall & pid=$!
         progress
@@ -1024,7 +1024,7 @@ EOL
         log "systemctl enable mariadb.service"
         log "systemctl start mariadb.service"
 
-        install_snipeit
+        install_hsbit
 
         set_firewall & pid=$!
         progress
@@ -1109,7 +1109,7 @@ esac
 done
 
 echo ""
-echo "  ***Open http://$fqdn to login to Snipe-IT.***"
+echo "  ***Open http://$fqdn to login to HSB-IT.***"
 echo ""
 echo ""
 echo "* Installation log located in $APP_LOG."

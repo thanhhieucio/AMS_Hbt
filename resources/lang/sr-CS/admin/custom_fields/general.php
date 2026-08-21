@@ -69,5 +69,5 @@ return [
         'radio' => 'Dugmići izbora',
     ],
     'markdown_supported' => 'Markdaun je podržan',
-    'general_help_text' => 'Prilagođena polja skladište dodatne informacije koje nisu pokrivene podrazumevanim poljima imovine. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Prilagođena polja skladište dodatne informacije koje nisu pokrivene podrazumevanim poljima imovine. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

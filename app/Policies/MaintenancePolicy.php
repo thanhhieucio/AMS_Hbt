@@ -92,7 +92,7 @@ final class MaintenancePolicy
      * Determine whether the user can upload or delete files attached to a
      * maintenance record. Mirrors files() here because maintenance file
      * management follows the same asset-edit gate for both read and write.
-     * MaintenancePolicy is standalone (does not extend SnipePermissionsPolicy)
+     * MaintenancePolicy is standalone (does not extend HsbPermissionsPolicy)
      * so the base class fallback for manageFiles does not apply.
      */
     public function manageFiles(User $user, Maintenance $maintenance): bool

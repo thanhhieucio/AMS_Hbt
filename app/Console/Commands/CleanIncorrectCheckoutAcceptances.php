@@ -14,14 +14,14 @@ class CleanIncorrectCheckoutAcceptances extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:clean-checkout-acceptances';
+    protected $signature = 'hsbit:clean-checkout-acceptances';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete checkout acceptances for checkouts to non-users';
+    protected $description = 'Xóa xác nhận nhận bàn giao cho các lượt cấp phát không thuộc người dùng.';
 
     /**
      * Execute the console command.

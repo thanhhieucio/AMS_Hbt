@@ -13,7 +13,7 @@ return [
     'update' => 'Cập nhật tài sản đang bảo trì',
     'create' => 'Tạo Bảo hành Tài sản',
     'responsible_party' => 'Responsible Party',
-    'checked_out_to_at_creation' => 'Checkout đến',
+    'checked_out_to_at_creation' => 'Cấp phát đến',
     'completed_at' => 'Completed At',
     'completed_by' => 'Completed By',
     'mark_complete' => 'Mark Complete',

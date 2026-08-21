@@ -14,7 +14,7 @@
      Slot overrides the default text (trans('admin/users/table.lock_passwords')).
 
      Deliberately does NOT carry the .help-block class that x-form.help
-     applies: the snipeValidatorOptions.highlight callback in
+     applies: the hsbValidatorOptions.highlight callback in
      layouts/default.blade.php calls $group.find('.help-block').remove()
      on any form-group in error state, which would strip this notice on
      validation. The .demo-lock-notice class is here so a future style

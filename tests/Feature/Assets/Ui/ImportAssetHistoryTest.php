@@ -50,7 +50,7 @@ class ImportAssetHistoryTest extends TestCase
     public function test_process_endpoint_allowed_in_demo_mode_for_superadmin(): void
     {
         // Superadmins bypass the demo-mode gate on process() so the
-        // seeded sample CSVs (populated by snipeit:demo-settings) can
+        // seeded sample CSVs (populated by hsbit:demo-settings) can
         // actually be run against the demo DB. Without a real CSV on
         // disk the import will error out below the gate, so this test
         // just proves the gate itself lets the superadmin through

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * This controller handles all actions related to Consumables for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */
@@ -25,7 +25,7 @@ class ConsumablesController extends Controller
     /**
      * Return a view to display component information.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ConsumablesController::getDatatable() method that generates the JSON response
      * @since [v1.0]
@@ -44,7 +44,7 @@ class ConsumablesController extends Controller
     /**
      * Return a view to display the form view to create a new consumable
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ConsumablesController::postCreate() method that stores the form data
      * @since [v1.0]
@@ -64,7 +64,7 @@ class ConsumablesController extends Controller
     /**
      * Validate and store new consumable data.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ConsumablesController::getCreate() method that returns the form view
      * @since [v1.0]
@@ -124,7 +124,7 @@ class ConsumablesController extends Controller
     /**
      * Returns a form view to edit a consumable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $consumableId
      *
@@ -147,7 +147,7 @@ class ConsumablesController extends Controller
     /**
      * Returns a form view to edit a consumable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  ImageUploadRequest  $request
      * @param  int  $consumableId
@@ -204,7 +204,7 @@ class ConsumablesController extends Controller
     /**
      * Delete a consumable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $consumableId
      *
@@ -230,7 +230,7 @@ class ConsumablesController extends Controller
     /**
      * Return a view to display component information.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @see ConsumablesController::getDataView() method that generates the JSON response
      * @since [v1.0]

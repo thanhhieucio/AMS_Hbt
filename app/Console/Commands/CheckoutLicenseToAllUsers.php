@@ -13,14 +13,14 @@ class CheckoutLicenseToAllUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:checkout-to-all {--license_id=} {--notify}';
+    protected $signature = 'hsbit:checkout-to-all {--license_id=} {--notify}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Checks out licenses to all users';
+    protected $description = 'Cấp phát license cho toàn bộ người dùng.';
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class CheckoutLicenseToAllUsers extends Command
         $notify = $this->option('notify');
 
         if (! $license_id) {
-            $this->error('ERROR: License ID is required.');
+            $this->error('LỖI: Bắt buộc có ID license.');
 
             return false;
         }
@@ -79,7 +79,7 @@ class CheckoutLicenseToAllUsers extends Command
 
             // If the license is valid, check that there is an available seat
             if ($license->availCount()->count() < 1) {
-                $this->error('ERROR: No available seats');
+                $this->error('LỖI: Không còn ghế khả dụng.');
 
                 return false;
             }

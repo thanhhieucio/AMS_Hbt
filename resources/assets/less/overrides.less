@@ -733,7 +733,7 @@ h4 {
  Instead, we use CSS to add the icon into the table header, which leaves the column selector
  "title" text as-is and hides the icon.
 
- See https://github.com/grokability/snipe-it/issues/7989
+ See https://github.com/thanhhieucio/HSB-IT/issues/7989
  */
 thead th.css-accessory > .th-inner,
 thead th.css-accessory-alt > .th-inner,
@@ -1300,7 +1300,7 @@ caption.tableCaption {
   > *:first-child { margin-top: 0; }
 }
 
-// via https://github.com/grokability/snipe-it/issues/11754
+// via https://github.com/thanhhieucio/HSB-IT/issues/11754
 .sidebar-toggle.btn {
   border-radius: 3px;
   box-shadow: none;
@@ -1463,7 +1463,7 @@ Radio toggle styles for permission settings and check/uncheck all
       }
     }
 
-    li.snipetab {
+    li.hsbtab {
       margin-right: 0 !important;
     }
 
@@ -1511,12 +1511,12 @@ Radio toggle styles for permission settings and check/uncheck all
 // color toward the theme's link tint on :hover / :focus, which reads black on
 // the red pill background. Pin white in every interactive state so the pill
 // stays legible.
-.snipe-advanced-search-tags-clear-all,
-.snipe-advanced-search-tags-clear-all:link,
-.snipe-advanced-search-tags-clear-all:visited,
-.snipe-advanced-search-tags-clear-all:hover,
-.snipe-advanced-search-tags-clear-all:focus,
-.snipe-advanced-search-tags-clear-all:active {
+.hsb-advanced-search-tags-clear-all,
+.hsb-advanced-search-tags-clear-all:link,
+.hsb-advanced-search-tags-clear-all:visited,
+.hsb-advanced-search-tags-clear-all:hover,
+.hsb-advanced-search-tags-clear-all:focus,
+.hsb-advanced-search-tags-clear-all:active {
   color: #fff !important;
   text-decoration: none;
 }
@@ -2214,7 +2214,7 @@ its trigger in both modes.
    inactive-step dots (#f5f5f5) both wash out against the dark-mode
    body. Bump to the theme's mid-gray so wizard steps stay visible
    on setup, importer modal, and the LDAP settings wizard. Selector
-   uses [data-theme="dark"] — the actual attribute Snipe-IT toggles
+   uses [data-theme="dark"] — the actual attribute HSB-IT toggles
    for dark mode. Disabled variant is called out explicitly because
    .bs-wizard-step.disabled > .bs-wizard-dot is a same-specificity
    rule from AdminLTE — the extra .disabled class ensures we win. */
@@ -2348,7 +2348,7 @@ table rows
 // CSS-sticky replacement for bootstrap-table's fixed-columns extension.
 //
 // Tables that pass use_sticky_css to <x-table> get one of these classes
-// (snipe-table--sticky-right-N / snipe-table--sticky-left-N) instead of the
+// (hsb-table--sticky-right-N / hsb-table--sticky-left-N) instead of the
 // extension's data-fixed-columns=true. The extension clones the table body
 // into an absolutely-positioned overlay, which drifts in height with
 // long-content rows (#19197) and misplaces tooltips when the container
@@ -2375,8 +2375,8 @@ table rows
 
 // Position-specific sticky rules. Recurses from @pos=1 up to @maxN.
 .gen-sticky-right(@maxN, @pos: 1) when (@pos <= @maxN) {
-    .snipe-table--sticky-right-@{maxN} > thead > tr > th:nth-last-child(@{pos}),
-    .snipe-table--sticky-right-@{maxN} > tbody > tr > td:nth-last-child(@{pos}) {
+    .hsb-table--sticky-right-@{maxN} > thead > tr > th:nth-last-child(@{pos}),
+    .hsb-table--sticky-right-@{maxN} > tbody > tr > td:nth-last-child(@{pos}) {
         position: sticky;
         right: var(~"--sticky-right-offset-@{pos}", 0);
         z-index: 2;
@@ -2391,8 +2391,8 @@ table rows
 .gen-sticky-right(5);
 
 .gen-sticky-left(@maxN, @pos: 1) when (@pos <= @maxN) {
-    .snipe-table--sticky-left-@{maxN} > thead > tr > th:nth-child(@{pos}),
-    .snipe-table--sticky-left-@{maxN} > tbody > tr > td:nth-child(@{pos}) {
+    .hsb-table--sticky-left-@{maxN} > thead > tr > th:nth-child(@{pos}),
+    .hsb-table--sticky-left-@{maxN} > tbody > tr > td:nth-child(@{pos}) {
         position: sticky;
         left: var(~"--sticky-left-offset-@{pos}", 0);
         z-index: 2;
@@ -2408,13 +2408,13 @@ table rows
 
 // Shared: header z-index bump and zebra-stripe overlay for all pinned columns.
 .gen-sticky-right-shared(@maxN) {
-    .snipe-table--sticky-right-@{maxN} > thead > tr > th:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN} > thead > tr > th:nth-last-child(-n+@{maxN}) {
         z-index: 3;
     }
-    .snipe-table--sticky-right-@{maxN}.table-striped > tbody > tr:nth-of-type(even) > td:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN}.table-striped > tbody > tr:nth-of-type(even) > td:nth-last-child(-n+@{maxN}) {
         background-image: linear-gradient(var(--table-stripe-bg), var(--table-stripe-bg));
     }
-    .snipe-table--sticky-right-@{maxN}.table-striped > tbody > tr:nth-of-type(odd) > td:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN}.table-striped > tbody > tr:nth-of-type(odd) > td:nth-last-child(-n+@{maxN}) {
         background-image: linear-gradient(var(--table-stripe-bg-alt), var(--table-stripe-bg-alt));
     }
 }
@@ -2425,13 +2425,13 @@ table rows
 .gen-sticky-right-shared(5);
 
 .gen-sticky-left-shared(@maxN) {
-    .snipe-table--sticky-left-@{maxN} > thead > tr > th:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN} > thead > tr > th:nth-child(-n+@{maxN}) {
         z-index: 3;
     }
-    .snipe-table--sticky-left-@{maxN}.table-striped > tbody > tr:nth-of-type(even) > td:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN}.table-striped > tbody > tr:nth-of-type(even) > td:nth-child(-n+@{maxN}) {
         background-image: linear-gradient(var(--table-stripe-bg), var(--table-stripe-bg));
     }
-    .snipe-table--sticky-left-@{maxN}.table-striped > tbody > tr:nth-of-type(odd) > td:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN}.table-striped > tbody > tr:nth-of-type(odd) > td:nth-child(-n+@{maxN}) {
         background-image: linear-gradient(var(--table-stripe-bg-alt), var(--table-stripe-bg-alt));
     }
 }
@@ -2442,7 +2442,7 @@ table rows
 .gen-sticky-left-shared(5);
 
 // Row-state overrides. Bootstrap-table adds `.selected` on click / checkbox
-// tick (see line ~2889 for the base rule), and Snipe-IT paints `.success`
+// tick (see line ~2889 for the base rule), and HSB-IT paints `.success`
 // and `.danger` rows for the audit / restore flows. Without these
 // overrides, the sticky columns keep their zebra background painted on top
 // of the row-selected color and read as unselected even when the rest of
@@ -2450,16 +2450,16 @@ table rows
 // background-image (to clear the linear-gradient stripe overlay from the
 // -shared mixins) so the sticky cells pick up the row's highlight state.
 .gen-sticky-right-row-state(@maxN) {
-    .snipe-table--sticky-right-@{maxN} > tbody > tr.selected > td:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN} > tbody > tr.selected > td:nth-last-child(-n+@{maxN}) {
         background-color: ~"light-dark(hsl(from var(--main-theme-color) h s calc(l + 40)),hsl(from var(--main-theme-color) h s calc(l - 40)))" !important;
         background-image: none !important;
     }
-    .snipe-table--sticky-right-@{maxN} > tbody > tr.success > td:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN} > tbody > tr.success > td:nth-last-child(-n+@{maxN}) {
         background-color: #00a65a !important;
         background-image: none !important;
         color: white !important;
     }
-    .snipe-table--sticky-right-@{maxN} > tbody > tr.danger > td:nth-last-child(-n+@{maxN}) {
+    .hsb-table--sticky-right-@{maxN} > tbody > tr.danger > td:nth-last-child(-n+@{maxN}) {
         background-color: var(--text-danger) !important;
         background-image: none !important;
         color: white !important;
@@ -2472,16 +2472,16 @@ table rows
 .gen-sticky-right-row-state(5);
 
 .gen-sticky-left-row-state(@maxN) {
-    .snipe-table--sticky-left-@{maxN} > tbody > tr.selected > td:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN} > tbody > tr.selected > td:nth-child(-n+@{maxN}) {
         background-color: ~"light-dark(hsl(from var(--main-theme-color) h s calc(l + 40)),hsl(from var(--main-theme-color) h s calc(l - 40)))" !important;
         background-image: none !important;
     }
-    .snipe-table--sticky-left-@{maxN} > tbody > tr.success > td:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN} > tbody > tr.success > td:nth-child(-n+@{maxN}) {
         background-color: #00a65a !important;
         background-image: none !important;
         color: white !important;
     }
-    .snipe-table--sticky-left-@{maxN} > tbody > tr.danger > td:nth-child(-n+@{maxN}) {
+    .hsb-table--sticky-left-@{maxN} > tbody > tr.danger > td:nth-child(-n+@{maxN}) {
         background-color: var(--text-danger) !important;
         background-image: none !important;
         color: white !important;
@@ -2502,22 +2502,22 @@ table rows
 // to review other columns before deciding what to check.
 // -----------------------------------------------------------------------------
 
-.snipe-table > thead > tr > th.bs-checkbox,
-.snipe-table > tbody > tr > td.bs-checkbox {
+.hsb-table > thead > tr > th.bs-checkbox,
+.hsb-table > tbody > tr > td.bs-checkbox {
     position: sticky;
     left: 0;
     z-index: 2;
     background-color: var(--box-bg);
 }
 
-.snipe-table.table-striped > tbody > tr:nth-of-type(even) > td.bs-checkbox {
+.hsb-table.table-striped > tbody > tr:nth-of-type(even) > td.bs-checkbox {
     background-image: linear-gradient(var(--table-stripe-bg), var(--table-stripe-bg));
 }
-.snipe-table.table-striped > tbody > tr:nth-of-type(odd) > td.bs-checkbox {
+.hsb-table.table-striped > tbody > tr:nth-of-type(odd) > td.bs-checkbox {
     background-image: linear-gradient(var(--table-stripe-bg-alt), var(--table-stripe-bg-alt));
 }
 
-.snipe-table > thead > tr > th.bs-checkbox {
+.hsb-table > thead > tr > th.bs-checkbox {
     z-index: 3;
 }
 
@@ -2527,16 +2527,16 @@ table rows
 // .danger highlights on the checkbox column, which is exactly the column
 // users click to toggle the selection state, so the mismatch is most
 // visible there.
-.snipe-table > tbody > tr.selected > td.bs-checkbox {
+.hsb-table > tbody > tr.selected > td.bs-checkbox {
     background-color: ~"light-dark(hsl(from var(--main-theme-color) h s calc(l + 40)),hsl(from var(--main-theme-color) h s calc(l - 40)))" !important;
     background-image: none !important;
 }
-.snipe-table > tbody > tr.success > td.bs-checkbox {
+.hsb-table > tbody > tr.success > td.bs-checkbox {
     background-color: #00a65a !important;
     background-image: none !important;
     color: white !important;
 }
-.snipe-table > tbody > tr.danger > td.bs-checkbox {
+.hsb-table > tbody > tr.danger > td.bs-checkbox {
     background-color: var(--text-danger) !important;
     background-image: none !important;
     color: white !important;
@@ -2552,7 +2552,7 @@ table rows
 // extra chrome.
 // -----------------------------------------------------------------------------
 
-.snipe-top-scrollbar {
+.hsb-top-scrollbar {
     overflow-x: auto;
     overflow-y: hidden;
     // Slightly taller than the OS scrollbar so the thumb is always
@@ -2561,7 +2561,7 @@ table rows
     margin-bottom: 4px;
 }
 
-.snipe-top-scrollbar-inner {
+.hsb-top-scrollbar-inner {
     // Height just enough to make the parent scrollable; width is set by
     // JS to match the underlying table's scrollWidth.
     height: 1px;
@@ -3121,7 +3121,7 @@ dl.table-display {
 // the rest of the app uses so login and password-reset screens carry
 // the tenant's chosen theme mode instead of a permanent light-mode
 // look. Also styles the .register-* classes since AdminLTE ships them
-// paired and future Snipe-IT signup flows may use them.
+// paired and future HSB-IT signup flows may use them.
 .login-page,
 .register-page {
   background: var(--color-bg);

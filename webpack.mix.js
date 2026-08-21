@@ -73,12 +73,12 @@ mix
 mix
     .copy('./node_modules/chart.js/dist/Chart.min.js', 'public/js/dist')
 
-// Combine main SnipeIT JS files
+// Combine main HSBIT JS files
 mix
   .js(
     [
-        "./resources/assets/js/snipeit.js",
-      "./resources/assets/js/snipeit_modals.js",
+        "./resources/assets/js/hsbit.js",
+      "./resources/assets/js/hsbit_modals.js",
       "./node_modules/canvas-confetti/dist/confetti.browser.js",
         // The general direction we have been going is to pull these via require() directly
         // But this runs in only one place, is only 24k, and doesn't break the sourcemaps

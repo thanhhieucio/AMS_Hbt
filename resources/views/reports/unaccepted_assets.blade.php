@@ -44,7 +44,7 @@
                 id="unacceptedAssetsReport"
                 data-fixed-number="false"
                 data-fixed-right-number="false"
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
                 data-export-options='{
                     "fileName": "maintenance-report-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

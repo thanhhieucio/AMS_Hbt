@@ -22,7 +22,7 @@
 
                         <table
                             data-toolbar="#toolbar"
-                            class="table table-striped snipe-table"
+                            class="table table-striped hsb-table"
                             id="requestedAssets"
                             data-id-table="requestedAssets"
                             data-cookie-id-table="requestedAssets"
@@ -50,11 +50,11 @@
                                     {{ csrf_field() }}
                                         <td>
                                         @if (($request->itemType() == "asset") && ($request->requestable))
-                                            <a href="{{ $request->requestable->getImageUrl() }}" data-toggle="lightbox" data-type="image"><img src="{{ $request->requestable->getImageUrl() }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
+                                            <a href="{{ $request->requestable->getImageUrl() }}" data-toggle="lightbox" data-type="image"><img src="{{ $request->requestable->getImageUrl() }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
                                         @elseif (($request->itemType() == "asset_model") && ($request->requestable))
-                                            <a href="{{ Storage::disk('public')->url(app('models_upload_path') . $request->requestable->image) }}" data-toggle="lightbox" data-type="image"><img src="{{ Storage::disk('public')->url(app('models_upload_path') . $request->requestable->image) }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
+                                            <a href="{{ Storage::disk('public')->url(app('models_upload_path') . $request->requestable->image) }}" data-toggle="lightbox" data-type="image"><img src="{{ Storage::disk('public')->url(app('models_upload_path') . $request->requestable->image) }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
                                         @elseif (($request->itemType() == "accessory") && ($request->requestable) && ($request->requestable->getImageUrl()))
-                                            <a href="{{ $request->requestable->getImageUrl() }}" data-toggle="lightbox" data-type="image"><img src="{{ $request->requestable->getImageUrl() }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
+                                            <a href="{{ $request->requestable->getImageUrl() }}" data-toggle="lightbox" data-type="image"><img src="{{ $request->requestable->getImageUrl() }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="{{ $request->requestable->name }}"></a>
                                         @endif
                                         </td>
                                         <td>

@@ -17,14 +17,14 @@ class SendExpirationAlerts extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:expiring-alerts {--expired-licenses}';
+    protected $signature = 'hsbit:expiring-alerts {--expired-licenses}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Check for expiring warrantees and service agreements, and sends out an alert email.';
+    protected $description = 'Kiểm tra bảo hành và hợp đồng dịch vụ sắp hết hạn rồi gửi email cảnh báo.';
 
     /**
      * Create a new command instance.

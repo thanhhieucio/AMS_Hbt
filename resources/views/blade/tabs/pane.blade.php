@@ -4,7 +4,7 @@
 
 <!-- tab-pane -->
 
-<div id="{{ $name }}" {{ $attributes->merge(['class' => 'snipetab-pane tab-pane fade']) }}>
+<div id="{{ $name }}" {{ $attributes->merge(['class' => 'hsbtab-pane tab-pane fade']) }}>
 
     <div class="row">
         <div class="col-md-12">

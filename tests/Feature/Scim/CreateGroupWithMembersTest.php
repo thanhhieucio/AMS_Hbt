@@ -17,7 +17,7 @@ class CreateGroupWithMembersTest extends TestCase
         // POST /scim/v2/Groups body that carries `members` alongside
         // displayName used to write pivot rows with a NULL group_id
         // and blow up with an integrity-constraint violation. The
-        // SnipeMutableCollection::add override saves the parent first.
+        // HsbMutableCollection::add override saves the parent first.
         Passport::actingAs(User::factory()->superuser()->create());
 
         $memberOne = User::factory()->create();

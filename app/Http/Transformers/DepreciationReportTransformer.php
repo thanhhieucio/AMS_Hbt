@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  * have the right to see additional info, and inspecting the API call here could disclose
  * info they're not supposed to see.
  *
- * @author [A. Gianotto] [<snipe@snipe.net>]
+ * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
  *
  * @since [v5.2.0]
  */

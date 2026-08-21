@@ -1,6 +1,6 @@
 {
-  "name": "grokability/snipe-it",
-  "description": "Open source asset management system built on Laravel.",
+  "name": "thanhhieucio/hsb-it",
+  "description": "Hệ thống quản lý tài sản CNTT HSB-IT xây dựng trên Laravel.",
   "keywords": [
     "assets",
     "asset-management",

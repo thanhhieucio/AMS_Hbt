@@ -18,7 +18,7 @@ use Livewire\Component;
  * observer-driven invalidation) never sit on the critical render path.
  *
  * The setting-gate lives on the tag in layouts/default.blade.php:
- * `@if ($snipeSettings->show_alerts_in_menu == '1') <livewire:alert-menu />`
+ * `@if ($hsbSettings->show_alerts_in_menu == '1') <livewire:alert-menu />`
  * so nothing about this component runs when the operator turned the
  * bell off.
  */

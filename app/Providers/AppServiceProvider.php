@@ -11,7 +11,7 @@ use App\Models\License;
 use App\Models\Location;
 use App\Models\Maintenance;
 use App\Models\Setting;
-use App\Models\SnipeSCIMConfig;
+use App\Models\HsbSCIMConfig;
 use App\Models\User;
 use App\Observers\AccessoryObserver;
 use App\Observers\AssetModelObserver;
@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap application services.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      *
@@ -112,7 +112,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(RollbarServiceProvider::class);
         }
 
-        $this->app->singleton('ArieTimmerman\Laravel\SCIMServer\SCIMConfig', SnipeSCIMConfig::class); // this overrides the default SCIM configuration with our own
+        $this->app->singleton('ArieTimmerman\Laravel\SCIMServer\SCIMConfig', HsbSCIMConfig::class); // this overrides the default SCIM configuration with our own
 
     }
 }

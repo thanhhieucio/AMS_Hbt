@@ -34,7 +34,7 @@
                                         <tr>
                                             <td>
                                                 @if ($asset->image_url ?? null)
-                                                    <img src="{{ $asset->image_url }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" alt="">
+                                                    <img src="{{ $asset->image_url }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" alt="">
                                                 @endif
                                             </td>
                                             <td>

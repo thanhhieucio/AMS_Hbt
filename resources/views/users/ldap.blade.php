@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        @if ($snipeSettings->ldap_enabled == 0)
+        @if ($hsbSettings->ldap_enabled == 0)
           {{ trans('admin/users/message.ldap_not_configured') }}
         @else
 
@@ -22,7 +22,7 @@
                             <p>
                                 <i class="fa-solid fa-lightbulb text-info"></i>
                                 <strong>
-                                    {!!  trans('admin/users/general.ldap_sync_intro', ['link' => 'https://snipe-it.readme.io/docs/ldap-sync#/']) !!}
+                                    {!!  trans('admin/users/general.ldap_sync_intro', ['link' => 'https://docs.hsb.edu.vn/hsb-it/docs/ldap-sync#/']) !!}
                                 </strong>
                             </p>
                         </div>
@@ -69,7 +69,7 @@
                     data-show-refresh="false"
                     id="customFieldsTable"
                     data-advanced-search="false"
-                    class="table table-striped snipe-table"
+                    class="table table-striped hsb-table"
                     data-export-options='{
                     "fileName": "ldap-sync-results-{{ date('Y-m-d') }}"
                 }'>

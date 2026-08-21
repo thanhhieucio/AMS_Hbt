@@ -1,8 +1,8 @@
 /* 
  * 
- * Snipe-IT Universal Modal support
+ * HSB-IT Universal Modal support
  * 
- * Enables modal dialogs to create sub-resources throughout Snipe-IT
+ * Enables modal dialogs to create sub-resources throughout HSB-IT
  * 
  */
 
@@ -75,7 +75,7 @@ $(function () {
         //do we need to re-select2 this, after load? Probably.
         $('#createModal').find('select.select2').select2();
         // Initialize the ajaxy select2 with images.
-        // This is a copy/paste of the code from snipeit.js, would be great to only have this in one place.
+        // This is a copy/paste of the code from hsbit.js, would be great to only have this in one place.
 
         $('.js-data-ajax').each( function (i,item) {
             var link = $(item);
@@ -214,7 +214,7 @@ function formatDatalistSafe(datalist) {
          * We are specifically chosing empty alt-text below, because this 
          * image conveys no additional information, relative to the text
          * that will *always* be there in any select2 list that is in use
-         * in Snipe-IT. If that changes, we would probably want to change
+         * in HSB-IT. If that changes, we would probably want to change
          * some signatures of some functions, but right now, we don't want
          * screen readers to say "HP SuperJet 5000, .... picture of HP 
          * SuperJet 5000..." and so on, for every single row in a list of

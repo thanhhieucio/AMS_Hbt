@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  *
  * @version v1.0
  */
-class Actionlog extends SnipeModel
+class Actionlog extends HsbModel
 {
     use CompanyableTrait;
     use HasFactory;
@@ -117,7 +117,7 @@ class Actionlog extends SnipeModel
     /**
      * Override from Builder to automatically add the company
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -206,7 +206,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> item relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -220,7 +220,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> company relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -234,7 +234,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> asset relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -248,7 +248,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> license relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -262,7 +262,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> consumable relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -276,7 +276,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> consumable relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -290,7 +290,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> components relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -304,7 +304,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> item type relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -322,7 +322,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> target type relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -340,7 +340,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> userlog relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -354,7 +354,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> admin user relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -369,7 +369,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> user relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -384,7 +384,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> target relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -419,7 +419,7 @@ class Actionlog extends SnipeModel
     /**
      * Establishes the actionlog -> location relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -433,7 +433,7 @@ class Actionlog extends SnipeModel
     /**
      * Check if the file exists, and if it does, force a download
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -453,7 +453,7 @@ class Actionlog extends SnipeModel
     /**
      * Saves the log record with the action type
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -479,7 +479,7 @@ class Actionlog extends SnipeModel
     /**
      * Calculate the number of days until the next audit
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v4.0]
      *
@@ -514,7 +514,7 @@ class Actionlog extends SnipeModel
      *
      * @since  [v4.0]
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      */
     public function calcNextAuditDate($monthInterval = 12, $asset = null)
     {
@@ -530,7 +530,7 @@ class Actionlog extends SnipeModel
     /**
      * Determines what the type of request is so we can log it to the action_log
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  v6.3.0
      */
@@ -568,7 +568,7 @@ class Actionlog extends SnipeModel
     public function logUploadDelete($object, $filename)
     {
         $log = new Actionlog;
-        $log->item_type = $object instanceof SnipeModel ? get_class($object) : $object;
+        $log->item_type = $object instanceof HsbModel ? get_class($object) : $object;
         $log->item_id = $object->id;
         $log->created_by = auth()->id();
         $log->target_id = null;

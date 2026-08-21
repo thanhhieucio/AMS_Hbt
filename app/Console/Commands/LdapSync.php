@@ -19,14 +19,14 @@ class LdapSync extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:ldap-sync {--location=} {--location_id=*} {--base_dn=} {--filter=} {--delete} {--summary} {--json_summary}';
+    protected $signature = 'hsbit:ldap-sync {--location=} {--location_id=*} {--base_dn=} {--filter=} {--delete} {--summary} {--json_summary}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command line LDAP sync';
+    protected $description = 'Đồng bộ LDAP từ dòng lệnh.';
 
     /**
      * Create a new command instance.
@@ -55,7 +55,7 @@ class LdapSync extends Command
         ini_set('max_execution_time', env('LDAP_TIME_LIM', 600)); // 600 seconds = 10 minutes
         ini_set('memory_limit', env('LDAP_MEM_LIM', '500M'));
 
-        // Map the LDAP attributes to the Snipe-IT user fields.
+        // Map the LDAP attributes to the HSB-IT user fields.
         $ldap_map = [
             'username' => Setting::getSettings()->ldap_username_field,
             'last_name' => Setting::getSettings()->ldap_lname_field,
@@ -241,7 +241,7 @@ class LdapSync extends Command
 
         }
 
-        // Assign the mapped LDAP attributes for each user to the Snipe-IT user fields
+        // Assign the mapped LDAP attributes for each user to the HSB-IT user fields
         for ($i = 0; $i < $results['count']; $i++) {
             $item = [];
             $item['username'] = $results[$i][$ldap_map['username']][0] ?? null;
@@ -535,7 +535,7 @@ class LdapSync extends Command
         if ($this->option('summary')) {
             for ($x = 0; $x < count($summary); $x++) {
                 if ($summary[$x]['status'] == 'error') {
-                    $this->error('ERROR: '.$summary[$x]['firstname'].' '.$summary[$x]['lastname'].' (username:  '.$summary[$x]['username'].') was not imported: '.$summary[$x]['note']);
+                    $this->error('LỖI: '.$summary[$x]['firstname'].' '.$summary[$x]['lastname'].' (username:  '.$summary[$x]['username'].') chưa được nhập: '.$summary[$x]['note']);
                 } else {
                     $this->info('User '.$summary[$x]['firstname'].' '.$summary[$x]['lastname'].' (username:  '.$summary[$x]['username'].') was '.strtoupper($summary[$x]['createorupdate']).'.');
                 }

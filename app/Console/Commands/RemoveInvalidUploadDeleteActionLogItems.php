@@ -12,14 +12,14 @@ class RemoveInvalidUploadDeleteActionLogItems extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:remove-invalid-upload-delete-action-log-items';
+    protected $signature = 'hsbit:remove-invalid-upload-delete-action-log-items';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Permanently remove invalid "upload deleted" action log items that have a null filename. This command can potentially result in deleted files being "resurrected" in the UI.';
+    protected $description = 'Xóa vĩnh viễn các dòng nhật ký xóa upload không hợp lệ có filename rỗng. Lệnh này có thể làm tệp đã xóa xuất hiện lại trong giao diện.';
 
     /**
      * Execute the console command.
@@ -47,7 +47,7 @@ class RemoveInvalidUploadDeleteActionLogItems extends Command
             $log->deleted_at,
         ])->toArray());
 
-        if ($this->confirm("Do you wish to remove {$invalidLogs->count()} log items?")) {
+        if ($this->confirm("Bạn có muốn xóa {$invalidLogs->count()} dòng nhật ký không?")) {
             $invalidLogs->each(fn ($log) => $log->forceDelete());
         }
 

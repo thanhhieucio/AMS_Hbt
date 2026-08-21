@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * This controller handles all actions related to Custom Asset Fields for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @todo Improve documentation here.
  * @todo Check for raw DB queries and try to convert them to query builder statements
@@ -125,7 +125,7 @@ class CustomFieldsetsController extends Controller
     /**
      * Presents edit form for fieldset
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $id
      *
@@ -141,7 +141,7 @@ class CustomFieldsetsController extends Controller
     /**
      * Saves updated fieldset data
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @param  int  $id
      *
@@ -221,7 +221,7 @@ class CustomFieldsetsController extends Controller
     /**
      * Set the field in a fieldset to required
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.0]
      */
@@ -240,7 +240,7 @@ class CustomFieldsetsController extends Controller
     /**
      * Set the field in a fieldset to optional
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.0]
      */

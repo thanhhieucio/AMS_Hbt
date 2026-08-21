@@ -26,7 +26,7 @@ return [
     'use_default_eula_disabled' => '<del>Sử dụng giá trị EULA mặc định để thay thế.</del> No primary default EULA is set. Please add one in Settings.',
     'use_default_eula_column' => 'Sử dụng EULA mặc định',
     'import_require_acceptance' => 'Require Acceptance',
-    'import_checkin_email' => 'Send Checkin Email',
+    'import_checkin_email' => 'Gửi email thu hồi',
     'import_eula_text' => 'EULA text',
     'import_category_type' => 'Kiểu danh mục',
     'import_alert_on_response' => 'Alert on Response',

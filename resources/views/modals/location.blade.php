@@ -1,4 +1,4 @@
-{{-- See snipeit_modals.js for what powers this --}}
+{{-- See hsbit_modals.js for what powers this --}}
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -16,7 +16,7 @@
                 </div>
 
                 <!-- Setup of default company, taken from asset creator if scoped locations are activated in the settings -->
-				@if (($snipeSettings->scope_locations_fmcs == '1') && ($user->companies->isNotEmpty()))
+				@if (($hsbSettings->scope_locations_fmcs == '1') && ($user->companies->isNotEmpty()))
 					<input type="hidden" name="company_id" id='modal-company' value='{{ $user->companies->first()->id }}' class="form-control">
 				@endif
 

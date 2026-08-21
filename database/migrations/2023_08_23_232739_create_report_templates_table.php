@@ -26,7 +26,7 @@ class CreateReportTemplatesTable extends Migration
              * for the systems that had successfully run the migration:
              * 2025_01_06_210534_change_report_templates_options_to_column_text_field.
              *
-             * https://github.com/grokability/snipe-it/issues/16015
+             * https://github.com/thanhhieucio/HSB-IT/issues/16015
              */
             $table->text('options');
 

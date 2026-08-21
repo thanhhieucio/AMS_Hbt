@@ -88,5 +88,5 @@
 
 {{ trans('mail.best_regards') }}<br>
 
-{{ $snipeSettings->site_name }}
+{{ $hsbSettings->site_name }}
 </x-mail::message>

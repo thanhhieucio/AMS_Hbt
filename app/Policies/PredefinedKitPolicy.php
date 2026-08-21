@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class PredefinedKitPolicy extends SnipePermissionsPolicy
+class PredefinedKitPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

@@ -71,7 +71,7 @@
                         name="requestable"
                         :label="trans('admin/hardware/general.requestable')"
                         :item="$asset"
-                        data-user-preference-key="snipeit.checkout.requestable_default.{{ auth()->id() ?? 'guest' }}"
+                        data-user-preference-key="hsbit.checkout.requestable_default.{{ auth()->id() ?? 'guest' }}"
                         data-had-old-input="{{ ((bool) old('requestable', false)) || session()->has('_old_input.requestable') ? '1' : '0' }}"
                     />
 
@@ -110,7 +110,7 @@
                         name="note"
                     >
                         <x-slot:input>
-                            <textarea class="col-md-6 form-control" id="note" name="note" @required($snipeSettings->require_checkinout_notes)>{{ old('note', $asset->note) }}</textarea>
+                            <textarea class="col-md-6 form-control" id="note" name="note" @required($hsbSettings->require_checkinout_notes)>{{ old('note', $asset->note) }}</textarea>
                         </x-slot:input>
                     </x-form.row>
 
@@ -120,7 +120,7 @@
                         'show_custom_fields_type' => 'checkout',
                     ])
 
-                    @if ($asset->requireAcceptance() || (string) $snipeSettings->require_accept_signature === '1' || $asset->getEula() || ($snipeSettings->webhook_endpoint != ''))
+                    @if ($asset->requireAcceptance() || (string) $hsbSettings->require_accept_signature === '1' || $asset->getEula() || ($hsbSettings->webhook_endpoint != ''))
                         <div class="form-group notification-callout" style="display:none;">
                             <div class="col-md-8 col-md-offset-3">
                                 <x-callout type="info" role="status">
@@ -131,7 +131,7 @@
                                         <br>
                                     @endif
 
-                                    @if ((string) $snipeSettings->require_accept_signature === '1')
+                                    @if ((string) $hsbSettings->require_accept_signature === '1')
                                             <x-icon type="signature" class="fa-fw"/>
                                         {{ trans('admin/categories/general.required_signature') }}
                                         <br>
@@ -149,7 +149,7 @@
                                         <br>
                                     @endif
 
-                                    @if ($snipeSettings->webhook_endpoint != '')
+                                    @if ($hsbSettings->webhook_endpoint != '')
                                         <i class="fab fa-slack fa-fw" aria-hidden="true"></i>
                                         {{ trans('general.webhook_msg_note') }}
                                     @endif
@@ -157,7 +157,7 @@
                             </div>
 
                             <!-- Sign in place checkbox -->
-                            @if ($asset->requireAcceptance() || (string) $snipeSettings->require_accept_signature === '1')
+                            @if ($asset->requireAcceptance() || (string) $hsbSettings->require_accept_signature === '1')
                                 <div id="sign_in_place_div" class="col-md-7 col-md-offset-3">
                                     <label class="form-control">
                                         <input type="checkbox" value="1" name="sign_in_place" @checked(old('sign_in_place', session('sign_in_place', false))) aria-label="sign_in_place">

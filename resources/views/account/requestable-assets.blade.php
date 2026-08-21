@@ -66,7 +66,7 @@
                                 data-bulk-button-id="#bulkAssetEditButton"
                                 data-bulk-form-id="#assetsBulkForm"
                                 id="assetsListingTable"
-                                class="table table-striped snipe-table"
+                                class="table table-striped hsb-table"
                                 data-url="{{ route('api.assets.requestable', ['requestable' => true]) }}">
 
                                 <thead>
@@ -101,7 +101,7 @@
                         <div class="col-md-12">
                                 <table
                                         data-toolbar="#toolbar"
-                                        class="table table-striped snipe-table"
+                                        class="table table-striped hsb-table"
                                         id="table"
                                         data-id-table="advancedTable"
                                         data-cookie-id-table="requestableAssets">
@@ -123,7 +123,7 @@
 
                                                     @if (($requestableModel->image) && ($requestableModel->getImageUrl()))
                                                         <a href="{{ $requestableModel->getImageUrl() }}" data-toggle="lightbox" data-type="image">
-                                                            <img src="{{ $requestableModel->getImageUrl() }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="">
+                                                            <img src="{{ $requestableModel->getImageUrl() }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive" alt="">
                                                         </a>
                                                     @endif
 
@@ -166,7 +166,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <table
-                                    class="table table-striped snipe-table"
+                                    class="table table-striped hsb-table"
                                     id="requestableAccessoriesTable"
                                     data-cookie-id-table="requestableAccessories">
                                 <thead>
@@ -185,7 +185,7 @@
                                             <td>
                                                 @if (($requestableAccessory->image) && ($requestableAccessory->getImageUrl()))
                                                     <a href="{{ $requestableAccessory->getImageUrl() }}" data-toggle="lightbox" data-type="image">
-                                                        <img src="{{ $requestableAccessory->getImageUrl() }}" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive">
+                                                        <img src="{{ $requestableAccessory->getImageUrl() }}" style="max-height: {{ $hsbSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive">
                                                     </a>
                                                 @endif
                                             </td>

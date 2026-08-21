@@ -69,5 +69,5 @@ return [
         'radio' => 'Radio gumbi',
     ],
     'markdown_supported' => 'Markdown is supported',
-    'general_help_text' => 'Custom fields store additional information not covered by the default asset fields. <a href="https://snipe-it.readme.io/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
+    'general_help_text' => 'Custom fields store additional information not covered by the default asset fields. <a href="https://docs.hsb.edu.vn/hsb-it/docs/custom-fields#/"><i class="fa fa-external-link"></i></a>.',
 ];

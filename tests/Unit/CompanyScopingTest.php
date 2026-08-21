@@ -227,7 +227,7 @@ class CompanyScopingTest extends TestCase
     /**
      * FMCS + floaters on: null-company users are visible to a
      * company-scoped caller. This mirrors the item-level floater rule
-     * documented at https://snipe-it.readme.io/docs/multi-tenancy-ish and
+     * documented at https://docs.hsb.edu.vn/hsb-it/docs/multi-tenancy-ish and
      * is required so checkout dropdowns can offer floater users as valid
      * targets under the "items from any company can be checked out to
      * targets with no company assignment" policy.
@@ -368,7 +368,7 @@ class CompanyScopingTest extends TestCase
 
         // FMCS on, floater on: company-scoped caller sees their own pivot
         // companies AND null-company (floater) users, matching the docs at
-        // https://snipe-it.readme.io/docs/multi-tenancy-ish. They still do
+        // https://docs.hsb.edu.vn/hsb-it/docs/multi-tenancy-ish. They still do
         // NOT see users pivoted to other companies (that was the ticket 56305
         // regression). Floater caller sees everyone. Superuser sees everyone.
         $this->settings->enableFloaterMode();

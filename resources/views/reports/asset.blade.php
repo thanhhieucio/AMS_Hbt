@@ -27,7 +27,7 @@
 
                     <table
                     name="assetsReport"
-                    class="table table-striped snipe-table"
+                    class="table table-striped hsb-table"
                     data-advanced-search="false"
                     id="table"
                     data-url="{{route('api.assets.index', array(''=>e($requestStatus),'order_number'=>e($requestOrderNumber), 'status_id'=>e($requestStatusId), 'report'=>'true'))}}"

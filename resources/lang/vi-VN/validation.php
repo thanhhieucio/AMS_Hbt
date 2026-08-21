@@ -232,7 +232,7 @@ return [
     */
 
     'attributes' => [
-        'serials.*' => 'Serial Number',
+        'serials.*' => 'Số sê-ri',
         'asset_tags.*' => 'Thẻ tài sản',
     ],
 

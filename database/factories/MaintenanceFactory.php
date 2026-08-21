@@ -30,7 +30,7 @@ class MaintenanceFactory extends Factory
         return [
             // Set location_id to rtd_location_id on the generated asset so
             // seeded maintenance rows point at assets with a real location,
-            // matching what snipeit:sync-asset-locations would have set.
+            // matching what hsbit:sync-asset-locations would have set.
             'asset_id' => Asset::factory()->laptopZenbook()->afterMaking(function (Asset $asset) {
                 if ($asset->location_id === null) {
                     $asset->location_id = $asset->rtd_location_id;

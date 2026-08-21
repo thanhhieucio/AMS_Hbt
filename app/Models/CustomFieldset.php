@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Watson\Validating\ValidatingTrait;
 
-class CustomFieldset extends SnipeModel
+class CustomFieldset extends HsbModel
 {
     use HasFactory;
     use Presentable;
@@ -114,7 +114,7 @@ class CustomFieldset extends SnipeModel
      * Determine the validation rules we should apply based on the
      * custom field format
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      */

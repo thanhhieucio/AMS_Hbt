@@ -22,7 +22,7 @@
                   data-show-refresh="false"
                   data-sort-order="asc"
                   id="pendingAcceptances"
-                  class="table table-striped snipe-table"
+                  class="table table-striped hsb-table"
                   data-export-options='{
                   "fileName": "my-pending-acceptances-{{ date('Y-m-d') }}",
                   "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

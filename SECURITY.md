@@ -1,41 +1,29 @@
-# Security Policy
+# Chính sách bảo mật
 
-We take security issues very seriously, and will always attempt to address any 
-vulnerabilities as quickly as possible. 
+HSB-IT xử lý vấn đề bảo mật nghiêm túc và luôn cố gắng khắc phục lỗ hổng nhanh nhất có thể.
 
-## Supported Versions
+## Phiên bản được hỗ trợ
 
-We try to make a reasonable effort to support older versions of Snipe-IT, 
-however there are times when library dependencies and/or PHP/MySQL dependencies 
-make it impossible to backport security fixes on older versions. 
+HSB-IT cố gắng hỗ trợ hợp lý các phiên bản cũ. Tuy nhiên, có những trường hợp dependency thư viện hoặc yêu cầu PHP/MySQL khiến việc backport bản vá bảo mật cho phiên bản cũ không khả thi.
 
-| Version | Supported          |
-|---------|--------------------|
-| 8.x     | :white_check_mark: |
-| 7.x     | :x:                |
-| 6.x     | :x:                |
-| 5.1.x   | :x:                |
-| 5.0.x   | :x:                |
-| 4.0.x   | :x:                |
-| < 4.0   | :x:                |
+| Phiên bản | Hỗ trợ             |
+|----------|--------------------|
+| 8.x      | :white_check_mark: |
+| 7.x      | :x:                |
+| 6.x      | :x:                |
+| 5.1.x    | :x:                |
+| 5.0.x    | :x:                |
+| 4.0.x    | :x:                |
+| < 4.0    | :x:                |
 
-## Reporting a Vulnerability
+## Báo cáo lỗ hổng
 
-Security vulnerabilities should be sent to security@snipeitapp.com. You can typically expect a 
-response within two business days, and we typically have fixes out in under a week from the initial disclosure.
+Vui lòng gửi lỗ hổng bảo mật tới `security@hsb.edu.vn`. Thông thường bạn có thể nhận phản hồi trong vòng hai ngày làm việc; với các lỗi đã xác nhận, mục tiêu là phát hành bản sửa trong khoảng một tuần kể từ khi nhận thông tin ban đầu.
 
-This obviously varies based on the severity of the security issue and the difficulty in remediation, but those have
-historically been the timelines we work around.
+Thời gian thực tế phụ thuộc vào mức độ nghiêm trọng và độ khó khi khắc phục. Chúng tôi mong bạn không công bố công khai lỗ hổng trước khi HSB-IT có thời gian xử lý và gắn tag bản phát hành, nhằm bảo vệ người dùng.
 
-We do ask that you do not disclose the vulnerability publicly until we have had a chance to address it and tag a release
-so that we can protect our users, and we will work
-with you to coordinate a public disclosure once we have a fix out. We will also work with you to ensure that you receive
-appropriate credit for the discovery of the vulnerability, if you would like to be credited. (Please provide a GitHub
-username or other information if you would like to be credited, and please let us know if you would like to remain
-anonymous.)
+Khi đã có bản sửa, chúng tôi sẽ phối hợp với bạn để công bố có trách nhiệm. Nếu bạn muốn được ghi nhận công lao phát hiện lỗ hổng, hãy gửi kèm GitHub username hoặc thông tin phù hợp. Nếu muốn ẩn danh, vui lòng nói rõ trong báo cáo.
 
-For responsible disclosure, we ask that you give us at least __90 days__ to address the issue before disclosing it
-publicly,
-but we will work with you if you need to disclose it sooner than that.
+Với công bố có trách nhiệm, vui lòng cho HSB-IT ít nhất **90 ngày** để xử lý trước khi công bố công khai. Nếu bạn cần công bố sớm hơn, hãy trao đổi để hai bên thống nhất lịch phù hợp.
 
-For a full breakdown of our security policies, please see https://snipeitapp.com/security.
+Chi tiết chính sách bảo mật: https://hsb.edu.vn/security.

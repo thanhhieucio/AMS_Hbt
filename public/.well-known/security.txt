@@ -1,7 +1,7 @@
-Contact: mailto:security@snipeitapp.com
+Contact: mailto:security@hsb.edu.vn
 Expires: 2025-05-16T11:30:00.000Z
-Acknowledgments: https://snipeitapp.com/thanks
+Acknowledgments: https://hsb.edu.vn/thanks
 Preferred-Languages: en-US, pt-PT, de-DE
-Canonical: https://github.com/grokability/snipe-it/blob/master/public/.well-known/security.txt
-Policy: https://snipeitapp.com/security
-Hiring: https://snipeitapp.com/company/careers
+Canonical: https://github.com/thanhhieucio/HSB-IT/blob/master/public/.well-known/security.txt
+Policy: https://hsb.edu.vn/security
+Hiring: https://hsb.edu.vn/company/careers

@@ -12,14 +12,14 @@ class ReEncodeCustomFieldNames extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:regenerate-fieldnames';
+    protected $signature = 'hsbit:regenerate-fieldnames';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This utility will regenerate the column names for custom fields. It should typically only be needed when a PHP upgrade changed the behavior of the unicode conversion between versions.';
+    protected $description = 'Tạo lại tên cột cho trường tùy chỉnh. Thường chỉ cần khi nâng cấp PHP làm thay đổi cách chuyển đổi Unicode.';
 
     /**
      * Create a new command instance.
@@ -48,7 +48,7 @@ class ReEncodeCustomFieldNames extends Command
      */
     public function handle()
     {
-        if ($this->confirm('This will regenerate all of the custom field database fieldnames in your database. THIS WILL CHANGE YOUR SCHEMA AND SHOULD NOT BE DONE WITHOUT MAKING A BACKUP FIRST. Do you wish to continue?')) {
+        if ($this->confirm('Thao tác này sẽ tạo lại toàn bộ tên trường cơ sở dữ liệu của trường tùy chỉnh. VIỆC NÀY SẼ THAY ĐỔI SCHEMA VÀ KHÔNG NÊN THỰC HIỆN NẾU CHƯA SAO LƯU. Bạn có muốn tiếp tục?')) {
 
             /** Get all of the custom fields */
             $fields = CustomField::get();
@@ -59,17 +59,17 @@ class ReEncodeCustomFieldNames extends Command
             /** Loop through the columns on the assets table */
             foreach ($asset_columns as $asset_column) {
 
-                /** Add ones that start with _snipeit_ to an array for handling */
-                if (strpos($asset_column, '_snipeit_') === 0) {
+                /** Add ones that start with _hsbit_ to an array for handling */
+                if (strpos($asset_column, '_hsbit_') === 0) {
 
                     /**
                      * Get the ID of the custom field based on the fieldname.
-                     * For example, in _snipeit_mac_address_1, we grab the 1 because we know
+                     * For example, in _hsbit_mac_address_1, we grab the 1 because we know
                      * that's the ID of the custom field that created the column.
                      * Then use that ID as the array key for use comparing the actual assets field name
                      * and the db_column value from the custom fields table.
                      */
-                    $last_part = substr(strrchr($asset_column, '_snipeit_'), 1);
+                    $last_part = substr(strrchr($asset_column, '_hsbit_'), 1);
                     $custom_field_columns[$last_part] = $asset_column;
 
                 }
@@ -80,7 +80,7 @@ class ReEncodeCustomFieldNames extends Command
 
                 /** The assets table has the column it should have, all is well */
                 if ($field->db_column == $field->convertUnicodeDbSlug() && \Schema::hasColumn('assets', $field->convertUnicodeDbSlug())) {
-                    $this->info('-- ✓ This field exists on the assets table and the value for db_column matches in the custom_fields table.');
+                    $this->info('-- ✓ Trường này tồn tại trong bảng assets và giá trị db_column khớp với bảng custom_fields.');
 
                     /**
                      * There is a mismatch between the fieldname on the assets table and
@@ -114,7 +114,7 @@ class ReEncodeCustomFieldNames extends Command
                         $field->save();
 
                     } else {
-                        $this->warn('-- ✘ WARNING: There is no field on the assets table ending in  '.$field->id.'. This may require more in-depth investigation and may mean the schema was altered manually.');
+                        $this->warn('-- ✘ CẢNH BÁO: Không có trường nào trong bảng assets kết thúc bằng  '.$field->id.'. Có thể cần kiểm tra sâu hơn và schema có thể đã bị chỉnh sửa thủ công.');
                     }
                 }
 

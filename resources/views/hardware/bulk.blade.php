@@ -169,7 +169,7 @@
                     input_div_class="input-group col-md-3"
                 >
                     <x-slot:input>
-                        <span class="input-group-addon">{{ $snipeSettings->default_currency }}</span>
+                        <span class="input-group-addon">{{ $hsbSettings->default_currency }}</span>
                         <input type="text" class="form-control" pattern="^\d+([.,]\d+)?$" maxlength="10" placeholder="{{ trans('admin/hardware/form.cost') }}" name="purchase_cost" id="purchase_cost" value="{{ old('purchase_cost') }}">
                     </x-slot:input>
                 </x-form.row>

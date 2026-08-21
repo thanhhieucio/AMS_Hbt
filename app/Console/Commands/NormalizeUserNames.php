@@ -12,14 +12,14 @@ class NormalizeUserNames extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:normalize-names';
+    protected $signature = 'hsbit:normalize-names';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Normalizes weirdly formatted names as first-letter upercased';
+    protected $description = 'Chuẩn hóa tên bị định dạng bất thường về dạng viết hoa chữ cái đầu.';
 
     /**
      * Create a new command instance.

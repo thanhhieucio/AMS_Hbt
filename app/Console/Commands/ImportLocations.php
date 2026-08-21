@@ -13,14 +13,14 @@ class ImportLocations extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:import-locations {filename}';
+    protected $signature = 'hsbit:import-locations {filename}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import locations and their parents';
+    protected $description = 'Nhập danh sách địa điểm và địa điểm cha.';
 
     /**
      * Create a new command instance.
@@ -92,7 +92,7 @@ class ImportLocations extends Command
                 $location->name = trim($row['Name']);
                 $this->info('Checking location: '.$location->name);
             } else {
-                $this->error('Location name is required and is missing from at least one row in this dataset. Check your CSV for extra trailing rows and try again.');
+                $this->error('Tên địa điểm là bắt buộc và đang bị thiếu ở ít nhất một dòng dữ liệu. Kiểm tra lại CSV để loại bỏ dòng thừa ở cuối rồi thử lại.');
 
                 return false;
             }

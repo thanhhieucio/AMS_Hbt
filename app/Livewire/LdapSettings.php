@@ -109,7 +109,7 @@ class LdapSettings extends Component
 
     public string $ldap_auth_filter_query = '';
 
-    // Step 3: Attribute mapping. LDAP attribute names Snipe-IT reads
+    // Step 3: Attribute mapping. LDAP attribute names HSB-IT reads
     // from each entry. Only ldap_username_field + ldap_fname_field are
     // required per the legacy StoreLdapSettings rules.
     public string $ldap_username_field = '';
@@ -761,7 +761,7 @@ class LdapSettings extends Component
     // === Step 3: Attribute mapping ========================================= =============================
 
     /**
-     * Snipe-IT field name → LDAP-attribute-name Livewire property. Used
+     * HSB-IT field name → LDAP-attribute-name Livewire property. Used
      * both by the preview-table render and by any future sync-side code
      * that wants a canonical map of "what field goes where." Order here
      * defines the order in the preview table.
@@ -970,16 +970,16 @@ class LdapSettings extends Component
         $attributes = array_change_key_case((array) ldap_get_attributes($conn, $entry));
         @ldap_unbind($conn);
 
-        // Build the preview table: for each Snipe-IT field, resolve the
+        // Build the preview table: for each HSB-IT field, resolve the
         // configured LDAP attribute name to its actual value (or a
         // "not mapped" / "not present" marker for blade to render
         // muted). Attribute names are compared lowercase. LDAP is
         // case-insensitive on attribute names.
         $preview = [];
-        foreach ($this->attributeMap() as $snipeField => $ldapAttr) {
+        foreach ($this->attributeMap() as $hsbField => $ldapAttr) {
             $ldapAttrLower = trim(strtolower((string) $ldapAttr));
             if ($ldapAttrLower === '') {
-                $preview[$snipeField] = ['attr' => null, 'value' => null];
+                $preview[$hsbField] = ['attr' => null, 'value' => null];
 
                 continue;
             }
@@ -987,7 +987,7 @@ class LdapSettings extends Component
             if (isset($attributes[$ldapAttrLower][0])) {
                 $value = $attributes[$ldapAttrLower][0];
             }
-            $preview[$snipeField] = ['attr' => $ldapAttr, 'value' => $value];
+            $preview[$hsbField] = ['attr' => $ldapAttr, 'value' => $value];
         }
 
         $this->step3TestDn = (string) $dn;
@@ -1280,7 +1280,7 @@ class LdapSettings extends Component
         // completion summary (step 5) instead of redirecting away.
         // The summary lists sync-scheduling options. The wizard only
         // enabled login, not the recurring user sync, so pointing the
-        // admin at cron / Task Scheduler / manual `snipeit:ldap-sync`
+        // admin at cron / Task Scheduler / manual `hsbit:ldap-sync`
         // right after enable is the useful hand-off.
         if ($this->currentStep === 4) {
             $this->highestStepReached = 5;
@@ -1332,7 +1332,7 @@ class LdapSettings extends Component
             // IETF-reserved ranges.
             // While this makes sense in some cases, we control that via the
             // TEST_ALLOW_PRIVATE_IPS env var, since some folks will legitimately need
-            // their install of Snipe-IT to talk to internal networks
+            // their install of HSB-IT to talk to internal networks
             if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
                 return trans('admin/settings/general.ldap_wizard.test.private_ip_blocked', ['host' => $host, 'ip' => $ip]);
             }

@@ -13,14 +13,14 @@ class CheckinLicensesFromAllUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:checkin-from-all {--license_id=} {--notify}';
+    protected $signature = 'hsbit:checkin-from-all {--license_id=} {--notify}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Checks in licenses from all users';
+    protected $description = 'Thu hồi license từ toàn bộ người dùng.';
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class CheckinLicensesFromAllUsers extends Command
         $notify = $this->option('notify');
 
         if (! $license_id) {
-            $this->error('ERROR: License ID is required.');
+            $this->error('LỖI: Bắt buộc có ID license.');
 
             return false;
         }
@@ -79,7 +79,7 @@ class CheckinLicensesFromAllUsers extends Command
                 }
 
                 // Log the checkin
-                $seat->logCheckin($seat->user, 'Checked in via cli tool');
+                $seat->logCheckin($seat->user, 'Thu hồi bằng công cụ CLI');
             }
         }
     }

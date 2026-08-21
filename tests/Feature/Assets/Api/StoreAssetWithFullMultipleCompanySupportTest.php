@@ -14,7 +14,7 @@ class StoreAssetWithFullMultipleCompanySupportTest extends TestCase
     use ProvidesDataForFullMultipleCompanySupportTesting;
 
     /**
-     * @link https://github.com/grokability/snipe-it/issues/15654
+     * @link https://github.com/thanhhieucio/HSB-IT/issues/15654
      */
     #[DataProvider('dataForFullMultipleCompanySupportTesting')]
     public function test_adheres_to_full_multiple_companies_support_scoping($data)

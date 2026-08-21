@@ -2,7 +2,7 @@
 {{-- Header --}}
 @slot('header')
 
-{{-- Check that the $snipeSettings variable is set, images are set to be shown, and setup is complete --}}
+{{-- Check that the $hsbSettings variable is set, images are set to be shown, and setup is complete --}}
 <style>
 
     th, td {
@@ -18,34 +18,34 @@
     }
 </style>
 
-@if (isset($snipeSettings) && ($snipeSettings::setupCompleted()))
+@if (isset($hsbSettings) && ($hsbSettings::setupCompleted()))
 
-    @if ($snipeSettings->show_url_in_emails=='1' )
+    @if ($hsbSettings->show_url_in_emails=='1' )
         @component('mail::header', ['url' => config('app.url')])
     @else
         @component('mail::header', ['url' => ''])
     @endif
 
     {{-- Show images in email!  --}}
-    @if (($snipeSettings->show_images_in_email=='1') && ($snipeSettings->email_logo!='') && ($snipeSettings->brand != '1'))
+    @if (($hsbSettings->show_images_in_email=='1') && ($hsbSettings->email_logo!='') && ($hsbSettings->brand != '1'))
 
-        {{-- $snipeSettings->brand = 1 = Text  --}}
-        {{-- $snipeSettings->brand = 2 = Logo  --}}
-        {{-- $snipeSettings->brand = 3 = Logo + Text  --}}
-        @if ($snipeSettings->brand == '3')
+        {{-- $hsbSettings->brand = 1 = Text  --}}
+        {{-- $hsbSettings->brand = 2 = Logo  --}}
+        {{-- $hsbSettings->brand = 3 = Logo + Text  --}}
+        @if ($hsbSettings->brand == '3')
 
-            <img style="max-height: 100px; vertical-align:middle;" src="{{ \Storage::disk('public')->url(e($snipeSettings->email_logo)) }}" alt="">
+            <img style="max-height: 100px; vertical-align:middle;" src="{{ \Storage::disk('public')->url(e($hsbSettings->email_logo)) }}" alt="">
             <br><br>
-            {{ $snipeSettings->site_name }}
+            {{ $hsbSettings->site_name }}
             <br><br>
 
         {{-- else if branding type is just logo --}}
-        @elseif ($snipeSettings->brand == '2')
-           <img style="max-height: 100px; vertical-align:middle;" src="{{ \Storage::disk('public')->url(e($snipeSettings->email_logo)) }}" alt="">
+        @elseif ($hsbSettings->brand == '2')
+           <img style="max-height: 100px; vertical-align:middle;" src="{{ \Storage::disk('public')->url(e($hsbSettings->email_logo)) }}" alt="">
         @endif
 
     @else
-        {{ $snipeSettings->site_name ?? config('app.name') }}
+        {{ $hsbSettings->site_name ?? config('app.name') }}
     @endif
 
 @endif
@@ -67,14 +67,14 @@
 {{-- Footer --}}
 @slot('footer')
 @component('mail::footer')
-@if($snipeSettings::setupCompleted())
-© {{ date('Y') }} {{ $snipeSettings->site_name }}. {{ trans('mail.rights_reserved') }}
+@if($hsbSettings::setupCompleted())
+© {{ date('Y') }} {{ $hsbSettings->site_name }}. {{ trans('mail.rights_reserved') }}
 @else
-© {{ date('Y') }} Snipe-IT. {{ trans('mail.rights_reserved') }}
+© {{ date('Y') }} HSB-IT. {{ trans('mail.rights_reserved') }}
 @endif
 
-@if ($snipeSettings->privacy_policy_link!='')
-<a href="{{ $snipeSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
+@if ($hsbSettings->privacy_policy_link!='')
+<a href="{{ $hsbSettings->privacy_policy_link }}">{{ trans('admin/settings/general.privacy_policy') }}</a>
 @endif
 
 @endcomponent

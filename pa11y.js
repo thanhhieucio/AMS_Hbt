@@ -1,6 +1,6 @@
 const pa11y = require('pa11y');
 
-pa11y('http://snipe-it.test', {
+pa11y('http://hsb-it.test', {
     standard: "WCAG2AA",
     level: "error",
     defaults: {

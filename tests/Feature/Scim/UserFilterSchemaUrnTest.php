@@ -18,7 +18,7 @@ use Tests\TestCase;
  * The upstream library's Complex::applyComparison drops the schema URN
  * on the floor and always dispatches to the FIRST schema node (core),
  * which reports "Unknown path" for any attribute defined on a non-core
- * schema. SnipeRootComplex now intercepts these and routes to the
+ * schema. HsbRootComplex now intercepts these and routes to the
  * correct schema node based on the URN.
  *
  * Note: filtering by relationship-backed extension attributes

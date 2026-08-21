@@ -14,7 +14,7 @@
 {{-- Two eonasdan datetimepickers linked so picking a start date sets the
      end picker's minDate, and picking an end date sets the start picker's
      maxDate. Replaces the bootstrap-datepicker .input-daterange pattern.
-     Linking is handled in snipeit.js by pairing .js-date-range-start with
+     Linking is handled in hsbit.js by pairing .js-date-range-start with
      the .js-date-range-end sibling under the same .js-date-range parent. --}}
 <div {{ $attributes->merge(['class' => 'row js-date-range']) }} @if ($id) id="{{ $id }}" @endif>
     <div class="col-xs-6" style="padding-right: 5px;">

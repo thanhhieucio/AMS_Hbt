@@ -25,7 +25,7 @@ use Watson\Validating\ValidatingTrait;
  *
  * @version v1.8
  */
-final class Company extends SnipeModel
+final class Company extends HsbModel
 {
     use CompanyableTrait;
     use HasFactory;
@@ -354,7 +354,7 @@ final class Company extends SnipeModel
             try {
                 // This is primarily for the gate:allows-check in location->isDeletable()
                 // Locations don't have a company_id so without this it isn't possible to delete locations with FullMultipleCompanySupport enabled
-                // because this function is called by SnipePermissionsPolicy->before()
+                // because this function is called by HsbPermissionsPolicy->before()
                 if (! Schema::hasColumn($company_table, 'company_id')) {
                     return true;
                 }
@@ -556,7 +556,7 @@ final class Company extends SnipeModel
      *
      * @todo - refactor that trait to handle the user's model as well.
      *
-     * @author [A. Gianotto] <snipe@snipe.net>
+     * @author [A. Gianotto] <hieubt@hsb.edu.vn>
      *
      * @return mixed
      */
@@ -608,7 +608,7 @@ final class Company extends SnipeModel
 
             // Floater mode on: a company-scoped caller also sees null-company
             // (floater) users. This mirrors the item-level floater rule
-            // documented at https://snipe-it.readme.io/docs/multi-tenancy-ish
+            // documented at https://docs.hsb.edu.vn/hsb-it/docs/multi-tenancy-ish
             // and is required so checkout dropdowns can offer floater users
             // as valid targets under the "items from any company can be
             // checked out to targets with no company assignment" policy.
@@ -710,7 +710,7 @@ final class Company extends SnipeModel
      *
      * This gets invoked by CompanyableChildScope, but I'm not sure what it does.
      *
-     * @author [A. Gianotto] <snipe@snipe.net>
+     * @author [A. Gianotto] <hieubt@hsb.edu.vn>
      *
      * @return mixed
      */

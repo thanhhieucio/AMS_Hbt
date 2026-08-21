@@ -21,7 +21,7 @@ class ValidationServiceProvider extends ServiceProvider
     /**
      * Custom email array validation
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      *

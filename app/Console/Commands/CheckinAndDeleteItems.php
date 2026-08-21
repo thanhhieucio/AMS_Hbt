@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class CheckinAndDeleteItems extends Command
 {
-    protected $signature = 'snipeit:checkin-delete-all
+    protected $signature = 'hsbit:checkin-delete-all
         {--company-id= : Only process items belonging to this company ID}
         {--admin-id= : ID of the user credited for the checkins (defaults to first superadmin)}
         {--no-notifications : Suppress email and webhook notifications}
@@ -26,7 +26,7 @@ class CheckinAndDeleteItems extends Command
         {--dry-run : Preview what would be processed without making any changes}
         {--force : Skip the confirmation prompt}';
 
-    protected $description = 'Check in all assigned items and soft-delete them, optionally scoped to a company';
+    protected $description = 'Thu hồi toàn bộ hạng mục đã cấp phát và xóa mềm, có thể giới hạn theo công ty.';
 
     public function handle(): int
     {
@@ -34,7 +34,7 @@ class CheckinAndDeleteItems extends Command
         $noNotifications = $this->option('no-notifications');
         $dryRun = $this->option('dry-run');
         $typeOption = $this->option('type') ?? 'all';
-        $note = $this->option('note') ?: 'Checked in and deleted via CLI';
+        $note = $this->option('note') ?: 'Thu hồi và xóa bằng CLI';
 
         $allTypes = ['assets', 'licenses', 'accessories', 'components'];
         $typesToProcess = $typeOption === 'all'
@@ -72,8 +72,8 @@ class CheckinAndDeleteItems extends Command
         if ($dryRun) {
             $this->warn('DRY RUN — no changes will be made.');
         } elseif (! $this->option('force')) {
-            if (! $this->confirm("This will check in and soft-delete all [{$typesMsg}] for [{$scopeMsg}]. Continue?")) {
-                $this->info('Aborted.');
+            if (! $this->confirm("Thao tác này sẽ thu hồi và xóa mềm toàn bộ [{$typesMsg}] cho [{$scopeMsg}]. Tiếp tục?")) {
+                $this->info('Đã hủy.');
 
                 return 0;
             }
@@ -116,7 +116,7 @@ class CheckinAndDeleteItems extends Command
         foreach ($assets as $asset) {
             if ($asset->assignedTo) {
                 if ($dryRun) {
-                    $this->line('  Would check in asset: '.$asset->asset_tag.' (assigned to '.$asset->assignedTo->name.')');
+                    $this->line('  Sẽ thu hồi tài sản: '.$asset->asset_tag.' (đang gán cho '.$asset->assignedTo->name.')');
                 } else {
                     $target = $asset->assignedTo;
                     $checkin_at = now()->format('Y-m-d H:i:s');
@@ -144,7 +144,7 @@ class CheckinAndDeleteItems extends Command
             }
 
             if ($dryRun) {
-                $this->line('  Would delete asset: '.$asset->asset_tag);
+                $this->line('  Sẽ xóa tài sản: '.$asset->asset_tag);
             } else {
                 $asset->delete();
             }
@@ -176,7 +176,7 @@ class CheckinAndDeleteItems extends Command
                 $target = $seat->assigned_to ? $seat->user : $seat->asset;
 
                 if ($dryRun) {
-                    $this->line('  Would check in license seat for: '.$license->name.' (assigned to '.($target?->name ?? $target?->asset_tag ?? 'unknown').')');
+                    $this->line('  Sẽ thu hồi ghế license cho: '.$license->name.' (đang gán cho '.($target?->name ?? $target?->asset_tag ?? 'không rõ').')');
                 } else {
                     $seat->assigned_to = null;
                     $seat->asset_id = null;
@@ -195,7 +195,7 @@ class CheckinAndDeleteItems extends Command
             }
 
             if ($dryRun) {
-                $this->line('  Would delete license: '.$license->name);
+                $this->line('  Sẽ xóa license: '.$license->name);
             } else {
                 $license->licenseseats()->delete();
                 $license->delete();
@@ -226,7 +226,7 @@ class CheckinAndDeleteItems extends Command
                 $target = $checkout->assignedTo;
 
                 if ($dryRun) {
-                    $this->line('  Would check in accessory: '.$accessory->name.' (assigned to '.($target?->name ?? $target?->asset_tag ?? 'unknown').')');
+                    $this->line('  Sẽ thu hồi phụ kiện: '.$accessory->name.' (đang gán cho '.($target?->name ?? $target?->asset_tag ?? 'không rõ').')');
                 } else {
                     $checkin_at = now()->format('Y-m-d H:i:s');
                     $checkout->delete();
@@ -244,7 +244,7 @@ class CheckinAndDeleteItems extends Command
             }
 
             if ($dryRun) {
-                $this->line('  Would delete accessory: '.$accessory->name);
+                $this->line('  Sẽ xóa phụ kiện: '.$accessory->name);
             } else {
                 $accessory->delete();
             }
@@ -276,7 +276,7 @@ class CheckinAndDeleteItems extends Command
                 $asset = Asset::find($assignment->asset_id);
 
                 if ($dryRun) {
-                    $this->line('  Would check in component: '.$component->name.' (assigned to '.($asset?->asset_tag ?? 'unknown').')');
+                    $this->line('  Sẽ thu hồi linh kiện: '.$component->name.' (đang gán cho '.($asset?->asset_tag ?? 'không rõ').')');
                 } else {
                     $checkin_at = now()->format('Y-m-d H:i:s');
                     DB::table('components_assets')->where('id', $assignment->id)->delete();
@@ -294,7 +294,7 @@ class CheckinAndDeleteItems extends Command
             }
 
             if ($dryRun) {
-                $this->line('  Would delete component: '.$component->name);
+                $this->line('  Sẽ xóa linh kiện: '.$component->name);
             } else {
                 $component->delete();
             }

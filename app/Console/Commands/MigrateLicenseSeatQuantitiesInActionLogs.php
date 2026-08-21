@@ -14,7 +14,7 @@ class MigrateLicenseSeatQuantitiesInActionLogs extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:migrate-license-seat-quantities-in-action-logs
+    protected $signature = 'hsbit:migrate-license-seat-quantities-in-action-logs
                             {--no-interaction: Do not ask any interactive question}';
 
     /**
@@ -22,7 +22,7 @@ class MigrateLicenseSeatQuantitiesInActionLogs extends Command
      *
      * @var string
      */
-    protected $description = 'Updates quantity field in action_logs table for license seats that were added or deleted.';
+    protected $description = 'Cập nhật trường số lượng trong action_logs cho các ghế license đã thêm hoặc đã xóa.';
 
     /**
      * Execute the console command.

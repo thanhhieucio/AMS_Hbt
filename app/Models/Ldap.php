@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Log;
  * into its guts. While that conflates this model with the User model, I think having the appropriate logic for
  * turning LDAP people into Users ought to belong here, so it's easier on the consumer of this class.
  *
- * We're probably going to have to eventually make it so that Snipe-IT users can define multiple LDAP servers,
+ * We're probably going to have to eventually make it so that HSB-IT users can define multiple LDAP servers,
  * and having this as a more instance-oriented class will be a step in the right direction.
  ***********************************************/
 
@@ -57,7 +57,7 @@ class Ldap extends Model
     /**
      * Makes a connection to LDAP using the settings in Admin > Settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -182,7 +182,7 @@ class Ldap extends Model
     /**
      * Binds/authenticates the user to LDAP, and returns their attributes.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -265,7 +265,7 @@ class Ldap extends Model
      * Binds/authenticates an admin to LDAP for LDAP searching/syncing.
      * Here we also return a better error if the app key is donked.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -304,7 +304,7 @@ class Ldap extends Model
     /**
      * Parse and map LDAP attributes based on settings
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -346,7 +346,7 @@ class Ldap extends Model
     /**
      * Create user from LDAP attributes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -388,7 +388,7 @@ class Ldap extends Model
     /**
      * Searches LDAP
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *

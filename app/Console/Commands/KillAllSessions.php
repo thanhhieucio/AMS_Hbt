@@ -11,14 +11,14 @@ class KillAllSessions extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:global-logout  {--force : Skip the danger prompt; assuming you enter "y"} ';
+    protected $signature = 'hsbit:global-logout  {--force : Skip the danger prompt; assuming you enter "y"} ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will destroy all web sessions on disk and will force a re-login for all users.';
+    protected $description = 'Xóa toàn bộ phiên web trên đĩa và buộc mọi người dùng đăng nhập lại.';
 
     /**
      * Create a new command instance.

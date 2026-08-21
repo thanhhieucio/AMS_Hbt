@@ -161,15 +161,15 @@ class UserFactory extends Factory
         });
     }
 
-    public function snipeAdmin()
+    public function hsbAdmin()
     {
         return $this->state(function () {
             return [
-                'first_name' => 'Snipe E.',
+                'first_name' => 'Hsb E.',
                 'last_name' => 'Head',
-                'username' => 'snipe',
+                'username' => 'hsb',
                 'avatar' => '2.jpg',
-                'email' => 'snipe@snipe.net',
+                'email' => 'hieubt@hsb.edu.vn',
                 'permissions' => '{"superuser":"1"}',
             ];
         });
@@ -604,7 +604,7 @@ class UserFactory extends Factory
             'first_name' => 'Asset',
             'last_name' => 'Manager',
             'username' => 'assetmgr',
-            'email' => 'assetmgr@demo.snipeitapp.com',
+            'email' => 'assetmgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'assets.view' => '1',
                 'assets.create' => '1',
@@ -628,7 +628,7 @@ class UserFactory extends Factory
             'first_name' => 'License',
             'last_name' => 'Manager',
             'username' => 'licensemgr',
-            'email' => 'licensemgr@demo.snipeitapp.com',
+            'email' => 'licensemgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'licenses.view' => '1',
                 'licenses.create' => '1',
@@ -648,7 +648,7 @@ class UserFactory extends Factory
             'first_name' => 'Accessory',
             'last_name' => 'Manager',
             'username' => 'accessorymgr',
-            'email' => 'accessorymgr@demo.snipeitapp.com',
+            'email' => 'accessorymgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'accessories.view' => '1',
                 'accessories.create' => '1',
@@ -667,7 +667,7 @@ class UserFactory extends Factory
             'first_name' => 'Consumable',
             'last_name' => 'Manager',
             'username' => 'consumablemgr',
-            'email' => 'consumablemgr@demo.snipeitapp.com',
+            'email' => 'consumablemgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'consumables.view' => '1',
                 'consumables.create' => '1',
@@ -686,7 +686,7 @@ class UserFactory extends Factory
             'first_name' => 'Component',
             'last_name' => 'Manager',
             'username' => 'componentmgr',
-            'email' => 'componentmgr@demo.snipeitapp.com',
+            'email' => 'componentmgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'components.view' => '1',
                 'components.create' => '1',
@@ -705,7 +705,7 @@ class UserFactory extends Factory
             'first_name' => 'User',
             'last_name' => 'Manager',
             'username' => 'usermgr',
-            'email' => 'usermgr@demo.snipeitapp.com',
+            'email' => 'usermgr@demo.hsb.edu.vn',
             'permissions' => json_encode([
                 'users.view' => '1',
                 'users.create' => '1',

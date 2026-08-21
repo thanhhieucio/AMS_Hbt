@@ -50,7 +50,7 @@ class SvgUploadSanitizationTest extends TestCase
         // correctly. UploadedFile::fake() derives its mime from the
         // filename, which would trivially "pass" the SVG detection
         // without exercising the real sanitize path.
-        $path = tempnam(sys_get_temp_dir(), 'snipeit_svg_');
+        $path = tempnam(sys_get_temp_dir(), 'hsbit_svg_');
         file_put_contents($path, $content);
         $this->tempFiles[] = $path;
 

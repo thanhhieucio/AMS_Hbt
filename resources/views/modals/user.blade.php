@@ -1,7 +1,7 @@
-{{-- See snipeit_modals.js for what powers this. The password-generator
+{{-- See hsbit_modals.js for what powers this. The password-generator
      wiring and the first-input focus that used to be inline <script>
      blocks on this partial now live inside the modal-load callback in
-     snipeit_modals.js so all modal-lifecycle JS is in one place. --}}
+     hsbit_modals.js so all modal-lifecycle JS is in one place. --}}
 
 <div class="modal-dialog">
     <div class="modal-content">
@@ -63,7 +63,7 @@
 
                 {{-- Activated checkbox is rendered ABOVE the password fields
                      so the toggle sits above the inputs whose visibility it
-                     controls (see snipeit.js). Defaults to unchecked because
+                     controls (see hsbit.js). Defaults to unchecked because
                      the modal is typically used to create a user on-the-fly
                      for asset assignment, where login is not usually needed. --}}
                 <div class="dynamic-form-row">

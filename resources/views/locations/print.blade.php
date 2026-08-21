@@ -31,21 +31,21 @@
 </head>
 <body>
 
-@if ($snipeSettings->logo_print_assets=='1')
-    @if ($snipeSettings->brand == '3')
+@if ($hsbSettings->logo_print_assets=='1')
+    @if ($hsbSettings->brand == '3')
 
         <h3>
-        @if ($snipeSettings->acceptance_pdf_logo!='')
-            <img class="print-logo" src="{{ Storage::disk('public')->url($snipeSettings->acceptance_pdf_logo) }}" alt="">
+        @if ($hsbSettings->acceptance_pdf_logo!='')
+            <img class="print-logo" src="{{ Storage::disk('public')->url($hsbSettings->acceptance_pdf_logo) }}" alt="">
         @endif
-        {{ $snipeSettings->site_name }}
+        {{ $hsbSettings->site_name }}
         </h3>
-    @elseif ($snipeSettings->brand == '2')
-        @if ($snipeSettings->acceptance_pdf_logo!='')
-            <img class="print-logo" src="{{ Storage::disk('public')->url($snipeSettings->acceptance_pdf_logo) }}" alt="">
+    @elseif ($hsbSettings->brand == '2')
+        @if ($hsbSettings->acceptance_pdf_logo!='')
+            <img class="print-logo" src="{{ Storage::disk('public')->url($hsbSettings->acceptance_pdf_logo) }}" alt="">
         @endif
     @else
-      <h3>{{ $snipeSettings->site_name }}</h3>
+      <h3>{{ $hsbSettings->site_name }}</h3>
     @endif
 @endif
 
@@ -175,7 +175,7 @@
 
     @foreach ($assets as $asset)
         @php
-            if($snipeSettings->show_archived_in_list != 1 && $asset->status?->archived == 1){
+            if($hsbSettings->show_archived_in_list != 1 && $asset->status?->archived == 1){
                 continue;
             }
         @endphp
@@ -227,7 +227,7 @@
 
             @foreach ($assignedAssets as $asset)
                 @php
-                    if($snipeSettings->show_archived_in_list != 1 && $asset->status?->archived == 1){
+                    if($hsbSettings->show_archived_in_list != 1 && $asset->status?->archived == 1){
                         continue;
                     }
                 @endphp

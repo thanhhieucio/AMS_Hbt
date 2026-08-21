@@ -633,7 +633,7 @@ class ImportAssetsTest extends ImportDataTestCase implements TestsPermissionsReq
         $customField = CustomField::query()->where('name', 'Mac Address')->firstOrNew();
 
         if (! $customField->exists) {
-            $customField = CustomField::factory()->macAddress()->create(['db_column' => '_snipeit_mac_address_1']);
+            $customField = CustomField::factory()->macAddress()->create(['db_column' => '_hsbit_mac_address_1']);
         }
 
         if ($customField->field_encrypted) {

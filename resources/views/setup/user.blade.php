@@ -25,7 +25,7 @@
         <label for="site_name">
           {{ trans('general.site_name') }}
         </label>
-        <input class="form-control" placeholder="Snipe-IT Asset Management" required="" name="site_name" type="text" value="{{ old('site_name') }}">
+        <input class="form-control" placeholder="Quan ly tai san HSB-IT" required="" name="site_name" type="text" value="{{ old('site_name') }}">
 
         <x-form.error name="site_name" />
       </div>
@@ -36,14 +36,14 @@
           <!-- first name -->
           <div class="form-group col-lg-6">
               <label for="first_name">{{ trans('general.first_name') }}</label>
-              <input class="form-control" placeholder="Jane" required="" name="first_name" type="text" id="first_name" value="{{ old('first_name') }}">
+              <input class="form-control" placeholder="Nguyen Van" required="" name="first_name" type="text" id="first_name" value="{{ old('first_name') }}">
               <x-form.error name="first_name" />
           </div>
 
           <!-- last name -->
           <div class="form-group col-lg-6 required {{ $errors->has('last_name') ? 'error' : '' }}">
               <label for="last_name">{{ trans('general.last_name') }}</label>
-              <input class="form-control" placeholder="Smith" required="" name="last_name" type="text" id="last_name" value="{{ old('last_name') }}">
+              <input class="form-control" placeholder="An" required="" name="last_name" type="text" id="last_name" value="{{ old('last_name') }}">
               <x-form.error name="last_name" />
           </div>
       </div>
@@ -52,14 +52,14 @@
           <!-- email-->
           <div class="form-group col-lg-6{{ $errors->has('email') ? ' error' : '' }}">
               <label for="email">{{ trans('admin/users/table.email') }}</label>
-              <input class="form-control" type="email" name="email" id="email" value="{{ old('email', config('mail.from.address')) }}" placeholder="you@example.com" required>
+              <input class="form-control" type="email" name="email" id="email" value="{{ old('email', config('mail.from.address')) }}" placeholder="ban@example.com" required>
               <x-form.error name="email" />
           </div>
 
           <!-- username -->
           <div class="form-group col-lg-6 {{ $errors->has('username') ? 'error' : '' }}">
               <label for="username">{{ trans('admin/users/table.username') }}</label>
-              <input class="form-control" placeholder="jsmith" required="" name="username" type="text" id="username" value="{{ old('username') }}" required>
+              <input class="form-control" placeholder="nvan" required="" name="username" type="text" id="username" value="{{ old('username') }}" required>
               <x-form.error name="username" />
           </div>
 
@@ -134,14 +134,14 @@
       <label for="locale">
         {{ trans('admin/settings/general.default_language') }}
       </label>
-      <x-input.locale-select name="locale" :selected="old('locale', 'en-US')" />
+      <x-input.locale-select name="locale" :selected="old('locale', 'vi-VN')" />
       <x-form.error name="locale" />
     </div>
 
     <!-- Currency -->
     <div class="form-group col-lg-6{{$errors->has('default_currency') ? ' error' : ''}}">
       <label for="default_currency">{{ trans('admin/settings/general.default_currency') }}</label>
-      <input class="form-control" placeholder="USD" maxlength="3" style="width: 60px;" name="default_currency" type="text" id="default_currency" value="{{ old('default_currency') }}">
+      <input class="form-control" placeholder="VND" maxlength="3" style="width: 60px;" name="default_currency" type="text" id="default_currency" value="{{ old('default_currency') }}">
 
       <x-form.error name="default_currency" />
     </div>

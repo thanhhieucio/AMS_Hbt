@@ -22,7 +22,7 @@ use Watson\Validating\ValidatingTrait;
  *
  * @version v1.0
  */
-class Component extends SnipeModel
+class Component extends HsbModel
 {
     use HasFactory;
 
@@ -141,7 +141,7 @@ class Component extends SnipeModel
     /**
      * Establishes the component -> location relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -155,7 +155,7 @@ class Component extends SnipeModel
     /**
      * Establishes the component -> assets relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -189,7 +189,7 @@ class Component extends SnipeModel
     /**
      * Establishes the component -> company relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -203,7 +203,7 @@ class Component extends SnipeModel
     /**
      * Establishes the component -> category relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -217,7 +217,7 @@ class Component extends SnipeModel
     /**
      * Establishes the item -> supplier relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v6.1.1]
      *
@@ -231,7 +231,7 @@ class Component extends SnipeModel
     /**
      * Establishes the item -> manufacturer relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -245,7 +245,7 @@ class Component extends SnipeModel
     /**
      * Determine whether this asset requires acceptance by the assigned user
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -259,7 +259,7 @@ class Component extends SnipeModel
     /**
      * Establishes the component -> action logs relationship
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -273,7 +273,7 @@ class Component extends SnipeModel
     /**
      * Check how many items within a component are checked out
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v5.0]
      *
@@ -340,7 +340,7 @@ class Component extends SnipeModel
      * Determine whether to send a checkin/checkout email based on
      * asset model category
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -354,7 +354,7 @@ class Component extends SnipeModel
     /**
      * Get the list of checkouts for this License
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v2.0]
      *
@@ -370,7 +370,7 @@ class Component extends SnipeModel
     /**
      * Check how many items within a component are remaining
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since  [v3.0]
      *
@@ -399,7 +399,7 @@ class Component extends SnipeModel
      *
      * This simply checks that there is a value for quantity, and if there isn't, set it to 0.
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  v6.3.4
      *
@@ -491,7 +491,7 @@ class Component extends SnipeModel
      *
      * PostgreSQL note: references a SELECT-list alias inside a compound
      * ORDER BY expression, which PostgreSQL rejects per SQL standard.
-     * Snipe-IT officially supports MySQL/MariaDB and tests on SQLite
+     * HSB-IT officially supports MySQL/MariaDB and tests on SQLite
      * (both allow this); moving to PostgreSQL would require inlining
      * the subquery or wrapping the query in an outer SELECT.
      */

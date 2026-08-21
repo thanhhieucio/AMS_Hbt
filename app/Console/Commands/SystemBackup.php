@@ -15,14 +15,14 @@ class SystemBackup extends Command
     // it (migrate, db:seed, etc.); it doesn't gate anything here but external
     // automations were passing it and crashing on the "option does not exist"
     // error.
-    protected $signature = 'snipeit:backup {--filename=} {--force}';
+    protected $signature = 'hsbit:backup {--filename=} {--force}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command creates a database dump and zips up all of the uploaded files in the upload directories.';
+    protected $description = 'Tạo bản sao lưu cơ sở dữ liệu và nén toàn bộ tệp đã tải lên trong các thư mục upload.';
 
     /**
      * Create a new command instance.

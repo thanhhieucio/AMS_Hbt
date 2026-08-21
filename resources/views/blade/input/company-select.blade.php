@@ -5,7 +5,7 @@
      disables sub-companies (they can't themselves become parents), the
      second hides the company being edited (so it can't be selected as its
      own parent). Both are read as data-* attributes by the js-data-ajax
-     initializer in snipeit.js and forwarded to the
+     initializer in hsbit.js and forwarded to the
      /api/v1/companies/selectlist endpoint. --}}
 @props([
     'label',
@@ -58,7 +58,7 @@
         </div>
     @endunless
 
-    @if ($snipeSettings->full_multiple_companies_support == '1')
+    @if ($hsbSettings->full_multiple_companies_support == '1')
         @cannot('superadmin')
             <div class="col-md-7 col-md-offset-3">
                 <p class="help-block"><x-icon type="tip" /> {{ trans('general.fmcs_company_select_note') }}</p>

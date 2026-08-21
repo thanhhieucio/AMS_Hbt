@@ -39,7 +39,7 @@
                         <x-slot:input>
                             <select name="checkin_by_field" id="checkin_by_field" data-minimum-results-for-search="Infinity" style="width: 100% !important" class="form-control select2" aria-label="checkin_by_field" required>
                                 <option value="asset_tag">{{ trans('general.asset_tag') }}</option>
-                                <option value="serial" {{ ($snipeSettings->unique_serial != '1') ? 'disabled' : '' }}>{{ trans('general.serial_number') }}</option>
+                                <option value="serial" {{ ($hsbSettings->unique_serial != '1') ? 'disabled' : '' }}>{{ trans('general.serial_number') }}</option>
                             </select>
                         </x-slot:input>
                     </x-form.row>
@@ -119,7 +119,7 @@
                     </h2>
                 </div>
                 <div class="box-body">
-                    <table id="checkedin" class="table table-striped snipe-table">
+                    <table id="checkedin" class="table table-striped hsb-table">
                         <thead>
                             <tr>
                                 <th scope="col">{{ trans('general.asset_tag') }}</th>
@@ -147,7 +147,7 @@
 
 {{-- Page-specific glue: AJAX checkin flow, dynamic result table, optional
      audio feedback. Same rationale as quickscan.blade.php — deeply specific
-     to this screen, kept inline rather than polluting snipeit.js with
+     to this screen, kept inline rather than polluting hsbit.js with
      quickscan-checkin-only handlers. --}}
 @section('moar_scripts')
     <script nonce="{{ csrf_token() }}">

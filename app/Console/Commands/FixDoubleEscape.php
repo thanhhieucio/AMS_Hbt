@@ -26,14 +26,14 @@ class FixDoubleEscape extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:unescape';
+    protected $signature = 'hsbit:unescape';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This should be run to fix some double-escaping issues from earlier versions of Snipe-IT.';
+    protected $description = 'Sửa các lỗi escape lặp từ những phiên bản HSB-IT trước.';
 
     /**
      * Create a new command instance.

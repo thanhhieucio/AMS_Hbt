@@ -5,7 +5,7 @@
         <div id="PersonalAccessTokensToolbar" class="pull-left" style="min-width: 280px; padding-top: 10px;"></div>
         <div class="table-responsive">
             <table
-                class="table table-striped snipe-table"
+                class="table table-striped hsb-table"
                 data-toolbar="#PersonalAccessTokensToolbar"
                 data-toggle="table"
                 data-sort-name="created_at"

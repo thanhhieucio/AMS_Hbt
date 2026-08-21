@@ -21,14 +21,14 @@ class SendAcceptanceReminder extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:acceptance-reminder';
+    protected $signature = 'hsbit:acceptance-reminder';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will resend users with unaccepted items a reminder to accept or decline them.';
+    protected $description = 'Gửi lại nhắc nhở cho người dùng còn hạng mục chưa chấp nhận hoặc chưa từ chối.';
 
     /**
      * Create a new command instance.

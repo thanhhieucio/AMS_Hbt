@@ -17,7 +17,7 @@ use Watson\Validating\ValidatingTrait;
  *
  * @version v1.0
  */
-class PredefinedKit extends SnipeModel
+class PredefinedKit extends HsbModel
 {
     protected $presenter = PredefinedKitPresenter::class;
 

@@ -15,7 +15,7 @@
      tenant's brand colors too. --}}
 <style>
     :root {
-        --main-theme-color: {{ $snipeSettings->header_color ?? '#3c8dbc' }};
+        --main-theme-color: {{ $hsbSettings->header_color ?? '#3c8dbc' }};
         --btn-theme-text-color: {{ $nav_link_color ?? 'light-dark(hsl(from var(--main-theme-color) h s calc(l + 10)),hsl(from var(--main-theme-color) h s calc(l - 10)))' }};
         --nav-hover-text-color: {{ $nav_link_color ?? 'hsl(from var(--main-theme-color) h s calc(l - 10))' }};
         --nav-primary-text-color: {{ $nav_link_color ?? '#ffffff' }};

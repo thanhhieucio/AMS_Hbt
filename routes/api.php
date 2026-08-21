@@ -21,16 +21,16 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'api-throttle:api']], fu
         return response()->json(
             [
                 'status' => 'error',
-                'message' => '404 endpoint not found. This is the base URL for the API and does not return anything itself. Please check the API reference at https://snipe-it.readme.io/reference to find a valid API endpoint.',
+                'message' => '404 endpoint not found. This is the base URL for the API and does not return anything itself. Please check the API reference at https://docs.hsb.edu.vn/hsb-it/reference to find a valid API endpoint.',
                 'payload' => null,
             ], 404);
     });
 
     Route::withoutMiddleware(['api'])->get('/client', function () {
         $client = Client::firstOrCreate(
-            ['redirect' => 'com.grokability.snipeitmobile://home'],
+            ['redirect' => 'com.grokability.hsbitmobile://home'],
             [
-                'name' => 'Snipe-IT Mobile App',
+                'name' => 'HSB-IT Mobile App',
                 'user_id' => null,
                 'secret' => '',
                 'personal_access_client' => false,
@@ -1367,7 +1367,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'api-throttle:api']], fu
         return response()->json(
             [
                 'status' => 'error',
-                'message' => '404 endpoint not found. Please check the API reference at https://snipe-it.readme.io/reference to find a valid API endpoint.',
+                'message' => '404 endpoint not found. Please check the API reference at https://docs.hsb.edu.vn/hsb-it/reference to find a valid API endpoint.',
                 'payload' => null,
             ], 404);
     }); // end fallback routes

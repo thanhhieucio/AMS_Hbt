@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-class DepreciationPolicy extends SnipePermissionsPolicy
+class DepreciationPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

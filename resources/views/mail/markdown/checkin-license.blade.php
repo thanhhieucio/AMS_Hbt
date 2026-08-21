@@ -26,6 +26,6 @@
 
 {{ trans('mail.best_regards') }}
 
-{{ $snipeSettings->site_name }}
+{{ $hsbSettings->site_name }}
 
 @endcomponent

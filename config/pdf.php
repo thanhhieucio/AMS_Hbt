@@ -6,7 +6,7 @@ return [
     'author' => '',
     'subject' => '',
     'keywords' => '',
-    'creator' => 'Snipe-IT',
+    'creator' => 'HSB-IT',
     'display_mode' => 'fullpage',
     'tempDir' => base_path('../temp/'),
     'pdf_a' => false,

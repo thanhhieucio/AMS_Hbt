@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class SupplierPolicy extends SnipePermissionsPolicy
+class SupplierPolicy extends HsbPermissionsPolicy
 {
     protected function columnName()
     {

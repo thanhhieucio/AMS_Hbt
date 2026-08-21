@@ -14,14 +14,14 @@ class SyncAssetLocations extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:sync-asset-locations {--output= : info|warn|error|all} ';
+    protected $signature = 'hsbit:sync-asset-locations {--output= : info|warn|error|all} ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This utility will sync the location_id of assets based on current state. It should not normally be needed, but is a safeguard in case we missed something in the Great Migration when flattening the assets to location relationship.';
+    protected $description = 'Đồng bộ location_id của tài sản theo trạng thái hiện tại. Đây là công cụ dự phòng khi quan hệ tài sản và địa điểm cần được làm phẳng lại.';
 
     /**
      * Create a new command instance.

@@ -13,7 +13,7 @@ class BulkAssetModelsController extends Controller
     /**
      * Returns a view that allows the user to bulk edit model attrbutes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.7]
      */
@@ -62,7 +62,7 @@ class BulkAssetModelsController extends Controller
     /**
      * Returns a view that allows the user to bulk edit model attrbutes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.7]
      */
@@ -116,7 +116,7 @@ class BulkAssetModelsController extends Controller
      * Validate and delete the given Asset Models. An Asset Model
      * cannot be deleted if there are associated assets.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */

@@ -10,12 +10,12 @@ class ModalController extends Controller
     /**
      * Load the modal views after confirming they are in the allowed_types array.
      * The allowed types away just prevents shithead skiddies from fuzzing the urls
-     * with automated scripts and junking up the logs. - snipe
+     * with automated scripts and junking up the logs. - hsb
      *
      * @version    v5.3.7-pre
      *
      * @author [Brady Wetherington] [<uberbrady@gmail.com>]
-     * @author [A. Gianotto] [<snipe@snipe.net]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn]
      *
      * @return View
      */

@@ -12,41 +12,41 @@
 <x-container columns="2">
     <x-page-column class="col-md-7">
 
-        <x-form route="{{ route('components.checkout.store', $snipe_component->id) }}" id="checkout_form">
+        <x-form route="{{ route('components.checkout.store', $hsb_component->id) }}" id="checkout_form">
 
-            <x-box header="{{ $snipe_component->name }} ({{ $snipe_component->numRemaining() }} {{ trans('admin/components/general.remaining') }})">
+            <x-box header="{{ $hsb_component->name }} ({{ $hsb_component->numRemaining() }} {{ trans('admin/components/general.remaining') }})">
 
-            @if ($snipe_component->company)
-                <x-form.static :label="trans('general.company')">{!! $snipe_component->company->present()->formattedNameLink !!}</x-form.static>
+            @if ($hsb_component->company)
+                <x-form.static :label="trans('general.company')">{!! $hsb_component->company->present()->formattedNameLink !!}</x-form.static>
             @endif
 
-            @if ($snipe_component->category)
-                <x-form.static :label="trans('general.category')">{!! $snipe_component->category->present()->formattedNameLink !!}</x-form.static>
+            @if ($hsb_component->category)
+                <x-form.static :label="trans('general.category')">{!! $hsb_component->category->present()->formattedNameLink !!}</x-form.static>
             @endif
 
-            @include ('partials.forms.edit.asset-select', ['translated_name' => trans('general.select_asset'), 'fieldname' => 'asset_id', 'company_id' => $snipe_component->company_id, 'required' => 'true', 'value' => old('asset_id')])
+            @include ('partials.forms.edit.asset-select', ['translated_name' => trans('general.select_asset'), 'fieldname' => 'asset_id', 'company_id' => $hsb_component->company_id, 'required' => 'true', 'value' => old('asset_id')])
 
             <x-input.quantity
                 name="assigned_qty"
                 :value="1"
                 :min="1"
-                :max="$snipe_component->numRemaining()"
+                :max="$hsb_component->numRemaining()"
                 :label="trans('general.qty')"
             />
 
-            @if ($snipe_component->requireAcceptance() || $snipe_component->getEula() || ($snipeSettings->webhook_endpoint != ''))
+            @if ($hsb_component->requireAcceptance() || $hsb_component->getEula() || ($hsbSettings->webhook_endpoint != ''))
                 <div class="form-group notification-callout">
                     <div class="col-md-8 col-md-offset-3">
                         <x-callout type="info" role="status">
-                            @if ($snipe_component->category->require_acceptance == '1')
+                            @if ($hsb_component->category->require_acceptance == '1')
                                 <i class="far fa-envelope fa-fw" aria-hidden="true"></i>
                                 {{ trans('admin/categories/general.required_acceptance') }}<br>
                             @endif
-                            @if ($snipe_component->getEula())
+                            @if ($hsb_component->getEula())
                                 <i class="far fa-envelope fa-fw" aria-hidden="true"></i>
                                 {{ trans('admin/categories/general.required_eula') }}<br>
                             @endif
-                            @if ($snipeSettings->webhook_endpoint != '')
+                            @if ($hsbSettings->webhook_endpoint != '')
                                 <i class="fab fa-slack fa-fw" aria-hidden="true"></i>
                                 {{ trans('general.webhook_msg_note') }}
                             @endif
@@ -57,7 +57,7 @@
 
             <x-form.row
                 :label="trans('admin/hardware/form.notes')"
-                :item="$snipe_component"
+                :item="$hsb_component"
                 name="note"
                 type="textarea"
             />

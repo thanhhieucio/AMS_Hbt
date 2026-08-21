@@ -20,18 +20,18 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * This class controls all actions related to asset models for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v4.0
  *
- * @author [A. Gianotto] [<snipe@snipe.net>]
+ * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
  */
 class AssetModelsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -171,7 +171,7 @@ class AssetModelsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -193,7 +193,7 @@ class AssetModelsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -210,7 +210,7 @@ class AssetModelsController extends Controller
     /**
      * Display the specified resource's assets
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -227,7 +227,7 @@ class AssetModelsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -248,7 +248,7 @@ class AssetModelsController extends Controller
          *
          * I have no idea why we manually overrode that field name
          * in previous versions. I assume there was a good reason for
-         * it, but I'll be damned if I can think of one. - snipe
+         * it, but I'll be damned if I can think of one. - hsb
          */
         if ($request->filled('custom_fieldset_id')) {
             $assetmodel->fieldset_id = $request->input('custom_fieldset_id');
@@ -264,7 +264,7 @@ class AssetModelsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      *
@@ -281,7 +281,7 @@ class AssetModelsController extends Controller
         }
 
         // Note: the image file is deliberately preserved across this
-        // soft-delete. Snipe-IT's `snipeit:purge` command permanently
+        // soft-delete. HSB-IT's `hsbit:purge` command permanently
         // removes it later when the row is force-deleted. Keeping the
         // file here means a restored soft-deleted row still has its
         // image. Also fixes a latent path bug: the old delete used
@@ -295,7 +295,7 @@ class AssetModelsController extends Controller
     /**
      * Gets a paginated collection for the select2 menus
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0.16]
      * @see SelectlistTransformer

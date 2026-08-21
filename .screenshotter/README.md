@@ -1,37 +1,37 @@
 # Screenshotter
 
-A Playwright-driven walkthrough of the Snipe-IT UI that produces PNG screenshots for docs, marketing, or reference use. The script logs in, navigates through canonical pages and interactions, and writes screenshots to an out-of-repo directory (`.screenshotter/screenshots/` by default, gitignored). What you do with the resulting PNGs is up to you.
+Screenshotter là walkthrough chạy bằng Playwright cho giao diện HSB-IT, dùng để tạo ảnh PNG phục vụ tài liệu, marketing hoặc tham chiếu nội bộ. Script đăng nhập, đi qua các trang và tương tác chuẩn, rồi ghi ảnh ra thư mục ngoài mã nguồn (`.screenshotter/screenshots/` theo mặc định, đã gitignore). Việc sử dụng các PNG tạo ra là trách nhiệm của người chạy script.
 
-## Requirements
+## Yêu cầu
 
-- Node 18+ (uses `node:util.parseArgs`).
-- Playwright and Chromium. Both are already installed as dev dependencies for this repo, so `npm install` is enough to have them available.
-- A running Snipe-IT install to point at. Herd or `php artisan serve` both work. Default target is `https://snipe-it.test`.
-- Credentials for a superuser on that install. Default is `admin` / `password`, which is what the demo seeder creates.
+- Node 18+ vì script dùng `node:util.parseArgs`.
+- Playwright và Chromium. Cả hai đã nằm trong dev dependency của repo, nên `npm install` là đủ.
+- Một bản HSB-IT đang chạy để script trỏ tới. Herd hoặc `php artisan serve` đều dùng được. Target mặc định là `https://hsb-it.test`.
+- Tài khoản superuser trên bản cài đó. Mặc định là `admin` / `password`, đúng với dữ liệu demo seeder tạo ra.
 
-## Data caution (read this)
+## Cảnh báo dữ liệu
 
-The script captures whatever is live in the connected database, in full. **DO NOT** run it against a production install, a staging environment that mirrors production, or any database that contains real customer data, real user PII, uploaded avatars or documents, license keys, IP addresses, employee numbers, or anything else you would not personally publish in a public forum.
+Script chụp nguyên trạng dữ liệu đang có trong database được kết nối. **Không chạy script này trên production, staging mirror production, hoặc bất kỳ database nào chứa dữ liệu khách hàng thật, PII người dùng thật, avatar/tài liệu upload thật, license key, IP address, mã nhân viên hoặc bất kỳ thông tin nào bạn không muốn công khai.**
 
-Once a screenshot exists on your disk it is one drag-and-drop away from GitHub, Discord, Reddit, a support ticket, a hosted docs site, a Slack message, a bug report attachment, or any other place where you might casually share a screenshot to explain something. Screenshots pulled from a real install have been the source of real data leaks in real projects. Do not become the next one. Stick to demo-seeded installs unless you have personally reviewed the data on that install.
+Khi ảnh đã nằm trên máy, chỉ cần kéo-thả nhầm là ảnh có thể đi lên GitHub, Discord, Reddit, ticket hỗ trợ, site tài liệu, Slack, attachment bug report hoặc nơi khác. Ảnh chụp từ bản cài thật từng là nguồn rò rỉ dữ liệu trong nhiều dự án. Hãy chỉ dùng bản demo-seeded trừ khi bạn đã tự kiểm tra dữ liệu trong bản cài đó.
 
-## Usage
+## Cách dùng
 
-Point it at any Snipe-IT install and it will screenshot whatever is there. In practice you want a freshly seeded demo install (see the caution above) so the shots are reproducible and safe to publish.
+Trỏ script tới một bản HSB-IT bất kỳ và nó sẽ chụp dữ liệu đang có. Trong thực tế, nên dùng bản demo mới seed lại để ảnh có thể tái tạo và an toàn khi công bố.
 
 ```bash
-# Recommended: reseed first so the shots reflect canonical demo data
+# Khuyến nghị: seed lại trước để ảnh phản ánh dữ liệu demo chuẩn
 php artisan migrate:fresh --seed
 npm run screenshotter
 
-# Also fine, if you know what is in your local DB and it is safe to capture
+# Cũng được, nếu bạn biết rõ dữ liệu local DB là an toàn để chụp
 npm run screenshotter
 ```
 
-At startup the script prints its config so you can see what mode you're in, and at the end it prints how long the run took:
+Khi bắt đầu, script in cấu hình để bạn biết đang chạy mode nào; khi kết thúc, script in thời gian chạy:
 
-```
-Base URL:  https://snipe-it.test
+```text
+Base URL:  https://hsb-it.test
 Login as:  admin
 Output:    .screenshotter/screenshots
 Viewport:  1840x900
@@ -47,150 +47,150 @@ Color:     light
 Done. 166 screenshots written to .screenshotter/screenshots in 4m 12.3s.
 ```
 
-Full runs wipe the walkthrough shots at the start of every run so stale images never mix with fresh ones. Only `.screenshotter/README.md`, `.screenshotter/src/screenshotter.mjs`, and the `.screenshotter/screenshots/adhoc/` subdirectory (see ad-hoc mode below) are preserved.
+Mỗi lần chạy full, script xóa ảnh walkthrough cũ trước khi chụp để ảnh cũ không trộn với ảnh mới. Chỉ giữ lại `.screenshotter/README.md`, `.screenshotter/src/screenshotter.mjs` và thư mục `.screenshotter/screenshots/adhoc/`.
 
-## All environment overrides
+## Biến môi trường override
 
 ```bash
-BASE_URL=https://staging.example.com    # default: https://snipe-it.test
-USERNAME=snipe                          # default: admin
-PASSWORD=secret                         # default: password
-OUT=/tmp/snipe-shots                    # default: .screenshotter/screenshots
-HEADLESS=false                          # default: true; false to watch it run
-VIEWPORT_WIDTH=1920 VIEWPORT_HEIGHT=1080 # default: 1840x900
-FRAME=false                             # default: true
-SUBMIT_FORMS=false                      # default: true
-TABS=true                               # default: false
-ALL_ROUTES=false                        # default: true
-COLOR_SCHEME=dark                       # default: light
-TABLE_PAGE_SIZE=25                      # default: 10; bootstrap-table rows per shot
+BASE_URL=https://staging.example.com      # mặc định: https://hsb-it.test
+USERNAME=hsb                              # mặc định: admin
+PASSWORD=secret                           # mặc định: password
+OUT=/tmp/hsb-shots                        # mặc định: .screenshotter/screenshots
+HEADLESS=false                            # mặc định: true; false để xem trình duyệt chạy
+VIEWPORT_WIDTH=1920 VIEWPORT_HEIGHT=1080  # mặc định: 1840x900
+FRAME=false                               # mặc định: true
+SUBMIT_FORMS=false                        # mặc định: true
+TABS=true                                 # mặc định: false
+ALL_ROUTES=false                          # mặc định: true
+COLOR_SCHEME=dark                         # mặc định: light
+TABLE_PAGE_SIZE=25                        # mặc định: 10; số dòng bootstrap-table mỗi ảnh
 ```
 
-`HEADLESS=false` runs the browser visibly so you can watch the walkthrough, which is useful when adding new blocks and debugging selectors. `TABLE_PAGE_SIZE` shrinks index tables so screenshots don't get needlessly long from data that adds no docs value.
+`HEADLESS=false` mở trình duyệt thật để bạn quan sát walkthrough, hữu ích khi thêm block mới hoặc debug selector. `TABLE_PAGE_SIZE` giảm số dòng trong bảng index để ảnh không dài không cần thiết.
 
-## Side effects on the database
+## Tác động phụ lên database
 
-The walkthrough posts each edit form after screenshotting it (to capture the post-save UI, whether that is a success callout or a validation-error state) so a full run writes back to the connected database. In practice this means:
+Walkthrough submit từng form edit sau khi chụp để ghi lại UI sau lưu, ví dụ callout thành công hoặc trạng thái lỗi validation. Vì vậy một lần chạy full có ghi vào database được kết nối. Cụ thể:
 
-- Every first-class object gets one no-op update per viewer, which appends an `action_logs` row per submission.
-- Any observer/notification/webhook wired to an update event fires as if a real edit happened. On a demo install this is usually fine, but if the install has outbound webhooks pointed at a real endpoint (Slack, an internal service, etc.) those fire too.
-- No data is intentionally changed (the forms are submitted with the values already on the page), but "unchanged" is not the same as "no side effects."
+- Mỗi object chính có một lần update no-op cho mỗi viewer, tạo thêm một dòng `action_logs` cho mỗi lần submit.
+- Observer, notification hoặc webhook gắn vào event update sẽ chạy như một lần sửa thật. Với bản demo thì thường ổn, nhưng nếu bản cài có webhook trỏ tới endpoint thật như Slack hoặc service nội bộ, chúng cũng sẽ được gọi.
+- Script không cố ý đổi dữ liệu vì form được submit với giá trị sẵn có trên trang, nhưng "không đổi giá trị" không đồng nghĩa với "không có tác động phụ".
 
-Before submitting, the script forces the form's `redirect_option=index` hidden field so the post-save destination is always the section's index page. This gives a stable "success callout on the index" shot regardless of what Snipe-IT's default `redirect_option` handling would have picked based on session state.
+Trước khi submit, script ép hidden field `redirect_option=index` để sau khi lưu luôn quay về trang index của section. Điều này tạo ảnh ổn định với success callout trên index, bất kể logic `redirect_option` mặc định của HSB-IT sẽ chọn gì dựa trên session.
 
-For a demo-seeded local install this is expected and fine. For anything else, do not run the full walkthrough (see the data caution above), or disable the submit step:
+Với bản demo local mới seed, tác động này là bình thường. Với bất kỳ môi trường nào khác, không chạy full walkthrough hoặc tắt bước submit:
 
 ```bash
-# Skip the write-back and the `-edit-submitted` shots
+# Bỏ ghi ngược và bỏ ảnh `-edit-submitted`
 SUBMIT_FORMS=false npm run screenshotter
 ```
 
-With `SUBMIT_FORMS=false` the walkthrough is read-only: no form posts, no `action_logs` entries, no observer/webhook fires. Trade-off is you lose the post-save UI captures.
+Khi `SUBMIT_FORMS=false`, walkthrough ở chế độ chỉ đọc: không post form, không tạo `action_logs`, không kích hoạt observer/webhook. Đổi lại bạn mất ảnh UI sau khi lưu.
 
-## Dev-tool overlays are blocked at the network level
+## Chặn overlay dev-tool ở tầng network
 
-Debugbar, Telescope, and Clockwork all get their asset requests aborted via Playwright network interception. Their JS never loads, so their overlays cannot render, so no debug panel ever appears in a shot. This is stronger than CSS hiding, which was the previous approach and broke on Snipe-IT error pages where debugbar rendered visible JSON collector panels through selectors we couldn't reach.
+Debugbar, Telescope và Clockwork đều bị abort request asset bằng Playwright network interception. JavaScript của chúng không tải, overlay không render, nên ảnh không có panel debug. Cách này chắc hơn ẩn bằng CSS, vì CSS từng hỏng trên trang lỗi HSB-IT khi debugbar render JSON collector panel bằng selector không truy cập được.
 
-If you add another dev tool that injects a page-level overlay, add its asset path to the `context.route(...)` block near the top of the script.
+Nếu thêm dev-tool khác có overlay toàn trang, hãy bổ sung asset path của nó vào block `context.route(...)` gần đầu script.
 
-## Narrowing to specific sections
+## Chạy theo section cụ thể
 
-Use `--section <name>` to regenerate just one or more sections instead of the whole walkthrough. Section names match the directory under `screenshots/`, and the section filter also selects which resource-managers run (managers whose section isn't in the filter are skipped).
+Dùng `--section <name>` để tạo lại một hoặc nhiều section thay vì chạy toàn bộ walkthrough. Tên section khớp thư mục dưới `screenshots/`, đồng thời filter này cũng quyết định resource-manager nào được chạy.
 
 ```bash
-# Just the assets section (admin + assetmgr)
+# Chỉ section assets (admin + assetmgr)
 npm run screenshotter -- --section assets
 
-# Comma-separated for multiple
+# Nhiều section, phân tách bằng dấu phẩy
 npm run screenshotter -- --section settings,reports,dashboard
 
-# Standalone sections work too
+# Section độc lập cũng dùng được
 npm run screenshotter -- --section dashboard
 ```
 
-Sections available: `assets`, `licenses`, `accessories`, `consumables`, `components`, `users`, `models`, `categories`, `manufacturers`, `suppliers`, `locations`, `departments`, `kits`, `companies`, `statuslabels`, `depreciations`, `custom-fields`, `fieldsets`, `maintenance-types`, `dashboard`, `settings`, `reports`.
+Các section hiện có: `assets`, `licenses`, `accessories`, `consumables`, `components`, `users`, `models`, `categories`, `manufacturers`, `suppliers`, `locations`, `departments`, `kits`, `companies`, `statuslabels`, `depreciations`, `custom-fields`, `fieldsets`, `maintenance-types`, `dashboard`, `settings`, `reports`.
 
-When `--section` is set, other sections' shots from prior runs are preserved (not wiped), and the `all-routes` sweep is skipped since it's not tied to any section.
+Khi đặt `--section`, ảnh của section khác từ lần chạy trước được giữ lại và lượt quét `all-routes` bị bỏ qua vì không gắn với section cụ thể.
 
-## Walking view-page tabs
+## Chụp các tab trên trang xem chi tiết
 
-Off by default. Set `TABS=true` to include a shot of every Bootstrap tab pane on view pages (asset view alone has ~10 tabs: Licenses, Components, Maintenances, Audits, Notes, Files, and so on). Shot names look like `{section}/{user}-{section}-view-tab-{slug}`.
+Mặc định tắt. Đặt `TABS=true` để chụp từng Bootstrap tab pane trên trang view. Riêng trang xem tài sản có khoảng 10 tab như Licenses, Components, Maintenances, Audits, Notes, Files. Tên ảnh có dạng `{section}/{user}-{section}-view-tab-{slug}`.
 
 ```bash
-# Include all tabs
+# Chụp toàn bộ tab
 TABS=true npm run screenshotter
 
-# Just assets, with tabs
+# Chỉ assets, kèm tab
 TABS=true npm run screenshotter -- --section assets
 ```
 
-Skipped silently on pages without any tabs. The already-active tab is skipped too since the base view shot already captured its content.
+Các trang không có tab sẽ được bỏ qua âm thầm. Tab đang active sẵn cũng được bỏ qua vì ảnh view gốc đã chụp nội dung đó.
 
-## Light and dark mode
+## Light mode và dark mode
 
-`COLOR_SCHEME=light` (default) or `COLOR_SCHEME=dark`. Uses Playwright's `colorScheme` context option which sets `prefers-color-scheme` at the browser level. Snipe-IT users whose theme preference is "system" render in the requested scheme automatically, without needing to toggle anything in the UI.
+Dùng `COLOR_SCHEME=light` theo mặc định hoặc `COLOR_SCHEME=dark`. Script dùng option `colorScheme` của Playwright để đặt `prefers-color-scheme` ở cấp browser. Người dùng HSB-IT có theme preference là `system` sẽ render theo scheme yêu cầu mà không cần thao tác UI.
 
 ```bash
 COLOR_SCHEME=dark npm run screenshotter
 COLOR_SCHEME=dark npm run screenshotter -- --section assets
 ```
 
-If a user's theme preference is set to something specific ("always dark" or "always light"), the app will honor that regardless of `prefers-color-scheme`, so this flag has no effect for those accounts.
+Nếu theme preference của người dùng được đặt cụ thể như `always dark` hoặc `always light`, ứng dụng sẽ ưu tiên cấu hình đó và flag này không có tác dụng với tài khoản đó.
 
-## Browser-chrome framing
+## Khung trình duyệt
 
-Every generated screenshot is wrapped in a styled browser chrome by default (rounded corners, gray titlebar with three traffic-light dots, soft ambient drop shadow radiating on all four sides). Set `FRAME=false` to skip the frame post-processing and get raw viewport shots instead.
+Mặc định mọi ảnh tạo ra được bọc bằng browser chrome tự dựng: bo góc, titlebar xám có ba chấm kiểu traffic-light và bóng mềm bốn phía. Đặt `FRAME=false` để bỏ bước xử lý khung và lấy ảnh viewport thô.
 
 ```bash
-# Framed (default)
+# Có khung (mặc định)
 npm run screenshotter
 
-# Raw shots, no frame
+# Ảnh thô, không khung
 FRAME=false npm run screenshotter
 ```
 
-Framing is done entirely locally via an inline HTML template plus a Playwright screenshot of the composed result. No external services are called, no image content leaves your machine.
+Khung được tạo hoàn toàn local bằng template HTML inline và ảnh Playwright của kết quả đã compose. Không gọi dịch vụ ngoài, không gửi nội dung ảnh ra khỏi máy.
 
-The frame's address bar shows the URL path of the shot (e.g. `/hardware/1/edit`) as a rounded pill centered in the chrome. Only the path is rendered, not the full URL. This keeps things clean regardless of what your local testing host is (`snipe-it.test`, an ngrok tunnel, etc.) and avoids leaking your local hostname into published images.
+Thanh địa chỉ trong khung chỉ hiển thị URL path của ảnh, ví dụ `/hardware/1/edit`, dưới dạng pill bo góc ở giữa chrome. Không render full URL. Cách này giữ ảnh sạch dù host test local là `hsb-it.test`, tunnel ngrok hay hostname khác, đồng thời tránh lộ hostname local trong ảnh công bố.
 
-## Ad-hoc single-shot mode
+## Chế độ chụp một ảnh ad-hoc
 
-Skip the full walkthrough and capture just one URL as a specific user. Useful for regenerating one stale image without re-running the whole sweep, or grabbing an off-catalog page for a one-off.
+Bỏ qua full walkthrough và chỉ chụp một URL với một user cụ thể. Hữu ích khi cần tạo lại một ảnh cũ, hoặc chụp một trang ngoài danh mục cho nhu cầu một lần.
 
 ```bash
-# Just a URL, using the default USERNAME (admin)
+# Chỉ một URL, dùng USERNAME mặc định (admin)
 node .screenshotter/src/screenshotter.mjs --one /hardware
 
-# As a specific role
+# Với một vai trò cụ thể
 node .screenshotter/src/screenshotter.mjs --one /hardware/create --as assetmgr
 
-# With a custom output name
+# Với tên output tùy chỉnh
 node .screenshotter/src/screenshotter.mjs --one /licenses/5 --as licensemgr --name license-detail
 
-# Shoot a specific tab on a view page
+# Chụp một tab cụ thể trên trang view
 node .screenshotter/src/screenshotter.mjs --one /hardware/1 --tab licenses
 node .screenshotter/src/screenshotter.mjs --one /hardware/1 --tab "components"
 
-# Dark mode, no framing
+# Dark mode, không khung
 COLOR_SCHEME=dark FRAME=false node .screenshotter/src/screenshotter.mjs --one /hardware --as admin
 ```
 
-Ad-hoc shots land in `.screenshotter/screenshots/adhoc/{username}-{name}-{timestamp}.png`, or with `-tab-{slug}` in the filename when `--tab` is used. The `adhoc/` directory is deliberately preserved across full walkthrough runs so historical one-off images stick around, and every ad-hoc shot carries a timestamp so repeated captures of the same URL never overwrite each other.
+Ảnh ad-hoc được lưu vào `.screenshotter/screenshots/adhoc/{username}-{name}-{timestamp}.png`, hoặc có thêm `-tab-{slug}` trong tên file khi dùng `--tab`. Thư mục `adhoc/` được giữ lại qua các lần full walkthrough để ảnh một lần không bị xóa, và mỗi ảnh đều có timestamp để chụp lại cùng URL không ghi đè ảnh cũ.
 
-Arguments:
+Tham số:
 
-- `--one <path>` (required) URL path to shoot, with or without a leading slash.
-- `--as <username>` (default: `USERNAME` env, which defaults to `admin`) user to log in as. Any seeded user works: `admin`, `snipe`, `assetmgr`, `licensemgr`, `accessorymgr`, `consumablemgr`, `componentmgr`, `usermgr`, etc.
-- `--name <slug>` (default: URL path with `/` replaced by `__`) filename slug. The timestamp is appended automatically.
-- `--tab <label>` case-insensitive substring match against the visible Bootstrap tab labels on the target page. `--tab licenses` matches "Licenses" or "Licenses (5)" alike. If nothing matches, the run aborts with a list of available tabs so you can pick a valid one.
+- `--one <path>`: bắt buộc, URL path cần chụp, có hoặc không có dấu `/` đầu.
+- `--as <username>`: user dùng để đăng nhập. Mặc định lấy từ env `USERNAME`, nếu không có thì là `admin`. User demo hợp lệ gồm `admin`, `hsb`, `assetmgr`, `licensemgr`, `accessorymgr`, `consumablemgr`, `componentmgr`, `usermgr`, v.v.
+- `--name <slug>`: slug tên file. Mặc định lấy URL path và đổi `/` thành `__`. Timestamp được tự động thêm.
+- `--tab <label>`: tìm không phân biệt hoa thường theo substring trên nhãn Bootstrap tab hiển thị ở trang đích. `--tab licenses` khớp cả `Licenses` và `Licenses (5)`. Nếu không có tab phù hợp, run dừng và in danh sách tab hiện có.
 
-## What a full run produces
+## Kết quả của một lần chạy full
 
-Every generated PNG follows the naming convention `{section}/{username}-{section}-{page}-{timestamp}.png` so alphabetical sort groups shots by section, then by role, then by run. The section appears in both the directory name and the filename so a single PNG shared out of context (dropped into a Discord thread, a PR comment, a support ticket) is still self-identifying.
+Mọi PNG tạo ra dùng quy ước tên `{section}/{username}-{section}-{page}-{timestamp}.png`, nên sắp xếp alphabet sẽ nhóm theo section, rồi vai trò, rồi lần chạy. Section xuất hiện cả trong tên thư mục và tên file, để một PNG đứng riêng trong Discord, PR comment hoặc ticket vẫn tự mô tả được.
 
-Example section directory contents after a run as `admin` plus the resource managers:
+Ví dụ nội dung thư mục section sau một lần chạy với `admin` và các resource manager:
 
-```
+```text
 .screenshotter/screenshots/assets/
 ├── admin-assets-index-2026-07-21-141230.png
 ├── admin-assets-view-2026-07-21-141230.png
@@ -209,24 +209,24 @@ Example section directory contents after a run as `admin` plus the resource mana
 └── assetmgr-assets-create-2026-07-21-141230.png
 ```
 
-Coverage per section:
+Phạm vi mỗi section:
 
-- **Index, view, edit, edit-submitted** for every first-class object.
-- **Info-panel toggle** on view pages that have one: the base `-view` shot captures the default (expanded) state; an extra `-view-info-collapsed` (or `-view-info-expanded` if the initial state happened to be collapsed) captures the other. Docs can then show both compact and expanded layouts.
-- **Checkout** for the checkoutable ones (assets, licenses, accessories, consumables, components, kits).
-- **Create form** as an extra where useful (assets, users, licenses).
-- **Bulk-checkout and bulk-checkin** under the assets section (`/hardware/bulkcheckout`, `/hardware/bulkcheckin`).
-- **Interaction shots** (only assets today: the status dropdown open on the create form).
+- **Index, view, edit, edit-submitted** cho mọi object chính.
+- **Toggle info-panel** trên trang view có panel: ảnh `-view` chụp trạng thái mặc định, ảnh phụ `-view-info-collapsed` hoặc `-view-info-expanded` chụp trạng thái còn lại.
+- **Checkout** cho các đối tượng có thể checkout: tài sản, license, phụ kiện, vật tư, linh kiện, kit.
+- **Create form** khi hữu ích, ví dụ tài sản, người dùng, license.
+- **Bulk-checkout và bulk-checkin** trong section assets (`/hardware/bulkcheckout`, `/hardware/bulkcheckin`).
+- **Ảnh tương tác**, hiện chủ yếu là dropdown trạng thái đang mở trên form tạo tài sản.
 
-Sections in the default walkthrough: `assets`, `licenses`, `accessories`, `consumables`, `components`, `users`, `models`, `categories`, `manufacturers`, `suppliers`, `locations`, `departments`, `kits`, `companies`, `statuslabels`, `depreciations`, `custom-fields`, `fieldsets`, `maintenance-types`, `dashboard`, `settings`, `reports`.
+Các section mặc định: `assets`, `licenses`, `accessories`, `consumables`, `components`, `users`, `models`, `categories`, `manufacturers`, `suppliers`, `locations`, `departments`, `kits`, `companies`, `statuslabels`, `depreciations`, `custom-fields`, `fieldsets`, `maintenance-types`, `dashboard`, `settings`, `reports`.
 
-Also shot as separate walkthroughs from the perspective of scoped resource-managers (each seeded with permissions for exactly one resource): `assetmgr`, `licensemgr`, `accessorymgr`, `consumablemgr`, `componentmgr`, `usermgr`. These land in the same section directories as the admin shots for side-by-side comparison.
+Ngoài ra, script còn chạy walkthrough theo góc nhìn của các resource manager đã seed quyền đúng cho từng resource: `assetmgr`, `licensemgr`, `accessorymgr`, `consumablemgr`, `componentmgr`, `usermgr`. Ảnh của các user này nằm cùng thư mục section với ảnh admin để dễ so sánh.
 
-Finally, a superuser sweep of every parameter-free GET route in the app, filed under `all-routes/`, for visual gut-check purposes. Set `ALL_ROUTES=false` to skip that pass.
+Cuối cùng, superuser sẽ quét mọi route GET không có parameter trong app và lưu dưới `all-routes/` để kiểm tra nhanh bằng mắt. Đặt `ALL_ROUTES=false` để bỏ qua lượt này.
 
-## How to add a new screenshot
+## Thêm ảnh chụp mới
 
-Each block in the script is intentionally explicit. Adding a new page or interaction means adding a small block that navigates, waits, and calls the `shot(name)` helper.
+Mỗi block trong script được viết rõ ràng. Thêm trang hoặc tương tác mới nghĩa là thêm một block nhỏ: điều hướng, chờ trạng thái cần thiết, rồi gọi helper `shot(name)`.
 
 ```js
 await page.goto(`${BASE_URL}/consumables`);
@@ -234,13 +234,13 @@ await waitForTable();
 await shot(`consumables/${USERNAME}-consumables-index`);
 ```
 
-For interaction shots (dropdown open, modal open, mid-flow state), click the trigger, wait for the target element to appear, then screenshot. The script uses `page.waitForLoadState('networkidle')` inside the `shot()` helper to defuse AdminLTE's async rendering, and a `waitForTable()` helper waits for bootstrap-table's loading overlay to clear before shooting a table page.
+Với ảnh tương tác như dropdown đang mở, modal đang mở hoặc trạng thái giữa flow, hãy click trigger, chờ element mục tiêu xuất hiện rồi chụp. Helper `shot()` gọi `page.waitForLoadState('networkidle')` để giảm nhiễu do render async của AdminLTE; helper `waitForTable()` chờ overlay loading của bootstrap-table biến mất trước khi chụp trang bảng.
 
-If your new block covers a first-class object (list plus detail plus edit page), add an entry to the `firstClassObjects` config array near the top of the walkthrough section and the loop will produce the three shots for free. Add `hasCheckout: true` if the entity is checkoutable, `hasView: false` if it has no detail page.
+Nếu block mới bao phủ một object chính gồm list, detail và edit page, hãy thêm entry vào mảng config `firstClassObjects` gần đầu phần walkthrough để vòng lặp tự tạo ba ảnh. Thêm `hasCheckout: true` nếu entity có checkout; thêm `hasView: false` nếu entity không có trang detail.
 
-## Shooting the same page as different users
+## Chụp cùng một trang bằng nhiều user
 
-The script has an `asUser(username, fn)` block helper that clears cookies, logs in as the named user, runs the callback, then any shots inside the block are captured under that session.
+Script có helper `asUser(username, fn)` để xóa cookie, đăng nhập bằng user chỉ định, chạy callback, rồi mọi ảnh trong block sẽ được chụp trong session đó.
 
 ```js
 await asUser('viewer', async () => {
@@ -250,14 +250,14 @@ await asUser('viewer', async () => {
 });
 ```
 
-Users referenced in these blocks must exist in the seeded database. The demo seeders ship the six resource-manager users (assetmgr, licensemgr, accessorymgr, consumablemgr, componentmgr, usermgr) plus the standard admin/snipe accounts. Add more via `UserFactory` states if you need finer-grained roles for docs comparison shots.
+User dùng trong các block này phải tồn tại trong database đã seed. Demo seeder có sáu resource-manager user (`assetmgr`, `licensemgr`, `accessorymgr`, `consumablemgr`, `componentmgr`, `usermgr`) cùng các tài khoản chuẩn `admin` và `hsb`. Nếu cần vai trò chi tiết hơn cho tài liệu so sánh, hãy bổ sung bằng state của `UserFactory`.
 
-## Workflow expectation
+## Kỳ vọng workflow
 
-When a PR adds or meaningfully changes a user-visible screen, modal, form, dropdown, or interaction, add or update the corresponding block in `.screenshotter/src/screenshotter.mjs` in the same PR. If a downstream doc references a specific screenshot filename and the script's block for it is removed, the doc visibly breaks the next time it is regenerated, which is the intended feedback loop.
+Khi PR thêm hoặc thay đổi đáng kể một màn hình, modal, form, dropdown hoặc tương tác người dùng, hãy thêm hoặc cập nhật block tương ứng trong `.screenshotter/src/screenshotter.mjs` trong cùng PR. Nếu tài liệu downstream tham chiếu một filename ảnh cụ thể và block tạo ảnh đó bị xóa, tài liệu sẽ hỏng rõ ràng ở lần regenerate tiếp theo; đó là vòng phản hồi mong muốn.
 
-## Implementation notes
+## Ghi chú triển khai
 
-The script uses the `.mjs` extension rather than `.js` so it always runs as an ES module regardless of what the root `package.json` says. The alternative was to add `"type": "module"` to `package.json`, which would flip every other `.js` file in the repo to ESM at the same time and is a much larger change than this script warrants.
+Script dùng đuôi `.mjs` thay vì `.js` để luôn chạy như ES module, bất kể root `package.json` cấu hình thế nào. Phương án khác là thêm `"type": "module"` vào `package.json`, nhưng cách đó sẽ chuyển mọi file `.js` khác trong repo sang ESM cùng lúc và tạo phạm vi thay đổi lớn hơn nhu cầu của script.
 
-Source and output are separated (`.screenshotter/src/` vs `.screenshotter/screenshots/`) so the wipe-before-run logic can never accidentally delete the script itself. An earlier version had them in the same directory with a filename-based skip list, which self-deleted the running script the moment someone renamed the output directory.
+Source và output được tách riêng (`.screenshotter/src/` và `.screenshotter/screenshots/`) để logic xóa trước khi chạy không bao giờ xóa nhầm chính script. Phiên bản cũ từng để chung một thư mục và dùng skip list theo filename; cách đó có thể tự xóa script đang chạy ngay khi ai đó đổi tên thư mục output.

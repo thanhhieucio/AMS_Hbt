@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SetupDatabaseRequest;
 use App\Http\Requests\SetupUserRequest;
 use App\Models\Setting;
 use App\Models\User;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\URL;
 
 /**
  * This controller handles all actions related to Settings for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */
@@ -31,7 +32,7 @@ class SetupController extends Controller
      * Checks to see whether or not the database has a migrations table
      * and a user, otherwise display the setup view.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      *
@@ -140,9 +141,115 @@ class SetupController extends Controller
     }
 
     /**
+     * Test the submitted database credentials and, if they work, persist them to
+     * the .env file so the pre-flight check on Step 1 can reconnect with them.
+     *
+     * Supports MySQL/MariaDB and PostgreSQL (including Cloud SQL for PostgreSQL,
+     * which speaks the standard Postgres wire protocol via the pgsql driver).
+     */
+    public function postSaveDatabase(SetupDatabaseRequest $request): RedirectResponse
+    {
+        $driver = $request->input('db_connection');
+        $host = $request->input('db_host');
+        $port = (int) $request->input('db_port');
+        $database = $request->input('db_database');
+        $username = $request->input('db_username');
+        $sslRequire = $driver === 'pgsql' && $request->boolean('db_sslmode');
+
+        // Leave the password field blank in the form to keep the credential
+        // already stored in .env instead of overwriting it with an empty one.
+        $password = $request->filled('db_password')
+            ? $request->input('db_password')
+            : (string) config("database.connections.{$driver}.password");
+
+        $test = $this->testDatabaseConnection($driver, $host, $port, $database, $username, $password, $sslRequire);
+
+        if (! $test['ok']) {
+            return redirect()
+                ->route('setup')
+                ->withInput($request->except('db_password'))
+                ->withErrors(['db_connection_test' => $test['error']], 'database');
+        }
+
+        $this->setEnvValues([
+            'DB_CONNECTION' => $driver,
+            'DB_HOST' => $host,
+            'DB_PORT' => (string) $port,
+            'DB_DATABASE' => $database,
+            'DB_USERNAME' => $username,
+            'DB_PASSWORD' => $password,
+            'DB_SSLMODE' => $sslRequire ? 'require' : 'prefer',
+        ]);
+
+        Artisan::call('config:clear');
+
+        return redirect()->route('setup')->with('success', trans('general.setup_db_saved'));
+    }
+
+    /**
+     * Attempt a raw PDO connection with the given credentials without touching
+     * the app's configured connection, so a bad Step 1 submission can't break it.
+     */
+    protected function testDatabaseConnection(string $driver, string $host, int $port, string $database, string $username, ?string $password, bool $sslRequire): array
+    {
+        try {
+            $dsn = match ($driver) {
+                'mysql' => "mysql:host={$host};port={$port};dbname={$database}",
+                'pgsql' => "pgsql:host={$host};port={$port};dbname={$database}".($sslRequire ? ';sslmode=require' : ''),
+            };
+
+            new \PDO($dsn, $username, $password ?? '', [
+                \PDO::ATTR_TIMEOUT => 5,
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            ]);
+
+            return ['ok' => true, 'error' => null];
+        } catch (\PDOException $e) {
+            return ['ok' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Write or update KEY=value pairs in the .env file, preserving everything else.
+     */
+    protected function setEnvValues(array $values): void
+    {
+        $path = base_path('.env');
+        $content = File::exists($path) ? File::get($path) : '';
+
+        foreach ($values as $key => $value) {
+            $line = $key.'='.$this->quoteEnvValue((string) $value);
+            $pattern = '/^'.preg_quote($key, '/').'=.*$/m';
+
+            $content = preg_match($pattern, $content)
+                ? preg_replace($pattern, $line, $content)
+                : rtrim($content)."\n".$line."\n";
+        }
+
+        File::put($path, $content);
+    }
+
+    /**
+     * Quote an .env value when it contains characters that would otherwise
+     * break parsing (whitespace, #, quotes).
+     */
+    protected function quoteEnvValue(string $value): string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        if (preg_match('/[\s#"\']/', $value)) {
+            return '"'.str_replace('"', '\\"', $value).'"';
+        }
+
+        return $value;
+    }
+
+    /**
      * Save the first admin user from Setup.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -214,7 +321,7 @@ class SetupController extends Controller
     /**
      * Return the admin user creation form in Setup.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -229,7 +336,7 @@ class SetupController extends Controller
     /**
      * Return the view that tells the user that the Setup is done.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -246,7 +353,7 @@ class SetupController extends Controller
      * Migrate the database tables, and return the output
      * to a view for Setup.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */

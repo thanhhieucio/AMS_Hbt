@@ -1131,7 +1131,7 @@ class SearchableTraitTest extends TestCase
 
     /**
      * Test negation filter on a custom field.
-     * filter={"_snipeit_cpu_X":"!Intel"} should return assets where the CPU field
+     * filter={"_hsbit_cpu_X":"!Intel"} should return assets where the CPU field
      * does NOT contain "Intel".
      */
     public function test_negation_filter_on_custom_field()

@@ -443,7 +443,7 @@
                   data-show-footer="true"
                   data-sort-order="asc"
                   id="userAssets"
-                  class="table table-striped snipe-table"
+                  class="table table-striped hsb-table"
                   data-export-options='{
                   "fileName": "my-assets-{{ date('Y-m-d') }}",
                   "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
@@ -621,7 +621,7 @@
                       data-show-refresh="false"
                       data-sort-order="asc"
                       id="userLicenses"
-                      class="table table-striped snipe-table"
+                      class="table table-striped hsb-table"
                       data-export-options='{
                     "fileName": "my-licenses-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
@@ -686,7 +686,7 @@
                       data-show-refresh="false"
                       data-sort-order="asc"
                       data-sort-name="name"
-                      class="table table-striped snipe-table table-hover"
+                      class="table table-striped hsb-table table-hover"
                       data-export-options='{
                     "fileName": "export-accessory-{{ str_slug($user->username) }}-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","delete","download","icon"]
@@ -732,7 +732,7 @@
                       data-show-refresh="false"
                       data-sort-order="asc"
                       data-sort-name="name"
-                      class="table table-striped snipe-table table-hover"
+                      class="table table-striped hsb-table table-hover"
                       data-export-options='{
                     "fileName": "export-consumable-{{ str_slug($user->username) }}-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","delete","download","icon"]
@@ -779,7 +779,7 @@
                     data-show-refresh="false"
                     data-sort-order="asc"
                     data-sort-name="name"
-                    class="table table-striped snipe-table table-hover"
+                    class="table table-striped hsb-table table-hover"
                     data-url="{{ route('api.self.eulas', ['user_id' => e(request('user_id'))]) }}"
                     data-export-options='{
                     "fileName": "export-eula-{{ str_slug($user->username) }}-{{ date('Y-m-d') }}",

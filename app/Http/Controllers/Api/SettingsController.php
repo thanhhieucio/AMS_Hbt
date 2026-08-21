@@ -155,7 +155,7 @@ class SettingsController extends Controller
     /**
      * Test the email configuration
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -189,7 +189,7 @@ class SettingsController extends Controller
     /**
      * Delete server-cached barcodes
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.0.0]
      */
@@ -224,7 +224,7 @@ class SettingsController extends Controller
     /**
      * Get a list of login attempts
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v5.0.0]
      */

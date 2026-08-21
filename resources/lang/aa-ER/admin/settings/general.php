@@ -253,7 +253,7 @@ return [
     'webhook_test_help' => 'crwdns11407:0crwdne11407:0',
     'shortcuts_enabled' => 'crwdns12654:0crwdne12654:0',
     'shortcuts_help_text' => 'crwdns12656:0crwdne12656:0',
-    'snipe_version' => 'crwdns1266:0crwdne1266:0',
+    'hsb_version' => 'crwdns1266:0crwdne1266:0',
     'support_footer' => 'crwdns1991:0crwdne1991:0',
     'support_footer_help' => 'crwdns1992:0crwdne1992:0',
     'version_footer' => 'crwdns2040:0crwdne2040:0',

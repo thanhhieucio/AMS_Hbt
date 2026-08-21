@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Gate;
 use Watson\Validating\ValidatingTrait;
 
-class Group extends SnipeModel
+class Group extends HsbModel
 {
     use HasFactory;
     use Presentable;
@@ -70,7 +70,7 @@ class Group extends SnipeModel
     /**
      * Establishes the groups -> users relationship
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *
@@ -90,7 +90,7 @@ class Group extends SnipeModel
     /**
      * Decode JSON permissions into array
      *
-     * @author A. Gianotto <snipe@snipe.net>
+     * @author A. Gianotto <hieubt@hsb.edu.vn>
      *
      * @since  [v1.0]
      *

@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-SNIPEIT_SH_URL= "https://raw.githubusercontent.com/grokability/snipe-it/master/snipeit.sh"
+HSBIT_SH_URL= "https://raw.githubusercontent.com/thanhhieucio/HSB-IT/master/hsbit.sh"
 NETWORK_BRIDGE= "en0: Wi-Fi (AirPort)"
 
 Vagrant.configure("2") do |config|
@@ -44,8 +44,8 @@ Vagrant.configure("2") do |config|
     centos7.vm.network "public_network", bridge: NETWORK_BRIDGE
     centos7.vm.provision :shell, :inline => "sudo yum -y update"
     centos7.vm.provision :shell, :inline => "yum install -y wget"
-    centos7.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    centos7.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    centos7.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    centos7.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
   config.vm.define "centos6" do |centos6|
@@ -53,24 +53,24 @@ Vagrant.configure("2") do |config|
     centos6.vm.hostname = 'centos6'
     centos6.vm.network "public_network", bridge: NETWORK_BRIDGE
     centos6.vm.provision :shell, :inline => "sudo yum -y update"
-    centos6.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    centos6.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    centos6.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    centos6.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
   config.vm.define "jessie" do |jessie|
     jessie.vm.box = "debian/jessie64"
     jessie.vm.hostname = 'debian8'
     jessie.vm.network "public_network", bridge: NETWORK_BRIDGE
-    jessie.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    jessie.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    jessie.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    jessie.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
   config.vm.define "stretch" do |stretch|
     stretch.vm.box = "debian/stretch64"
     stretch.vm.hostname = 'debian9'
     stretch.vm.network "public_network", bridge: NETWORK_BRIDGE
-    stretch.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    stretch.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    stretch.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    stretch.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
   config.vm.define "fedora27" do |fedora27|
@@ -78,8 +78,8 @@ Vagrant.configure("2") do |config|
     fedora27.vm.hostname = 'fedora27'
     fedora27.vm.network "public_network", bridge: NETWORK_BRIDGE
     fedora27.vm.provision :shell, :inline => "dnf -y install wget"
-    fedora27.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    fedora27.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    fedora27.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    fedora27.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
     config.vm.define "fedora26" do |fedora26|
@@ -87,8 +87,8 @@ Vagrant.configure("2") do |config|
     fedora26.vm.hostname = 'fedora26'
     fedora26.vm.network "public_network", bridge: NETWORK_BRIDGE
     fedora26.vm.provision :shell, :inline => "dnf -y install wget"
-    fedora26.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
-    fedora26.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+    fedora26.vm.provision :shell, :inline => "wget #{HSBIT_SH_URL}"
+    fedora26.vm.provision :shell, :inline => "chmod 755 hsbit.sh"
   end
 
   config.vm.define "freebsd" do |freebsd|

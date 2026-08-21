@@ -12,14 +12,14 @@ use Tests\TestCase;
  *
  *   TypeError Illuminate\Database\Grammar::parameterize():
  *   Argument #1 ($values) must be of type array, string given
- *   at MappedTable::replace (SnipeSCIMConfig.php:293)
+ *   at MappedTable::replace (HsbSCIMConfig.php:293)
  *
  * MappedTable is a leaf attribute for the User schema's `department`
  * and `location` fields — both scalar-mapped foreign relations.
  * SCIM clients (Entra, Okta in some configurations) send those as
  * complex objects: {"department": {"value": "Engineering"}} or
  * {"department": {"displayName": "Engineering"}}. The parent
- * SnipeRootComplex router also wraps sub-attribute values into an
+ * HsbRootComplex router also wraps sub-attribute values into an
  * array on the descent. Either way, MappedTable was receiving an
  * array in a code path that unconditionally passed it to
  * firstOrCreate() as a WHERE value — triggering the Grammar TypeError.

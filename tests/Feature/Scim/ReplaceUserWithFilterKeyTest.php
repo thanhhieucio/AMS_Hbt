@@ -20,7 +20,7 @@ class ReplaceUserWithFilterKeyTest extends TestCase
      *   Call to a member function shiftAttributeName() on null
      *   in vendor/arietimmerman/laravel-scim-server/src/Parser/Path.php:79
      *
-     * SnipeSCIMConfig::replace() (and its sibling ::add()) now guards
+     * HsbSCIMConfig::replace() (and its sibling ::add()) now guards
      * that condition and throws a SCIMException — the client gets a
      * HTTP 400 pointing at the bad key instead of a 500.
      */

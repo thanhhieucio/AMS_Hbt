@@ -12,14 +12,14 @@ class DisableLDAP extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:ldap-disable';
+    protected $signature = 'hsbit:ldap-disable';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This is  a rescue command that can be used to turn off LDAP settings in the event that you managed to lock yourself out using bad LDAP settings.';
+    protected $description = 'Lệnh cứu hộ để tắt cấu hình LDAP khi cấu hình sai khiến bạn không đăng nhập được.';
 
     /**
      * Create a new command instance.
@@ -38,7 +38,7 @@ class DisableLDAP extends Command
      */
     public function handle()
     {
-        if ($this->confirm("\n****************************************************\nThis will disable LDAP support. You will not be able \nto login with an account that does not exist \nlocally in the Snipe-IT local database. \n****************************************************\n\nDo you wish to continue? [y|N]")) {
+        if ($this->confirm("\n****************************************************\nThao tác này sẽ tắt LDAP. Bạn sẽ không thể \nđăng nhập bằng tài khoản chưa tồn tại \ntrong cơ sở dữ liệu cục bộ của HSB-IT. \n****************************************************\n\nBạn có muốn tiếp tục? [y|N]")) {
             $setting = Setting::getSettings();
             $setting->ldap_enabled = 0;
             if ($setting->save()) {

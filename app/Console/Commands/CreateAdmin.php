@@ -24,14 +24,14 @@ class CreateAdmin extends Command
      * @property Carbon|null $created_at
      * @property mixed $created_by
      */
-    protected $signature = 'snipeit:create-admin {--first_name=} {--last_name=}  {--email=}  {--username=}  {--password=} {show_in_list?} {autoassign_licenses?}';
+    protected $signature = 'hsbit:create-admin {--first_name=} {--last_name=}  {--email=}  {--username=}  {--password=} {show_in_list?} {autoassign_licenses?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create an admin user via command line.';
+    protected $description = 'Tạo tài khoản quản trị viên từ dòng lệnh.';
 
     /**
      * Create a new command instance.
@@ -54,7 +54,7 @@ class CreateAdmin extends Command
         $autoassign_licenses = $this->argument('autoassign_licenses');
 
         if (($first_name == '') || ($last_name == '') || ($username == '') || ($email == '') || ($password == '')) {
-            $this->info('ERROR: All fields are required.');
+            $this->info('LỖI: Tất cả trường đều bắt buộc.');
         } else {
             $user = new User;
             $user->first_name = $first_name;
@@ -81,7 +81,7 @@ class CreateAdmin extends Command
                 $errors = $user->getErrors();
 
                 foreach ($errors->all() as $error) {
-                    $this->info('ERROR:'.$error);
+                    $this->info('LỖI:'.$error);
                 }
             }
         }

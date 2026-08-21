@@ -19,14 +19,14 @@ class SendExpectedCheckinAlerts extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:expected-checkin {--with-output : Display the results in a table in your console in addition to sending the email}';
+    protected $signature = 'hsbit:expected-checkin {--with-output : Display the results in a table in your console in addition to sending the email}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Check for overdue or upcoming expected checkins.';
+    protected $description = 'Kiểm tra các lượt thu hồi dự kiến đã quá hạn hoặc sắp đến hạn.';
 
     /**
      * Create a new command instance.

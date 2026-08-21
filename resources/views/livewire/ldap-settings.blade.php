@@ -2,7 +2,7 @@
     Multi-step LDAP settings wizard. Four steps:
       1. Connection (server URL, TLS, cert)
       2. Authenticate & Scope (bind creds + base DN + filters)
-      3. Attribute Mapping (LDAP-attr → Snipe-IT-field)
+      3. Attribute Mapping (LDAP-attr → HSB-IT-field)
       4. Sync & Defaults (enable toggle, default group, forgot-pass URL)
 
     Layout order inside the box:
@@ -38,7 +38,7 @@
          inside this wizard. Uses the theme's --box-bg + --color-fg so
          it matches whatever dark-mode palette the site is running. --}}
     <style>
-        /* Scoped to actual input elements. Snipe-IT wraps checkboxes in
+        /* Scoped to actual input elements. HSB-IT wraps checkboxes in
            `<label class="form-control">` (see checkbox-row), and applying
            the dark background/border to those labels breaks their
            inherit-from-parent styling. Explicit element targets keep
@@ -75,7 +75,7 @@
            override re-asserts red on all four sides so a field in an
            error state actually LOOKS wrong instead of just having a
            red label + inline message. Also covers light mode since
-           Snipe-IT's AdminLTE overrides use the same has-error class. */
+           HSB-IT's AdminLTE overrides use the same has-error class. */
         .ldap-wizard .has-error input.form-control,
         .ldap-wizard .has-error textarea.form-control,
         .ldap-wizard .has-error select.form-control {
@@ -194,7 +194,7 @@
                  .modal-danger red-header confirm rather than a browser
                  native prompt so it matches the rest of the app's
                  destructive-action UX. --}}
-            @if ($snipeSettings->ldap_enabled == '1')
+            @if ($hsbSettings->ldap_enabled == '1')
                 <div class="box-tools pull-right">
                     <button
                         type="button"
@@ -638,15 +638,15 @@
                             <table class="table table-condensed table-striped" style="margin-bottom: 0;">
                                 <thead>
                                     <tr>
-                                        <th>{{ trans('admin/settings/general.ldap_wizard.mapping.preview_snipe_field') }}</th>
+                                        <th>{{ trans('admin/settings/general.ldap_wizard.mapping.preview_hsb_field') }}</th>
                                         <th>{{ trans('admin/settings/general.ldap_wizard.mapping.preview_ldap_attribute') }}</th>
                                         <th>{{ trans('admin/settings/general.ldap_wizard.mapping.preview_ldap_value') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($step3TestAttributes as $snipeField => $preview)
+                                    @foreach ($step3TestAttributes as $hsbField => $preview)
                                         <tr>
-                                            <td>{{ $snipeField }}</td>
+                                            <td>{{ $hsbField }}</td>
                                             <td>
                                                 @if ($preview['attr'])
                                                     <code>{{ $preview['attr'] }}</code>
@@ -726,7 +726,7 @@
                          save on step 4. Points admins at sync-scheduling
                          options. Login is live but recurring user sync
                          has to be scheduled separately since the app
-                         ships no default schedule for snipeit:ldap-sync. --}}
+                         ships no default schedule for hsbit:ldap-sync. --}}
 
 
                     <div class="col-md-12">
@@ -847,7 +847,7 @@
          state alone between wizard re-renders. The confirm button still
          fires wire:click because Livewire delegates click events at the
          document level. --}}
-    @if ($snipeSettings->ldap_enabled == '1')
+    @if ($hsbSettings->ldap_enabled == '1')
         <div
             wire:ignore
             class="modal modal-danger fade"

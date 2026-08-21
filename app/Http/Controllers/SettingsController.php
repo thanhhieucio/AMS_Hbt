@@ -37,7 +37,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * This controller handles all actions related to Settings for
- * the Snipe-IT Asset Management application.
+ * the HSB-IT Asset Management application.
  *
  * @version    v1.0
  */
@@ -46,7 +46,7 @@ class SettingsController extends Controller
     /**
      * Return a view that shows some of the key settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -76,7 +76,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -90,7 +90,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -197,7 +197,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -211,7 +211,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -252,7 +252,7 @@ class SettingsController extends Controller
             $setting->link_dark_color = $request->input('link_dark_color', '#5fa4cc');
             $setting->nav_link_color = $request->input('nav_link_color', '#FFFFFF');
 
-            $setting->site_name = $request->input('site_name', 'Snipe-IT');
+            $setting->site_name = $request->input('site_name', 'HSB-IT');
             $setting->custom_css = $request->input('custom_css');
 
             // Logo upload
@@ -319,7 +319,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -333,7 +333,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -388,7 +388,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -402,7 +402,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -433,7 +433,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -447,7 +447,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -502,7 +502,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -516,7 +516,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -530,7 +530,7 @@ class SettingsController extends Controller
     /**
      * Saves settings from form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.0]
      */
@@ -556,7 +556,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -573,7 +573,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -590,7 +590,7 @@ class SettingsController extends Controller
     /**
      * Saves settings from form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -674,7 +674,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -689,7 +689,7 @@ class SettingsController extends Controller
     /**
      * Saves settings from form.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -813,7 +813,7 @@ class SettingsController extends Controller
     /**
      * Show Google login settings form
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.1.1]
      */
@@ -827,7 +827,7 @@ class SettingsController extends Controller
     /**
      * ShSaveow Google login settings form
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.1.1]
      */
@@ -854,7 +854,7 @@ class SettingsController extends Controller
     /**
      * Show the listing of backups.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.8]
      */
@@ -893,14 +893,14 @@ class SettingsController extends Controller
     /**
      * Process the backup.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.8]
      */
     public function postBackups(): RedirectResponse
     {
         if (! config('app.lock_passwords')) {
-            Artisan::call('snipeit:backup', ['--filename' => 'manual-backup-'.date('Y-m-d-H-i-s')]);
+            Artisan::call('hsbit:backup', ['--filename' => 'manual-backup-'.date('Y-m-d-H-i-s')]);
             $output = Artisan::output();
 
             // Backup completed
@@ -925,7 +925,7 @@ class SettingsController extends Controller
     /**
      * Download the backup file.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.8]
      */
@@ -956,7 +956,7 @@ class SettingsController extends Controller
     /**
      * Delete the backup file.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v1.8]
      */
@@ -1000,7 +1000,7 @@ class SettingsController extends Controller
     /**
      * Uploads a backup file
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.0]
      */
@@ -1036,7 +1036,7 @@ class SettingsController extends Controller
     /**
      * Restore the backup file.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v6.0]
      */
@@ -1072,7 +1072,7 @@ class SettingsController extends Controller
 
                 if ($request->input('clean')) {
                     Log::debug("Attempting 'clean' - first, guessing prefix...");
-                    Artisan::call('snipeit:restore', [
+                    Artisan::call('hsbit:restore', [
                         '--sanitize-guess-prefix' => true,
                         'filename' => storage_path($path).'/'.$filename,
                     ]);
@@ -1084,7 +1084,7 @@ class SettingsController extends Controller
                 }
 
                 // run the restore command
-                Artisan::call('snipeit:restore',
+                Artisan::call('hsbit:restore',
                     $restore_params
                 );
 
@@ -1108,7 +1108,7 @@ class SettingsController extends Controller
                 }
 
                 Log::debug('Logging all users out..');
-                Artisan::call('snipeit:global-logout', ['--force' => true]);
+                Artisan::call('hsbit:global-logout', ['--force' => true]);
 
                 DB::table('users')->update(['remember_token' => null]);
                 Auth::logout();
@@ -1125,7 +1125,7 @@ class SettingsController extends Controller
     /**
      * Return a form to allow a super admin to update settings.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -1144,7 +1144,7 @@ class SettingsController extends Controller
     /**
      * Purges soft-deletes.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -1162,7 +1162,7 @@ class SettingsController extends Controller
                     Log::warning('User ID '.auth()->id().' initiated a PURGE!');
                     // Run a backup immediately before processing
                     Artisan::call('backup:run');
-                    Artisan::call('snipeit:purge', ['--force' => 'true', '--no-interaction' => true]);
+                    Artisan::call('hsbit:purge', ['--force' => 'true', '--no-interaction' => true]);
                     $output = Artisan::output();
 
                     return redirect()->route('settings.index')
@@ -1190,7 +1190,7 @@ class SettingsController extends Controller
      * We created a controller method for this because closures aren't allowed
      * in the routes file if you want to be able to cache the routes.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v4.0]
      */
@@ -1325,7 +1325,7 @@ class SettingsController extends Controller
     /**
      * Test the email configuration.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      *
      * @since [v3.0]
      */
@@ -1350,7 +1350,7 @@ class SettingsController extends Controller
     /**
      * Get login attempts view
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @author [A. Gianotto] [<hieubt@hsb.edu.vn>]
      */
     public function getLoginAttempts(): View
     {

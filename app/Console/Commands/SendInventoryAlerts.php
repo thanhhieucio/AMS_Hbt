@@ -16,14 +16,14 @@ class SendInventoryAlerts extends Command
      *
      * @var string
      */
-    protected $signature = 'snipeit:inventory-alerts';
+    protected $signature = 'hsbit:inventory-alerts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command checks for low inventory, and sends out an alert email.';
+    protected $description = 'Kiểm tra tồn kho thấp và gửi email cảnh báo.';
 
     /**
      * Create a new command instance.
