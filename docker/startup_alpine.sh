@@ -72,7 +72,8 @@ for dir in \
   'data/uploads/models' \
   'data/uploads/suppliers' \
   'dumps' \
-  'keys'
+  'keys' \
+  'secrets'
 do
   [ ! -d "/var/lib/hsbit/$dir" ] && mkdir -p "/var/lib/hsbit/$dir"
 done
@@ -80,6 +81,9 @@ done
 chown -R apache:root /var/lib/hsbit/data/*
 chown -R apache:root /var/lib/hsbit/dumps
 chown -R apache:root /var/lib/hsbit/keys
+chown -R apache:root /var/lib/hsbit/secrets
+chmod 700 /var/lib/hsbit/secrets
+find /var/lib/hsbit/secrets -type f -name '*.php' -exec chmod 600 {} \;
 chown -R apache:root /var/www/html/storage/framework/cache
 
 # Fix php settings

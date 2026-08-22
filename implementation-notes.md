@@ -91,3 +91,58 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - **Risks:** Đổi một phần key trong `en-US` sang tiếng Việt là cố ý để setup vẫn Việt hóa nếu production `.env` còn locale cũ; không tác động business logic ngoài wizard cài đặt.
 - **Rollback/verify:** Rollback bằng git diff theo các file trên. Verify bằng lint PHP, quét chuỗi `Snipe-IT Version`/setup tiếng Anh còn sót, deploy và `curl http://34.142.200.14/setup` xác nhận `lang=vi-VN`, text tiếng Việt, footer HSB-IT.
 - 2026-08-21 18:39:00 | Deploy note | Production VM source path is /opt/ams-hbt; deploy.sh now pulls there and tags the rebuilt image for both hieubt/hsb-it and legacy hieubt/ams-hbt compose compatibility.
+
+## 2026-08-21 - Gắn Firebase CLI project hbt-software
+
+- **Why:** User chọn Firebase project `hbt-software` sau khi đăng nhập Firebase CLI bằng tài khoản mới.
+- **Intent:** Tạo cấu hình Firebase tối thiểu cho workspace để CLI nhận project mặc định là `hbt-software`, chưa bật deploy service nào.
+- **Touched surface:** `.firebaserc`, `firebase.json`.
+- **Risks:** `firebase.json` rỗng không triển khai hosting/functions/rules; cần cấu hình thêm trước khi deploy Firebase service cụ thể.
+- **Rollback/verify:** Xóa `.firebaserc` và `firebase.json` nếu không dùng Firebase trong repo. Verify bằng `firebase use`.- 2026-08-21 21:09:14 | Write | C:/Users/HieuBT/AppData/Local/Temp/claude/D--Dev-AMS-hbt/c61cac47-99a6-4cc4-aeac-15b972d2391f/scratchpad/nosql-migration-audit.html
+- 2026-08-21 21:18:36 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-21 21:18:49 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-21 21:19:04 | Edit | routes/web.php
+- 2026-08-21 21:19:23 | Edit | resources/views/setup/index.blade.php
+- 2026-08-21 21:19:27 | Edit | resources/views/setup/index.blade.php
+- 2026-08-21 21:19:33 | Edit | resources/views/blade/form/error.blade.php
+- 2026-08-21 21:19:38 | Edit | config/database.php
+- 2026-08-21 21:19:50 | Edit | .env.example
+- 2026-08-21 21:20:04 | Edit | resources/lang/vi-VN/general.php
+- 2026-08-21 21:20:07 | Edit | resources/lang/en-US/general.php
+
+## 2026-08-22 - Chuẩn hóa DB_DATABASE mặc định cho setup
+
+- **Why:** User muốn phần cấu hình cơ sở dữ liệu trong setup mặc định dùng `DB_DATABASE=hsb_it`, nhưng người cài đặt vẫn nhập được tên database mới và hệ thống lưu ngược lại vào `.env`.
+- **Intent:** Đặt `hsb_it` làm tên database mặc định/fallback ở env mẫu, Docker env và form setup; giữ input database là field editable và `postSaveDatabase()` tiếp tục ghi giá trị người dùng nhập vào `DB_DATABASE`.
+- **Touched surface:** `.env`, `.env.example`, `.env.docker`, `docker/docker.env`, `config/database.php`, `resources/views/setup/index.blade.php`, `implementation-notes.md`.
+- **Risks:** Đổi default không tự rename database production đang có; nếu muốn chuyển database thật từ `snipeit` sang `hsb_it` cần tạo/migrate database trên MariaDB hoặc cài mới volume DB.
+- **Rollback/verify:** Rollback bằng git diff các file trên. Verify bằng quét `DB_DATABASE`, lint/config clear, và kiểm tra `/setup` hiển thị `hsb_it` trong ô tên cơ sở dữ liệu nhưng vẫn submit được tên khác.
+## 2026-08-22 - Lưu cấu hình database vào file secret
+
+- **Why:** User muốn các biến bootstrap database (`DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`) không bị ghi tiếp vào `.env` sau bước setup để giảm nguy cơ lộ thông tin nhạy cảm.
+- **Intent:** Cho Laravel đọc cấu hình database từ file PHP secret trước, fallback về `.env` khi chưa có file; setup wizard test kết nối rồi ghi cấu hình DB vào file secret ngoài web root.
+- **Touched surface:** `config/database.php`, `app/Http/Controllers/SetupController.php`, `resources/views/setup/index.blade.php`, `.env*`, Docker entrypoint/Dockerfile, `.gitignore`, `implementation-notes.md`.
+- **Risks:** File secret phải ghi được bởi web user/container; nếu mất file secret và `.env` không còn DB fallback thì app không kết nối được DB. Docker Compose nội bộ vẫn có thể cần biến DB ở host `.env` để khởi tạo service MariaDB.
+- **Rollback/verify:** Rollback bằng git diff các file trên. Verify bằng `php -l`, `php artisan config:clear`, kiểm tra setup hiển thị đường dẫn file secret và submit DB ghi được file cấu hình.
+
+## 2026-08-22 - Thêm lựa chọn hot patch vào deploy.sh
+
+- **Why:** User muốn có cách đẩy nhanh các file code nhỏ lên server/container mà không phải build lại Docker mỗi lần.
+- **Intent:** Giữ deploy chuẩn build Docker như cũ, bổ sung mode hot patch để `git pull`, copy file đã thay đổi vào container đang chạy và clear cache Laravel.
+- **Touched surface:** `deploy.sh`, `implementation-notes.md`.
+- **Risks:** Hot patch chỉ sửa container đang chạy, không cập nhật Docker image; nếu container bị recreate thì cần deploy chuẩn hoặc hot patch lại. Không phù hợp cho thay đổi Dockerfile, composer/npm dependency, migration cần build/runtime package mới.
+- **Rollback/verify:** Rollback bằng git diff `deploy.sh`. Verify bằng `bash -n deploy.sh` nếu có bash và đọc lại command SSH/docker cp sinh ra.
+
+## 2026-08-22 - S?a SSH hot deploy kh�ng tranh stdin
+- Intent: ngan gcloud compute ssh h?i x�c nh?n tuong t�c khi hot patch truy?n script qua stdin.
+- Touched surface: deploy.sh, c�c l?nh gcloud compute ssh c?a ch? d? full v� hot.
+- Risk: --quiet b? qua prompt x�c nh?n c?a gcloud; kh�ng thay d?i l?nh build/copy t? xa.
+- Rollback: kh�i ph?c hai l?nh gcloud compute ssh v? d?ng kh�ng c� --quiet.
+- Verification: bash -n deploy.sh v� deploy.sh --help.
+
+## 2026-08-22 - T? d?ng commit/push tru?c khi deploy
+- Intent: gom commit, push GitHub v� deploy l�n Google Compute v�o m?t l?n ch?y deploy.sh.
+- Touched surface: deploy.sh; t? d?ng stage to�n b? thay d?i trong repository tru?c khi deploy.
+- Risk: git add -A s? dua c? file untracked v�o commit; c?n ki?m tra .gitignore tru?c khi ch?y production.
+- Rollback: d�ng git revert commit deploy n?u c?n; c� th? d?t AUTO_GIT_SYNC=0 d? t?t bu?c t? d?ng.
+- Verification: bash -n deploy.sh, --help v� ki?m tra diff.

@@ -18,6 +18,7 @@ libapache2-mod-php8.3 \
 php8.3-curl \
 php8.3-ldap \
 php8.3-mysql \
+php8.3-pgsql \
 php8.3-gd \
 php8.3-xml \
 php8.3-mbstring \
@@ -94,11 +95,11 @@ RUN \
 	rm -r "/var/www/html/storage/private_uploads" && ln -fs "/var/lib/hsbit/data/private_uploads" "/var/www/html/storage/private_uploads" \
       && rm -rf "/var/www/html/public/uploads" && ln -fs "/var/lib/hsbit/data/uploads" "/var/www/html/public/uploads" \
       && rm -r "/var/www/html/storage/app/backups" && ln -fs "/var/lib/hsbit/dumps" "/var/www/html/storage/app/backups" \
-      && mkdir -p "/var/lib/hsbit/keys" && ln -fs "/var/lib/hsbit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key" \
+      && mkdir -p "/var/lib/hsbit/keys" "/var/lib/hsbit/secrets" && ln -fs "/var/lib/hsbit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key" \
       && ln -fs "/var/lib/hsbit/keys/oauth-public.key" "/var/www/html/storage/oauth-public.key" \
       && ln -fs "/var/lib/hsbit/keys/ldap_client_tls.cert" "/var/www/html/storage/ldap_client_tls.cert" \
       && ln -fs "/var/lib/hsbit/keys/ldap_client_tls.key" "/var/www/html/storage/ldap_client_tls.key" \
-      && chown docker "/var/lib/hsbit/keys/" \
+      && chown docker "/var/lib/hsbit/keys/" "/var/lib/hsbit/secrets/" \
       && chown -Rh docker "/var/www/html/storage/" \
       && chmod +x /var/www/html/artisan \
       && echo "Finished setting up application in /var/www/html"

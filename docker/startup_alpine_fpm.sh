@@ -77,7 +77,8 @@ for dir in \
   'data/uploads/models' \
   'data/uploads/suppliers' \
   'dumps' \
-  'keys'
+  'keys' \
+  'secrets'
 do
   [ ! -d "/var/lib/hsbit/$dir" ] && mkdir -p "/var/lib/hsbit/$dir"
 done
@@ -104,7 +105,11 @@ fi
 chown -R www-data:www-data \
   /var/lib/hsbit/data \
   /var/lib/hsbit/dumps \
-  /var/lib/hsbit/keys
+  /var/lib/hsbit/keys \
+  /var/lib/hsbit/secrets
+
+chmod 700 /var/lib/hsbit/secrets
+find /var/lib/hsbit/secrets -type f -name '*.php' -exec chmod 600 {} \;
 
 # Migrate/create database
 php artisan migrate --force

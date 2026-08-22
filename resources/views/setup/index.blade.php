@@ -17,11 +17,11 @@ Kiểm tra hệ thống ::
     </tr>
   </thead>
   <tbody>
-  <tr {!! ($start_settings['php_version_min']) ? ' class="success"' : ' class="danger"' !!}>
+    <tr {!! ($start_settings['php_version_min']) ? ' class="success"' : ' class="danger"' !!}>
       <td>PHP</td>
       <td>@if ($start_settings['php_version_min'])<i class="fas fa-check preflight-success"></i>@else<i class="fas fa-times preflight-error"></i>@endif</td>
       <td>@if ($start_settings['php_version_min'])Đạt yêu cầu.@else Chưa đạt yêu cầu.@endif Bạn đang chạy PHP {{ PHP_VERSION }}. Yêu cầu tối thiểu {{ config('app.min_php') }}.</td>
-  </tr>
+    </tr>
 
     <tr {!! ($start_settings['url_valid']) ? ' class="success"' : ' class="danger"' !!}>
       <td>URL</td>
@@ -32,7 +32,7 @@ Kiểm tra hệ thống ::
     <tr {!! ($start_settings['db_conn']===true) ? ' class="success"' : ' class="danger"' !!}>
       <td>Cơ sở dữ liệu</td>
       <td>@if ($start_settings['db_conn']===true)<i class="fas fa-check preflight-success"></i>@else<i class="fas fa-times preflight-error"></i>@endif</td>
-      <td>@if ($start_settings['db_conn']===true)Đã kết nối cơ sở dữ liệu thành công.@else Không kết nối được cơ sở dữ liệu. Vui lòng kiểm tra cấu hình database trong <code>.env</code>. Lỗi trả về: <code>{{ $start_settings['db_error'] }}</code> @endif</td>
+      <td>@if ($start_settings['db_conn']===true)Đã kết nối cơ sở dữ liệu thành công.@else Không kết nối được cơ sở dữ liệu. Vui lòng kiểm tra cấu hình database trong file bảo mật hoặc fallback <code>.env</code>. Lỗi trả về: <code>{{ $start_settings['db_error'] }}</code> @endif</td>
     </tr>
 
     <tr {!! (!$start_settings['env_exposed']) ? ' class="success"' : ' class="danger"' !!}>
@@ -86,6 +86,10 @@ Kiểm tra hệ thống ::
 @php
     $db_config_open = (! $start_settings['db_conn']) || $errors->database->any();
     $db_current_driver = old('db_connection', config('database.default'));
+    $db_connection_config = config('database.connections.'.$db_current_driver, []);
+    $db_current_database = old('db_database', $db_connection_config['database'] ?? 'hsb_it');
+    $db_current_database = in_array($db_current_database, [null, '', 'snipeit'], true) ? 'hsb_it' : $db_current_database;
+    $db_config_file = config('database.hsbit_config_file', storage_path('app/secrets/database.php'));
 @endphp
 
 <div class="panel panel-default" style="margin-top: 20px;">
@@ -99,7 +103,7 @@ Kiểm tra hệ thống ::
   <div id="dbConfigForm" class="panel-collapse collapse {{ $db_config_open ? 'in' : '' }}">
     <div class="panel-body">
 
-      <p>Hỗ trợ MySQL/MariaDB và PostgreSQL &mdash; kể cả <strong>Cloud SQL for PostgreSQL</strong>. Cloud SQL nói chuẩn giao thức PostgreSQL nên chọn <code>PostgreSQL</code> bên dưới là đúng.</p>
+      <p>Hỗ trợ MySQL/MariaDB và PostgreSQL &mdash; kể cả <strong>Cloud SQL for PostgreSQL</strong>. Sau khi kiểm tra kết nối thành công, thông tin database sẽ được lưu vào file cấu hình bảo mật <code>{{ $db_config_file }}</code>, không ghi mật khẩu database vào <code>.env</code>.</p>
 
       @if ($errors->database->has('db_connection_test'))
         <div class="alert alert-danger">
@@ -123,14 +127,14 @@ Kiểm tra hệ thống ::
           <div class="form-group col-lg-4">
             <label for="db_host">Host</label>
             <input class="form-control" type="text" name="db_host" id="db_host" placeholder="127.0.0.1 hoặc IP Cloud SQL" required
-                   value="{{ old('db_host', config('database.connections.'.config('database.default').'.host')) }}">
+                   value="{{ old('db_host', $db_connection_config['host'] ?? '127.0.0.1') }}">
             <x-form.error name="db_host" :bag="'database'" />
           </div>
 
           <div class="form-group col-lg-4">
             <label for="db_port">Port</label>
             <input class="form-control" type="number" name="db_port" id="db_port" min="1" max="65535" required
-                   value="{{ old('db_port', config('database.connections.'.config('database.default').'.port')) }}">
+                   value="{{ old('db_port', $db_connection_config['port'] ?? ($db_current_driver === 'pgsql' ? '5432' : '3306')) }}">
             <x-form.error name="db_port" :bag="'database'" />
           </div>
         </div>
@@ -139,14 +143,14 @@ Kiểm tra hệ thống ::
           <div class="form-group col-lg-4">
             <label for="db_database">Tên cơ sở dữ liệu</label>
             <input class="form-control" type="text" name="db_database" id="db_database" required
-                   value="{{ old('db_database') }}">
+                   value="{{ $db_current_database }}">
             <x-form.error name="db_database" :bag="'database'" />
           </div>
 
           <div class="form-group col-lg-4">
             <label for="db_username">Tên đăng nhập</label>
             <input class="form-control" type="text" name="db_username" id="db_username" required
-                   value="{{ old('db_username') }}">
+                   value="{{ old('db_username', $db_connection_config['username'] ?? '') }}">
             <x-form.error name="db_username" :bag="'database'" />
           </div>
 

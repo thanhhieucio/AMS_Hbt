@@ -157,7 +157,7 @@ class SetupController extends Controller
         $sslRequire = $driver === 'pgsql' && $request->boolean('db_sslmode');
 
         // Leave the password field blank in the form to keep the credential
-        // already stored in .env instead of overwriting it with an empty one.
+        // already stored in secure config instead of overwriting it with an empty one.
         $password = $request->filled('db_password')
             ? $request->input('db_password')
             : (string) config("database.connections.{$driver}.password");
@@ -171,7 +171,7 @@ class SetupController extends Controller
                 ->withErrors(['db_connection_test' => $test['error']], 'database');
         }
 
-        $this->setEnvValues([
+        $this->setDatabaseConfigValues([
             'DB_CONNECTION' => $driver,
             'DB_HOST' => $host,
             'DB_PORT' => (string) $port,
@@ -209,6 +209,76 @@ class SetupController extends Controller
         }
     }
 
+    /**
+     * Store database bootstrap values outside the web root. The app reads this
+     * file before falling back to .env, so DB secrets no longer have to live in .env.
+     */
+    protected function setDatabaseConfigValues(array $values): void
+    {
+        $path = $this->databaseConfigPath();
+        $directory = dirname($path);
+
+        File::ensureDirectoryExists($directory, 0700, true);
+        File::put($path, "<?php\n\nreturn ".var_export($values, true).";\n", true);
+
+        @chmod($directory, 0700);
+        @chmod($path, 0600);
+
+        $this->removeEnvValues([
+            'DB_CONNECTION',
+            'DB_HOST',
+            'DB_PORT',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'DB_SSLMODE',
+        ]);
+    }
+
+    /**
+     * Resolve the DB secret file path. Relative values are treated as project-root paths.
+     */
+    protected function databaseConfigPath(): string
+    {
+        $path = config('database.hsbit_config_file', storage_path('app/secrets/database.php'));
+
+        if (! is_string($path) || trim($path) === '') {
+            return storage_path('app/secrets/database.php');
+        }
+
+        $path = trim($path);
+
+        if ($this->isAbsolutePath($path)) {
+            return $path;
+        }
+
+        return base_path($path);
+    }
+
+    protected function isAbsolutePath(string $path): bool
+    {
+        return str_starts_with($path, '/') || preg_match('#^[A-Za-z]:[\\/]#', $path) === 1;
+    }
+
+    /**
+     * Remove DB bootstrap secrets from .env after they are saved to the secure file.
+     */
+    protected function removeEnvValues(array $keys): void
+    {
+        $path = base_path('.env');
+
+        if (! File::exists($path)) {
+            return;
+        }
+
+        $content = File::get($path);
+
+        foreach ($keys as $key) {
+            $content = preg_replace('/^'.preg_quote($key, '/').'=.*(?:\r?\n)?/m', '', $content);
+        }
+
+        File::put($path, rtrim($content)."\n");
+    }
     /**
      * Write or update KEY=value pairs in the .env file, preserving everything else.
      */

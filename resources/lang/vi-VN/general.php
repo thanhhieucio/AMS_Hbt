@@ -410,7 +410,7 @@ return [
     'setup_create_admin' => 'Tạo tài khoản quản trị',
     'setup_next' => 'Tiếp',
     'setup_done' => 'Cài đặt hoàn tất!',
-    'setup_db_saved' => 'Đã lưu cấu hình cơ sở dữ liệu. Hệ thống đang kết nối lại để kiểm tra.',
+    'setup_db_saved' => 'Đã lưu cấu hình cơ sở dữ liệu vào file bảo mật. Hệ thống đang kết nối lại để kiểm tra.',
     'bulk_edit_about_to' => 'Bạn đang chuẩn bị chỉnh sửa nội dung sau: ',
     'checked_out' => 'Bàn giao',
     'checked_out_to' => 'Đã ra khỏi khu kiểm tra',

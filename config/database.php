@@ -21,6 +21,26 @@ $dump_options = [
 // that require --single-transaction (e.g. no LOCK TABLES privilege).
 $dump_options['use_single_transaction'] = (env('DB_DUMP_SINGLE_TRANSACTION', 'false') === 'true');
 
+$db_config_path = env('HSBIT_DB_CONFIG_FILE', storage_path('app/secrets/database.php'));
+
+if (is_string($db_config_path) && ($db_config_path !== '') && ! str_starts_with($db_config_path, '/') && preg_match('#^[A-Za-z]:[\\/]#', $db_config_path) !== 1) {
+    $db_config_path = base_path($db_config_path);
+}
+
+$db_secret_values = [];
+
+if (is_string($db_config_path) && ($db_config_path !== '') && is_readable($db_config_path)) {
+    $loaded_db_secret_values = require $db_config_path;
+
+    if (is_array($loaded_db_secret_values)) {
+        $db_secret_values = $loaded_db_secret_values;
+    }
+}
+
+$db_config_value = static function (string $key, $default = null) use ($db_secret_values) {
+    return array_key_exists($key, $db_secret_values) ? $db_secret_values[$key] : env($key, $default);
+};
+
 // For modern versions of mysqldump, use --ssl-mode=DISABLED
 if (env('DB_DUMP_SKIP_SSL') == 'true') {
     // Correctly add the option as a string to the 'add_extra_option' key.
@@ -42,6 +62,8 @@ return [
 
     'fetch' => PDO::FETCH_CLASS,
 
+    'hsbit_config_file' => $db_config_path,
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -53,7 +75,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => $db_config_value('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,17 +109,17 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => (int) env('DB_PORT', 3306),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $db_config_value('DB_HOST', 'localhost'),
+            'port' => (int) $db_config_value('DB_PORT', 3306),
+            'database' => $db_config_value('DB_DATABASE', 'hsb_it'),
+            'username' => $db_config_value('DB_USERNAME', 'forge'),
+            'password' => $db_config_value('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => env('DB_PREFIX', null),
             'strict' => false,
             'engine' => 'InnoDB',
-            'unix_socket' => env('DB_SOCKET', ''),
+            'unix_socket' => $db_config_value('DB_SOCKET', ''),
             'dump' => $dump_options,
             'dump_command_timeout' => 60 * 5, // 5 minute timeout
             'dump_using_single_transaction' => true, // perform dump using a single transaction
@@ -115,25 +137,25 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $db_config_value('DB_HOST', 'localhost'),
+            'port' => $db_config_value('DB_PORT', '5432'),
+            'database' => $db_config_value('DB_DATABASE', 'hsb_it'),
+            'username' => $db_config_value('DB_USERNAME', 'forge'),
+            'password' => $db_config_value('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
             // 'require' when connecting to Cloud SQL for PostgreSQL over its public IP;
             // leave as 'prefer' (or unset) when going through the Cloud SQL Auth Proxy on localhost.
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'sslmode' => $db_config_value('DB_SSLMODE', 'prefer'),
         ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $db_config_value('DB_HOST', 'localhost'),
+            'database' => $db_config_value('DB_DATABASE', 'hsb_it'),
+            'username' => $db_config_value('DB_USERNAME', 'forge'),
+            'password' => $db_config_value('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
         ],
