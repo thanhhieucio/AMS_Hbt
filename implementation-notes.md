@@ -352,3 +352,12 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
   - **Chưa test qua UI thật** (vào `/admin/portal`, đổi tên thẻ, xác nhận trang portal hiển thị đúng) và **chưa chạy migration trên production** — migration này cần chạy (`php artisan migrate`) trước khi deploy code portal lên production, nếu không cột `portal_hsbit_label` sẽ không tồn tại và trang portal sẽ lỗi.
 - **Rollback:** `git diff`/`git checkout` các file liên quan; nếu đã migrate, chạy `php artisan migrate:rollback --path=database/migrations/2026_08_22_210000_add_portal_hsbit_label_to_settings.php` để xoá cột.
 - 2026-08-22 19:40:44 | Edit | implementation-notes.md
+- 2026-08-22 20:15:01 | Edit | deploy.sh
+
+## 2026-08-22 21:00 — deploy.sh hot tự chạy migration
+
+- **Why:** `deploy.sh hot` chỉ copy file + clear cache + reload Apache, không restart container nên `startup.sh` (nơi có `php artisan migrate --force`) không chạy lại — migration mới (như `add_portal_hsbit_label_to_settings`) sẽ không được áp dụng nếu chỉ hot deploy.
+- **What:** `deploy.sh`: thêm `sudo docker exec "$APP_CONTAINER" php artisan migrate --force` vào nhánh hot patch, chạy ngay sau khi copy file thay đổi, trước khi `optimize:clear`.
+- **Trade-off:** Chạy `migrate --force` vô điều kiện mỗi lần hot deploy (kể cả khi không có migration mới) — an toàn vì Laravel tự bỏ qua migration đã chạy, chi phí thêm không đáng kể so với rủi ro quên chạy tay.
+- **Verify:** `bash -n deploy.sh` không lỗi cú pháp. Chưa chạy thử `deploy.sh hot` thật trên production trong session này.
+- 2026-08-22 20:15:19 | Edit | implementation-notes.md

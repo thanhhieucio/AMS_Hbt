@@ -245,6 +245,9 @@ else
     sudo docker exec "$APP_CONTAINER" rm -f "/var/www/html/$file"
   done
 
+  echo '--- run pending migrations ---'
+  sudo docker exec "$APP_CONTAINER" php artisan migrate --force
+
   echo '--- clear Laravel caches ---'
   sudo docker exec "$APP_CONTAINER" php artisan optimize:clear
 
