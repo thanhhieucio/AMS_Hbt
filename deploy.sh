@@ -114,7 +114,12 @@ if [ "$MODE" = "full" ]; then
     sudo docker compose ps
   "
 else
-  gcloud compute ssh "${VM_NAME}" --zone="${VM_ZONE}" --quiet --command="bash -s -- '${PATCH_REF}' '${APP_CONTAINER}' '${BRANCH}' '${REMOTE_DIR}'" <<'REMOTE_SCRIPT'
+  # Built and base64-encoded locally (not piped through gcloud/ssh stdin): on Windows,
+  # forwarding a heredoc as stdin through gcloud -> the native ssh.exe -> the remote
+  # shell is unreliable (no real pty when bash.exe is invoked from PowerShell), so the
+  # remote side can receive garbage instead of this script. Passing it as a --command
+  # argument sidesteps stdin forwarding entirely.
+  REMOTE_SCRIPT_B64="$(base64 -w0 <<'REMOTE_SCRIPT'
 set -euo pipefail
 
 PATCH_REF="$1"
@@ -238,6 +243,9 @@ fi
 echo '--- status ---'
 sudo docker compose ps
 REMOTE_SCRIPT
+)"
+
+  gcloud compute ssh "${VM_NAME}" --zone="${VM_ZONE}" --quiet --command="echo '${REMOTE_SCRIPT_B64}' | base64 -d | bash -s -- '${PATCH_REF}' '${APP_CONTAINER}' '${BRANCH}' '${REMOTE_DIR}'"
 fi
 
 echo ""

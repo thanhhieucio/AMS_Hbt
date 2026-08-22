@@ -160,3 +160,14 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - 2026-08-22 09:36:48 | Edit | .gitattributes
 - 2026-08-22 09:36:51 | Edit | deploy.sh
 - 2026-08-22 09:37:49 | Edit | implementation-notes.md
+- 2026-08-22 10:09:08 | Edit | deploy.sh
+- 2026-08-22 10:09:15 | Edit | deploy.sh
+
+## 2026-08-22 - Bỏ heredoc-qua-stdin trong hot deploy, chuyển sang truyền script qua base64
+
+- **Why:** Sau khi chuẩn hóa line-ending, chạy lại `bash deploy.sh hot` (từ PowerShell gọi `bash.exe`) vẫn báo `bash: line 1: y: command not found`, và hoàn toàn không thấy output nào từ phía remote script (`--- git pull ---`...) — chứng tỏ nội dung `REMOTE_SCRIPT` không hề tới được `bash -s` trên VM, tức lỗi nằm ở khâu forward stdin qua `gcloud compute ssh`, không phải nội dung script.
+- **Intent:** Loại bỏ hoàn toàn việc dựa vào stdin để truyền script hot-patch. Khi chạy `bash.exe` từ PowerShell (không có pty thật) rồi gọi `gcloud` (Python) bọc `ssh.exe` (chương trình Windows gốc), luồng stdin bị forward qua nhiều lớp subprocess khác nhau trên Windows và không đáng tin cậy.
+- **What:** `deploy.sh` chế độ hot: build `REMOTE_SCRIPT_B64` bằng `base64 -w0 <<'REMOTE_SCRIPT' ... REMOTE_SCRIPT` — heredoc này chỉ được `base64` cục bộ đọc qua command substitution, không đi qua gcloud/ssh nên không bị ảnh hưởng bởi vấn đề forward stdin. Sau đó gọi `gcloud compute ssh ... --command="echo '${REMOTE_SCRIPT_B64}' | base64 -d | bash -s -- '${PATCH_REF}' '${APP_CONTAINER}' '${BRANCH}' '${REMOTE_DIR}'"` — toàn bộ script được truyền như một tham số dòng lệnh (chuỗi base64 chỉ gồm ký tự an toàn, không cần escape), remote tự decode và chạy, không phụ thuộc SSH stdin nữa.
+- **Risks:** Payload base64 của script hot-patch hiện ~4KB, an toàn so với giới hạn độ dài lệnh SSH/Windows (không có nguy cơ vượt giới hạn với script hiện tại; nếu script phình to hơn nhiều trong tương lai cần theo dõi lại). Yêu cầu remote VM có `base64` (coreutils chuẩn, có sẵn trên Debian/Ubuntu).
+- **Verify:** `bash -n deploy.sh` syntax OK; test round-trip `base64 -w0 <<'X' ... X | base64 -d` cục bộ cho ra đúng nội dung gốc. Cần chạy lại `bash deploy.sh hot` trên máy thật để xác nhận remote thực sự nhận và chạy được script (thấy log `--- git pull ---`, `--- docker cp changed files ---`... xuất hiện).
+- 2026-08-22 10:09:57 | Edit | implementation-notes.md
