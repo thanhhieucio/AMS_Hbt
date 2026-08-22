@@ -57,6 +57,7 @@ class Setting extends Model
 
     protected $fillable = [
         'site_name',
+        'portal_hsbit_label',
         'email_domain',
         'email_format',
         'username_format',

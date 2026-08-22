@@ -125,7 +125,7 @@
             <div class="portal-card-icon">
                 <x-icon type="assets" />
             </div>
-            <h3>{{ $hsbSettings->site_name }}</h3>
+            <h3>{{ $hsbSettings->portal_hsbit_label ?: $hsbSettings->site_name }}</h3>
             <p>{{ trans('general.portal_asset_management_desc') }}</p>
             <span class="portal-card-cta">
                 {{ trans('general.portal_enter_module') }}

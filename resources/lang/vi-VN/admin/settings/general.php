@@ -359,6 +359,11 @@ return [
     'barcode_delete_cache' => 'Xóa cache mã vạch',
     'branding_title' => 'Cập nhật cài đặt thương hiệu',
     'general_title' => 'Cập nhật cài đặt chung',
+    'portal_title' => 'Cập nhật cài đặt trang chọn phân hệ',
+    'portal_title_short' => 'Trang chọn phân hệ',
+    'portal_help' => 'Đổi tên hiển thị trên thẻ HSB-IT ở trang chọn phân hệ',
+    'portal_hsbit_label' => 'Tên hiển thị thẻ HSB-IT',
+    'portal_hsbit_label_help' => 'Tên hiển thị trên thẻ "Quản lý Tài Sản HSB-IT" ở trang chọn phân hệ sau khi đăng nhập. Để trống sẽ dùng tên site chung (Cài đặt chung > Tên site).',
     'domain' => 'Domain',
     'domain_title' => 'Cập nhật cài đặt domain',
     'domain_help' => 'Địa chỉ website dùng để tạo liên kết',
@@ -553,6 +558,7 @@ return [
         'notifications' => 'alerts, email, notifications, audit, threshold, email alerts, cc',
         'oauth' => 'oauth, oath, api, personal access keys, tokens',
         'domain' => 'domain, url, app_url, https, cloudflare, google login, callback',
+        'portal' => 'portal, trang chủ, chọn phân hệ, module, hub, dat rau huu co',
     ],
 
 ];

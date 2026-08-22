@@ -356,6 +356,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authorize:superuser
     Route::post('domain', [SettingsController::class, 'postDomainSettings'])
         ->name('settings.domain.save');
 
+    Route::get('portal', [SettingsController::class, 'getPortalSettings'])
+        ->name('settings.portal.index')
+        ->breadcrumbs(fn (Trail $trail) => $trail->parent('settings.index')
+            ->push(trans('admin/settings/general.portal_title'), route('settings.portal.index')));
+
+    Route::post('portal', [SettingsController::class, 'postPortalSettings'])
+        ->name('settings.portal.save');
+
     Route::get('purge', [SettingsController::class, 'getPurge'])
         ->name('settings.purge.index')
         ->breadcrumbs(fn (Trail $trail) => $trail->parent('settings.index')

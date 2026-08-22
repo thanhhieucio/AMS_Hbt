@@ -1524,6 +1524,49 @@ class SettingsController extends Controller
     }
 
     /**
+     * Show the form to configure the portal hub page (resources/views/portal.blade.php)
+     * shown right after login — currently just the HSB-IT module tile label.
+     */
+    public function getPortalSettings(): View
+    {
+        $setting = Setting::getSettings();
+
+        return view('settings.portal', compact('setting'));
+    }
+
+    /**
+     * Persist the portal hub label(s).
+     */
+    public function postPortalSettings(Request $request): RedirectResponse
+    {
+        if (config('app.lock_passwords')) {
+            return redirect()->back()->with('error', trans('general.feature_disabled'));
+        }
+
+        $validator = Validator::make($request->all(), [
+            'portal_hsbit_label' => ['nullable', 'string', 'max:191'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('settings.portal.index')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $setting = Setting::getSettings();
+        $setting->portal_hsbit_label = $request->input('portal_hsbit_label');
+
+        if ($setting->save()) {
+            return redirect()->route('settings.portal.index')
+                ->with('success', trans('admin/settings/message.update.success'));
+        }
+
+        return redirect()->route('settings.portal.index')
+            ->withInput()
+            ->withErrors($setting->getErrors());
+    }
+
+    /**
      * Validate and persist APP_URL to .env, then clear the config cache so the
      * new value takes effect on the next request.
      */

@@ -326,3 +326,29 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - **Việc còn lại (đã trao đổi với user, chưa làm):** User muốn có trang admin "SSL Certificate" (giống trang Domain) để **lần sau** đổi/gia hạn cert chỉ cần dán vào form thay vì SSH. Giới hạn kỹ thuật đã giải thích với user: form có thể ghi file cert/key vào đúng path trong volume (giống cách `postDomainSettings` ghi `.env`), nhưng **không thể** tự mở port Docker hay tự chạy lại container/`a2enmod` một cách an toàn từ trong tiến trình PHP (rủi ro kiểu command-injection/leo quyền nếu cấp cho web app quyền thực thi lệnh hệ thống) — vẫn cần 1 bước restart container thủ công sau khi đổi cert. Cert hiện tại hạn 15 năm (tới 2041) nên việc này không cấp bách.
 - **Lưu ý:** Tính năng "Domain settings" (`/admin/domain`) viết ở mục trên **chưa deploy lên production** — `.env` production vừa sửa trực tiếp qua SSH, không qua form đó (production đang chạy image Docker cũ, build trước session này).
 - 2026-08-22 19:31:15 | Edit | implementation-notes.md
+- 2026-08-22 19:39:09 | Write | database/migrations/2026_08_22_210000_add_portal_hsbit_label_to_settings.php
+- 2026-08-22 19:39:13 | Edit | app/Models/Setting.php
+- 2026-08-22 19:39:23 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 19:39:27 | Edit | routes/web.php
+- 2026-08-22 19:39:35 | Write | resources/views/settings/portal.blade.php
+- 2026-08-22 19:39:38 | Edit | resources/views/portal.blade.php
+- 2026-08-22 19:39:43 | Edit | resources/views/settings/index.blade.php
+- 2026-08-22 19:39:49 | Edit | resources/lang/vi-VN/admin/settings/general.php
+- 2026-08-22 19:39:52 | Edit | resources/lang/vi-VN/admin/settings/general.php
+
+## 2026-08-22 20:50 — Tên thẻ HSB-IT trên trang portal lấy từ cấu hình admin
+
+- **Why:** User muốn chữ "Quản lý Tài Sản HSB-IT" trên thẻ portal không hard-code, mà lấy từ 1 cấu hình riêng trong admin (tách khỏi `site_name` chung, vì `site_name` còn dùng ở nhiều chỗ khác như tiêu đề trang, header).
+- **What:**
+  - Migration `2026_08_22_210000_add_portal_hsbit_label_to_settings.php`: thêm cột `portal_hsbit_label` (string, nullable) vào bảng `settings`.
+  - `app/Models/Setting.php`: thêm `portal_hsbit_label` vào `$fillable`.
+  - `app/Http/Controllers/SettingsController.php`: thêm `getPortalSettings()`/`postPortalSettings()` — validate `nullable|string|max:191`, lưu thẳng qua Eloquent (không cần ghi `.env` như trang Domain, vì đây chỉ là text hiển thị lưu trong DB).
+  - `routes/web.php`: thêm `GET/POST admin/portal` → `settings.portal.index`/`settings.portal.save`.
+  - `resources/views/settings/portal.blade.php` (mới): form 1 field, placeholder là `site_name` hiện tại để gợi ý giá trị mặc định.
+  - `resources/views/settings/index.blade.php`: thêm tile "Trang chọn phân hệ" (icon `dashboard`) vào lưới Settings.
+  - `resources/views/portal.blade.php`: đổi `{{ $hsbSettings->site_name }}` thành `{{ $hsbSettings->portal_hsbit_label ?: $hsbSettings->site_name }}` — để trống thì tự fallback về tên site chung, không bao giờ hiển thị rỗng.
+  - `resources/lang/vi-VN/admin/settings/general.php`: thêm các key `portal_title`, `portal_title_short`, `portal_help`, `portal_hsbit_label`, `portal_hsbit_label_help`, `keywords.portal`.
+- **Verify:** Chạy migration thành công trên SQLite local; `php artisan route:list` xác nhận `GET/POST admin/portal`; `php -l` sạch cho các file PHP đã sửa; `php artisan view:cache` build sạch toàn bộ Blade (đã `view:clear` lại sau khi kiểm tra). Grep mẫu lỗi dấu hỏi trên file lang — không có ký tự lỗi mới.
+  - **Chưa test qua UI thật** (vào `/admin/portal`, đổi tên thẻ, xác nhận trang portal hiển thị đúng) và **chưa chạy migration trên production** — migration này cần chạy (`php artisan migrate`) trước khi deploy code portal lên production, nếu không cột `portal_hsbit_label` sẽ không tồn tại và trang portal sẽ lỗi.
+- **Rollback:** `git diff`/`git checkout` các file liên quan; nếu đã migrate, chạy `php artisan migrate:rollback --path=database/migrations/2026_08_22_210000_add_portal_hsbit_label_to_settings.php` để xoá cột.
+- 2026-08-22 19:40:44 | Edit | implementation-notes.md
