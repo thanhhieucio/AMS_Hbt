@@ -15,7 +15,7 @@ class DashboardTest extends TestCase
     public function test_users_without_admin_access_are_redirected()
     {
         $this->actingAs(User::factory()->create())
-            ->get(route('home'))
+            ->get(route('dashboard'))
             ->assertRedirect(route('view-assets'));
     }
 
@@ -28,7 +28,7 @@ class DashboardTest extends TestCase
         Component::factory()->count(2)->create();
 
         $this->actingAs(User::factory()->admin()->create())
-            ->get(route('home'))
+            ->get(route('dashboard'))
             ->assertViewIs('dashboard')
             ->assertViewHas('counts', function ($value) {
                 $accessoryCount = Accessory::count();

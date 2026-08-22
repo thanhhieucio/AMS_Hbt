@@ -359,6 +359,13 @@ return [
     'barcode_delete_cache' => 'Xóa cache mã vạch',
     'branding_title' => 'Cập nhật cài đặt thương hiệu',
     'general_title' => 'Cập nhật cài đặt chung',
+    'domain' => 'Domain',
+    'domain_title' => 'Cập nhật cài đặt domain',
+    'domain_help' => 'Địa chỉ website dùng để tạo liên kết',
+    'domain_app_url' => 'Địa chỉ ứng dụng (APP_URL)',
+    'domain_app_url_help' => 'Địa chỉ đầy đủ (có https://) mà người dùng thật sự truy cập, ví dụ https://portal.hsb.edu.vn. Giá trị này được dùng để tạo mọi liên kết tuyệt đối trong hệ thống — link trong email, URL callback đăng nhập Google, v.v. Sai giá trị này có thể làm hỏng đăng nhập Google và các liên kết trong email.',
+    'domain_current_effective_url' => 'Địa chỉ đang áp dụng hiện tại',
+    'domain_https_warning' => 'Google chỉ chấp nhận đăng nhập SSO qua địa chỉ dùng <code>https://</code> (trừ <code>localhost</code>/<code>127.0.0.1</code>). Nếu domain của bạn đứng sau Cloudflare hoặc proxy khác, đảm bảo origin đã bật HTTPS thật trước khi lưu địa chỉ https ở đây.',
     'mail_test' => 'Gửi thử',
     'mail_test_help' => 'This will attempt to send a test mail to :replyto.',
     'mail_test_no_email' => 'MAIL_REPLYTO_ADDR not set or has no value .env config file. Cannot send test email. Please update this value in your configuration file with a valid email address.',
@@ -545,6 +552,7 @@ return [
         'security' => 'password, passwords, requirements, two factor, two-factor, common passwords, remote login, logout, authentication',
         'notifications' => 'alerts, email, notifications, audit, threshold, email alerts, cc',
         'oauth' => 'oauth, oath, api, personal access keys, tokens',
+        'domain' => 'domain, url, app_url, https, cloudflare, google login, callback',
     ],
 
 ];

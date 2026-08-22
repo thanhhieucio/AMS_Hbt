@@ -94,6 +94,23 @@
           <div class="admin box box-default">
             <div class="box-body text-center">
               <h5>
+                <a href="{{ route('settings.domain.index') }}" class="settings_button">
+                  <x-icon type="globe-us" class="fa-4x"/>
+                  <br><br>
+                  <span class="name">{{ trans('admin/settings/general.domain') }}</span>
+                  <span class="keywords" aria-hidden="true" style="display:none">{{ trans('admin/settings/general.keywords.domain') }}</span>
+                </a>
+              </h5>
+              <p class="index-block">{{ trans('admin/settings/general.domain_help') }}</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-4 col-lg-3 col-sm-6 col-xl-1">
+          <div class="admin box box-default">
+            <div class="box-body text-center">
+              <h5>
                 <a href="{{ route('settings.security.index') }}" class="settings_button">
                   <x-icon type="locked" class="fa-4x"/>
                   <br><br>

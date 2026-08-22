@@ -218,16 +218,94 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - 2026-08-22 10:51:36 | Write | _render_firebase_check.php
 - 2026-08-22 10:52:11 | Edit | implementation-notes.md
 
-## 2026-08-22 - Luu hu?ng d?n HTTPS cho m�y ch? Google Compute
-- Intent: luu quy tr�nh c?p ch?ng ch? HTTPS cho HSB-IT v�o t�i li?u Markdown d? th?c hi?n sau.
+## 2026-08-22 - Luu hu?ng d?n HTTPS cho m�y ch? Google Compute
+- Intent: luu quy tr�nh c?p ch?ng ch? HTTPS cho HSB-IT v�o t�i li?u Markdown d? th?c hi?n sau.
 - Touched surface: docs/huong-dan-cau-hinh-https.md.
-- Risk: t�i li?u c� l?nh thao t�c firewall, DNS v� TLS; c?n thay t�n mi?n m?u b?ng t�n mi?n th?t tru?c khi ch?y.
-- Rollback: ch? c?n x�a t�i li?u n?u kh�ng c�n s? d?ng; kh�ng c� thay d?i runtime.
-- Verification: ki?m tra n?i dung Markdown v� du?ng d?n tham chi?u.
+- Risk: t�i li?u c� l?nh thao t�c firewall, DNS v� TLS; c?n thay t�n mi?n m?u b?ng t�n mi?n th?t tru?c khi ch?y.
+- Rollback: ch? c?n x�a t�i li?u n?u kh�ng c�n s? d?ng; kh�ng c� thay d?i runtime.
+- Verification: ki?m tra n?i dung Markdown v� du?ng d?n tham chi?u.
 
 ## 2026-08-22 - Ch?y local k?t n?i database production qua SSH tunnel
-- Intent: cho ph�p ki?m th? code local v?i database tr�n VM m� kh�ng m? MariaDB ra Internet.
+- Intent: cho ph�p ki?m th? code local v?i database tr�n VM m� kh�ng m? MariaDB ra Internet.
 - Touched surface: docker-compose.yml, dev.remote-db.docker-compose.yml, .env.dev.remote-db.example, .gitignore, docs/chay-local-ket-noi-db-remote.md.
-- Risk: local d�ng d? li?u th?t; tuy?t d?i kh�ng ch?y migration/reset/seed ph� d? li?u production. C?n full deploy m?t l?n d? bind MariaDB v�o loopback VM.
-- Rollback: x�a override port loopback trong docker-compose.yml v� d?ng local compose; database v?n kh�ng public ra Internet.
-- Verification: ki?m tra Compose config, file secret b? gitignore, v� hu?ng d?n tunnel.
+- Risk: local d�ng d? li?u th?t; tuy?t d?i kh�ng ch?y migration/reset/seed ph� d? li?u production. C?n full deploy m?t l?n d? bind MariaDB v�o loopback VM.
+- Rollback: x�a override port loopback trong docker-compose.yml v� d?ng local compose; database v?n kh�ng public ra Internet.
+- Verification: ki?m tra Compose config, file secret b? gitignore, v� hu?ng d?n tunnel.
+- 2026-08-22 16:16:10 | Edit | app/Models/Setting.php
+- 2026-08-22 16:16:17 | Edit | app/Models/Setting.php
+- 2026-08-22 16:16:37 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-22 16:16:45 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-22 16:17:22 | Edit | deploy.sh
+
+## 2026-08-22 16:20 — Vá lỗi "vào lại /setup dù đã cài xong" và khoá lỗ hổng liên quan
+- **Why:** Sáng 22/08, sau khi hoàn tất setup wizard và tạo admin, truy cập lại trang chủ vẫn hiện màn hình `/setup` công khai — nguy hiểm vì ai cũng có thể tự tạo admin mới. Điều tra qua SSH vào VM production phát hiện 2 lỗi gốc và 1 sự cố phát sinh khi vá tay.
+- **Nguyên nhân gốc (đã xác minh trực tiếp trên VM `hieubt-hsb-ams-server`):**
+  1. `deploy.sh` từng trỏ `REMOTE_DIR=/opt/hsb-it` (sai) trước khi được sửa thành `/opt/ams-hbt` trong cùng buổi sáng — khiến các lần deploy sớm không cập nhật đúng container đang chạy thật.
+  2. Vì vậy lúc setup wizard chạy (10:33), biến `DB_DATABASE` chưa được cấu hình đầy đủ trên container đang phục vụ, code rơi vào giá trị fallback hardcode `'hsb_it'` trong `config/database.php:114` → admin bị tạo nhầm ở database `hsb_it` thay vì `snipeit` (database thật production dùng). Sau khi deploy đúng chạy xong (11:01/11:18), app chuyển hẳn sang `snipeit` (trống) → tưởng như "mất" admin vừa tạo.
+  3. `Setting::setupCompleted()` (trước khi sửa) bắt mọi lỗi kết nối DB và coi là "chưa setup" → bất kỳ sự cố DB nào (kể cả tạm thời) cũng tự động lộ `/setup` công khai ra Internet, cho phép tạo admin mới/tự đổi cấu hình DB.
+- **Xử lý khẩn cấp trên production (qua SSH, không đụng dữ liệu nghiệp vụ):** đồng bộ lại password MySQL user `snipeit` khớp `.env`; trỏ app sang database `hsb_it` (nơi admin thật sự được tạo) bằng cách ghi `/var/lib/hsbit/secrets/database.php`; xoá database `snipeit` (rỗng, chỉ có seed mặc định) theo yêu cầu người dùng.
+- **Sự cố phát sinh khi vá tay:** file secrets viết qua `docker exec` (mặc định chạy quyền `root`) bị sai owner, Apache (chạy user `docker`) không đọc được nên vẫn fallback về cấu hình cũ — phải `chown docker:root` lại mới hết. Ghi chú vận hành: mọi thao tác ghi vào `/var/lib/hsbit/secrets/*` qua `docker exec` sau này phải `chown docker:root` (hoặc dùng `docker exec -u docker`).
+- **What (code, để chặn tái diễn):**
+  - `app/Models/Setting.php` — `setupCompleted()`: chỉ coi là "chưa setup" khi lỗi đúng là bảng chưa tồn tại (SQLSTATE `42S02`/`42P01`); các lỗi DB khác (mất kết nối, sai mật khẩu, sai database...) được ném lại (throw) để hiển thị trang lỗi bình thường thay vì lộ `/setup` công khai.
+  - `app/Http/Controllers/SetupController.php` — thêm `pinEffectiveDatabaseConfig()`, gọi ở đầu `setupMigrate()`: chốt lại đúng giá trị kết nối DB đang thực sự active (dù đến từ secrets file, `.env`, hay fallback) vào file secrets *trước khi* migrate/tạo admin — đảm bảo database dùng để tạo dữ liệu luôn trùng với database mà các request sau này sẽ đọc, không còn khả năng lệch như sáng nay.
+  - `deploy.sh` — cả `full` và `hot` mode: thêm health check sau deploy (curl trang chủ, cảnh báo nếu không phải HTTP 200; cảnh báo riêng nếu trang chủ redirect ra `/setup` trong khi file secrets DB vẫn tồn tại trên volume — đúng dấu hiệu của sự cố sáng nay).
+- **Verify:** Đã test trực tiếp trên production qua SSH — trang chủ trả về `/login` (không còn `/setup`), tài khoản `hieubt@hsb.edu.vn` còn nguyên. Code mới đã lint qua `php -l` (không lỗi cú pháp) và `bash -n deploy.sh` (không lỗi cú pháp). Chưa chạy `php artisan test` đầy đủ (không có PHP CLI sẵn trong môi trường dev Windows hiện tại) — nên chạy `php artisan test` trước khi deploy để chắc chắn không phá test khác liên quan `CheckForSetup`/`SetupController`.
+- **Rollback:** `git diff`/`git checkout` 3 file trên nếu cần; các thay đổi ở production (đồng bộ password, đổi database, xoá `snipeit`) không thể rollback qua git vì là thao tác trực tiếp trên VM — nếu cần khôi phục `snipeit` phải chạy lại migrate.
+- 2026-08-22 16:17:33 | Edit | deploy.sh
+- 2026-08-22 16:18:45 | Edit | implementation-notes.md
+- 2026-08-22 17:33:12 | Edit | resources/lang/vi-VN/general.php
+- 2026-08-22 17:33:15 | Write | app/Http/Controllers/PortalController.php
+- 2026-08-22 17:33:17 | Write | app/Http/Controllers/DatRauHuuCoController.php
+- 2026-08-22 17:33:20 | Edit | routes/web.php
+- 2026-08-22 17:33:21 | Edit | routes/web.php
+- 2026-08-22 17:33:24 | Edit | routes/web.php
+- 2026-08-22 17:33:53 | Edit | resources/views/layouts/default.blade.php
+- 2026-08-22 17:34:15 | Edit | tests/Feature/DashboardTest.php
+- 2026-08-22 17:35:24 | Write | resources/views/portal.blade.php
+- 2026-08-22 17:35:35 | Write | resources/views/dat-rau-huu-co/index.blade.php
+
+## 2026-08-22 17:40 — Trang portal chọn phân hệ sau đăng nhập + module chờ phát triển "Đặt rau hữu cơ"
+
+- **Why:** User muốn khi vào `/` phải đăng nhập trước, sau đó chọn 1 trong 2 phân hệ: "Quản lý Tài Sản HSB-IT" (như cũ) hoặc "Đặt rau hữu cơ" (module mới, hiện chỉ là placeholder chờ phát triển).
+- **What:**
+  - Route `home` (`/`) đổi từ trỏ thẳng `DashboardController@index` sang `PortalController@index` — trang hub hiển thị 2 thẻ module. Middleware `auth` giữ nguyên nên khách chưa đăng nhập vẫn bị redirect ra `/login` như trước (không cần đổi gì ở `LoginController`, `redirectTo` vẫn là `/` nên sau login sẽ vào thẳng portal).
+  - Dashboard thống kê tài sản (nội dung cũ của `/`) chuyển sang route mới `dashboard` (`/dashboard`), route name `dashboard`. Đã cập nhật link "Dashboard" trong sidebar (`resources/views/layouts/default.blade.php`) trỏ sang `route('dashboard')` thay vì `route('home')`.
+  - Thêm route/controller/view mới cho module chờ phát triển: `dat-rau-huu-co` (`DatRauHuuCoController`, view `resources/views/dat-rau-huu-co/index.blade.php`) — chỉ là placeholder "Đang phát triển", có nút quay lại portal.
+  - `portal.blade.php` và view placeholder đều `@extends('layouts/default')` (không tách layout riêng) để không mất banner impersonation, sidebar, breadcrumb, dark mode... vốn đang được layout dùng chung xử lý.
+  - Thêm các key dịch mới trong `resources/lang/vi-VN/general.php` (nhóm `portal_*` và `organic_vegetable_order`) thay vì hard-code chuỗi trong view.
+- **Trade-off đã chọn:** Giữ nguyên route name `home` cho portal (không đổi tên) vì rất nhiều nơi (`BreadcrumbsServiceProvider`, `Helper::getRedirectOption`/`sameOriginUrl`, `GoogleAuthController`, `ImpersonateController`...) đang gọi `route('home')` làm điểm neo breadcrumb "Home" và điểm redirect mặc định — đổi tên sẽ phải sửa rất nhiều chỗ. Hệ quả: icon "Home" trên breadcrumb của mọi trang trong module HSB-IT giờ dẫn về portal thay vì thẳng vào dashboard thống kê (chỉ thêm 1 click) — chấp nhận được vì đúng tinh thần "portal là trang chủ".
+  - "Đặt rau hữu cơ" hiện chỉ là placeholder route + view rỗng, chưa có controller/model/migration nghiệp vụ thật (đúng yêu cầu recommended ban đầu).
+- **Verify:**
+  - `php artisan route:list` xác nhận `/` → `home` (PortalController), `/dashboard` → `dashboard` (DashboardController), `/dat-rau-huu-co` → `dat_rau_huuco` (DatRauHuuCoController).
+  - `php artisan view:cache` build sạch toàn bộ Blade (bao gồm 2 view mới) không lỗi cú pháp; đã `view:clear` lại sau khi kiểm tra.
+  - `php -l` sạch cho các file PHP đã sửa/thêm.
+  - Đã cập nhật `tests/Feature/DashboardTest.php` (đổi `route('home')` → `route('dashboard')`) vì route `home` không còn trả về view `dashboard` nữa. Các test khác gọi `route('home')` chỉ assert redirect target/status nên không bị ảnh hưởng.
+  - **Chưa chạy được `php artisan test` đầy đủ** trong phiên này vì thiếu `.env.testing` (chỉ có `.env.testing.example`, cần `DB_DATABASE`/`DB_USERNAME`/`DB_PASSWORD` thật) — cần chạy full test suite trước khi deploy production.
+- **Rollback:** `git diff`/`git checkout` các file: `routes/web.php`, `app/Http/Controllers/PortalController.php`, `app/Http/Controllers/DatRauHuuCoController.php`, `resources/views/portal.blade.php`, `resources/views/dat-rau-huu-co/index.blade.php`, `resources/views/layouts/default.blade.php`, `resources/lang/vi-VN/general.php`, `tests/Feature/DashboardTest.php`.
+- 2026-08-22 17:37:43 | Edit | implementation-notes.md
+- 2026-08-22 17:40:38 | Write | C:/Users/HieuBT/AppData/Local/Temp/claude/D--Dev-AMS-hbt/21fdc647-35e0-4b38-8379-37803f6bbf7c/scratchpad/check_user.php
+- 2026-08-22 17:40:50 | Write | C:/Users/HieuBT/AppData/Local/Temp/claude/D--Dev-AMS-hbt/21fdc647-35e0-4b38-8379-37803f6bbf7c/scratchpad/check_user.php
+- 2026-08-22 18:24:02 | Edit | C:/Users/HieuBT/.config/herd/config/valet/Nginx/ams_hbt.test.conf
+- 2026-08-22 18:53:11 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 18:53:16 | Edit | routes/web.php
+- 2026-08-22 18:53:27 | Edit | resources/lang/vi-VN/admin/settings/general.php
+- 2026-08-22 18:53:30 | Edit | resources/lang/vi-VN/admin/settings/general.php
+- 2026-08-22 18:54:11 | Write | resources/views/settings/domain.blade.php
+- 2026-08-22 18:54:31 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 18:54:38 | Edit | resources/views/settings/index.blade.php
+
+## 2026-08-22 19:00 — Thêm form cấu hình Domain (APP_URL) trong menu Cài đặt
+
+- **Why:** Trong lúc chuẩn bị bật SSO đăng nhập Google, phát hiện production chưa có domain/HTTPS thật nên chưa đăng ký được redirect URI với Google. User yêu cầu có 1 form trong menu "Cài đặt" để cấu hình domain thay vì phải sửa `.env` bằng tay qua CLI/SSH.
+- **What:**
+  - `app/Http/Controllers/SettingsController.php`: thêm `getDomainSettings()`/`postDomainSettings()` — validate `app_url` (`required|url|max:255`), ghi vào `.env` bằng `setEnvValues()`/`quoteEnvValue()` (helper riêng, **cố ý copy** từ `SetupController` chứ không refactor dùng chung — theo quy tắc không sửa hàm sẵn có nếu không có yêu cầu rõ, tránh ảnh hưởng luồng setup wizard đang chạy tốt), rồi `Artisan::call('config:clear')` để áp dụng ngay.
+  - `routes/web.php`: thêm `GET/POST admin/domain` → `settings.domain.index`/`settings.domain.save`, cùng nhóm middleware `auth + authorize:superuser` như các trang Settings khác.
+  - `resources/views/settings/domain.blade.php` (mới): form 1 field `app_url`, hiển thị URL đang áp dụng hiện tại (`config('app.url')`), có cảnh báo (`x-callout`) về việc Google chỉ chấp nhận `https://` (trừ `localhost`/`127.0.0.1`) — lý do trực tiếp gây ra buổi làm việc này.
+  - `resources/views/settings/index.blade.php`: thêm tile "Domain" (icon `globe-us`, đã có sẵn trong `IconHelper`) vào lưới Settings, cạnh "General Settings".
+  - `resources/lang/vi-VN/admin/settings/general.php`: thêm các key `domain`, `domain_title`, `domain_help`, `domain_app_url`, `domain_app_url_help`, `domain_current_effective_url`, `domain_https_warning` và mục `keywords.domain` cho ô tìm kiếm ở trang Settings index.
+- **Trade-off đã chọn:** Chỉ cấu hình `APP_URL`, không đụng tới `TrustProxies`/`TRUSTED_PROXIES` dù production đứng sau Cloudflare — cần cấu hình sau nếu phát hiện app nhận sai scheme (http/https) từ header `X-Forwarded-Proto`. Không tạo `FormRequest` riêng (không theo pattern `SettingsFirebaseSourceRequest`/`SetupDatabaseRequest`) vì chỉ có 1 field, dùng `Validator::make()` inline cho gọn — nhất quán với `postSecurity()` cùng file.
+- **Verify:** `php artisan route:list` xác nhận `GET/POST admin/domain`; `php -l` sạch cho `SettingsController.php`, `routes/web.php`, file lang; `php artisan view:cache` build sạch toàn bộ Blade (gồm `settings/domain.blade.php`) không lỗi, đã `view:clear` lại sau khi kiểm tra. Grep mẫu lỗi dấu hỏi (`[A-Za-zÀ-ỹ]\?`) trên file lang đã sửa — không có ký tự lỗi mới.
+  - **Chưa test bằng UI thật** (đăng nhập vào `/admin/domain`, submit form, xác nhận `.env` được ghi đúng) — nên test tay trước khi dùng field này để đổi `APP_URL` thật trên production.
+- **Bối cảnh liên quan (chưa xử lý xong):** Domain thật `https://portal.hsb.edu.vn` đã trỏ DNS qua Cloudflare (IP Cloudflare, không phải trỏ thẳng `34.142.200.14`), nhưng `https://portal.hsb.edu.vn/` hiện trả lỗi Cloudflare 521 (không kết nối được tới origin) — cần xử lý ở tầng Cloudflare (SSL/TLS mode) và/hoặc mở port + cấu hình HTTPS trên VM trước khi form Domain này thật sự dùng được cho SSO Google. Việc sửa Nginx config của Herd để test SSO qua `localhost` cục bộ đã thử và **không khả thi** (Herd định tuyến site theo registry nội bộ, không chỉ theo `server_name` — đã revert lại nguyên trạng, xác nhận `ams_hbt.test` vẫn chạy bình thường).
+- **Rollback:** `git diff`/`git checkout` các file: `app/Http/Controllers/SettingsController.php`, `routes/web.php`, `resources/views/settings/domain.blade.php`, `resources/views/settings/index.blade.php`, `resources/lang/vi-VN/admin/settings/general.php`.
+- 2026-08-22 18:55:58 | Edit | implementation-notes.md

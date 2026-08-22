@@ -16,6 +16,7 @@ use App\Http\Controllers\BulkSuppliersController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DatRauHuuCoController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DepreciationsController;
 use App\Http\Controllers\GroupsController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\MaintenanceTypesController;
 use App\Http\Controllers\ManufacturersController;
 use App\Http\Controllers\ModalController;
 use App\Http\Controllers\NotesController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\Reports\CustomComponentReportController;
@@ -345,6 +347,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authorize:superuser
 
     Route::post('google', [SettingsController::class, 'postGoogleLoginSettings'])
         ->name('settings.google.save');
+
+    Route::get('domain', [SettingsController::class, 'getDomainSettings'])
+        ->name('settings.domain.index')
+        ->breadcrumbs(fn (Trail $trail) => $trail->parent('settings.index')
+            ->push(trans('admin/settings/general.domain_title'), route('settings.domain.index')));
+
+    Route::post('domain', [SettingsController::class, 'postDomainSettings'])
+        ->name('settings.domain.save');
 
     Route::get('purge', [SettingsController::class, 'getPurge'])
         ->name('settings.purge.index')
@@ -882,7 +892,20 @@ Route::withoutMiddleware(['web'])->get(
 
 Route::middleware(['auth'])->get(
     '/',
+    [PortalController::class, 'index']
+)->name('home');
+
+Route::middleware(['auth'])->get(
+    'dashboard',
     [DashboardController::class, 'index']
-)->name('home')
-    ->breadcrumbs(fn (Trail $trail) => $trail->push('Home', route('home'))
+)->name('dashboard')
+    ->breadcrumbs(fn (Trail $trail) => $trail->push('Home', route('dashboard'))
+    );
+
+Route::middleware(['auth'])->get(
+    'dat-rau-huu-co',
+    [DatRauHuuCoController::class, 'index']
+)->name('dat_rau_huuco')
+    ->breadcrumbs(fn (Trail $trail) => $trail->parent('home', route('home'))
+        ->push(trans('general.organic_vegetable_order'), route('dat_rau_huuco'))
     );

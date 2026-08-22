@@ -146,11 +146,26 @@ class Setting extends Model
             $settingsCount = self::count();
 
             return $usercount > 0 && $settingsCount > 0;
-        } catch (\Throwable $th) {
-            Log::debug('User table and settings table DO NOT exist or DO NOT have records');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // SQLSTATE 42S02 (MySQL/MariaDB "table doesn't exist") or 42P01
+            // (Postgres "undefined_table") means the schema genuinely hasn't
+            // been migrated yet - that's a real "not set up" state, safe to
+            // fall through to the setup wizard.
+            if (in_array($e->getCode(), ['42S02', '42P01'], true)) {
+                Log::debug('User table and settings table DO NOT exist yet - genuinely unmigrated.');
 
-            // Catch the error if the tables dont exit
-            return false;
+                return false;
+            }
+
+            // Any other DB error (auth failure, connection refused, wrong
+            // database, etc.) is an outage, not "not set up yet". Treating it
+            // as "not set up" would silently expose the public setup wizard
+            // (which can create a new superuser and re-point the DB
+            // connection) on a live, already-configured install. Let it
+            // bubble up so the app shows a normal error page instead.
+            Log::error('setupCompleted() DB check failed with a connection/query error, not a missing-schema error: '.$e->getMessage());
+
+            throw $e;
         }
     }
 

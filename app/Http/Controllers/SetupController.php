@@ -471,6 +471,42 @@ class SetupController extends Controller
     }
 
     /**
+     * Persist whatever database connection is CURRENTLY active (secrets file,
+     * else .env, else the connection's hardcoded fallback values) back into
+     * the secrets file, before any schema/data gets written.
+     *
+     * Without this, the connection actually used to migrate and create the
+     * first admin could differ from what a later request resolves (e.g. Step
+     * 1 never persisted a secrets file and .env's DB_DATABASE was blank at
+     * that moment, so the app silently fell back to the hardcoded default
+     * database name) - leaving the newly created data orphaned in a
+     * database nothing will ever read from again. Pinning the resolved
+     * values here guarantees the database written to is the one every
+     * future request will also connect to.
+     */
+    protected function pinEffectiveDatabaseConfig(): void
+    {
+        $driver = config('database.default');
+        $connection = config("database.connections.{$driver}");
+
+        if (! is_array($connection) || ! in_array($driver, ['mysql', 'pgsql'], true)) {
+            return;
+        }
+
+        $this->setDatabaseConfigValues([
+            'DB_CONNECTION' => $driver,
+            'DB_HOST' => (string) ($connection['host'] ?? ''),
+            'DB_PORT' => (string) ($connection['port'] ?? ''),
+            'DB_DATABASE' => (string) ($connection['database'] ?? ''),
+            'DB_USERNAME' => (string) ($connection['username'] ?? ''),
+            'DB_PASSWORD' => (string) ($connection['password'] ?? ''),
+            'DB_SSLMODE' => (string) ($connection['sslmode'] ?? 'prefer'),
+        ]);
+
+        Artisan::call('config:clear');
+    }
+
+    /**
      * Migrate the database tables, and return the output
      * to a view for Setup.
      *
@@ -480,6 +516,8 @@ class SetupController extends Controller
      */
     public function setupMigrate()
     {
+        $this->pinEffectiveDatabaseConfig();
+
         Artisan::call('migrate', ['--force' => true]);
         $output = Artisan::output();
         if ((! file_exists(storage_path().'/oauth-private.key')) || (! file_exists(storage_path().'/oauth-public.key'))) {

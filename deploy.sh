@@ -112,6 +112,24 @@ if [ "$MODE" = "full" ]; then
     sudo docker compose up -d
     echo '--- status ---'
     sudo docker compose ps
+    echo '--- post-deploy health check ---'
+    sleep 3
+    final_url=\$(curl -s -o /dev/null -w '%{url_effective}' -L http://localhost/ || echo 'CURL_FAILED')
+    http_code=\$(curl -s -o /dev/null -w '%{http_code}' -L http://localhost/ || echo '000')
+    echo \"trang chu: \$http_code -> \$final_url\"
+    if [ \"\$http_code\" != '200' ]; then
+      echo ''
+      echo '!!! CANH BAO: trang chu tra ve HTTP '\"\$http_code\"', khong phai 200 - kiem tra container/log ngay.'
+      echo ''
+    fi
+    secrets_exists='no'
+    sudo docker exec ${APP_CONTAINER} test -f /var/lib/hsbit/secrets/database.php 2>/dev/null && secrets_exists='yes'
+    if echo \"\$final_url\" | grep -q '/setup' && [ \"\$secrets_exists\" = 'yes' ]; then
+      echo ''
+      echo '!!! CANH BAO: trang chu dang redirect ra /setup nhung file cau hinh DB (secrets/database.php) van ton tai tren volume.'
+      echo '!!! Rat co the deploy nay khien app mat ket noi/tro sai database da cau hinh truoc do (giong su co 2026-08-22). Kiem tra ngay, dung vao setup ma chua ro nguyen nhan.'
+      echo ''
+    fi
   "
 else
   # Built and base64-encoded locally (not piped through gcloud/ssh stdin): on Windows,
@@ -232,6 +250,25 @@ else
 
   echo '--- reload Apache to refresh loaded PHP/opcache state ---'
   sudo docker exec "$APP_CONTAINER" apache2ctl graceful 2>/dev/null || true
+
+  echo '--- post-deploy health check ---'
+  sleep 2
+  final_url="$(curl -s -o /dev/null -w '%{url_effective}' -L http://localhost/ || echo 'CURL_FAILED')"
+  http_code="$(curl -s -o /dev/null -w '%{http_code}' -L http://localhost/ || echo '000')"
+  echo "trang chu: ${http_code} -> ${final_url}"
+  if [ "$http_code" != '200' ]; then
+    echo ''
+    echo "!!! CANH BAO: trang chu tra ve HTTP ${http_code}, khong phai 200 - kiem tra container/log ngay."
+    echo ''
+  fi
+  secrets_exists='no'
+  sudo docker exec "$APP_CONTAINER" test -f /var/lib/hsbit/secrets/database.php 2>/dev/null && secrets_exists='yes'
+  if echo "$final_url" | grep -q '/setup' && [ "$secrets_exists" = 'yes' ]; then
+    echo ''
+    echo '!!! CANH BAO: trang chu dang redirect ra /setup nhung file cau hinh DB (secrets/database.php) van ton tai tren volume.'
+    echo '!!! Rat co the deploy nay khien app mat ket noi/tro sai database da cau hinh truoc do (giong su co 2026-08-22). Kiem tra ngay, dung vao setup ma chua ro nguyen nhan.'
+    echo ''
+  fi
 fi
 
 if [ "${#skipped_files[@]}" -gt 0 ]; then

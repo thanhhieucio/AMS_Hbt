@@ -1512,4 +1512,84 @@ class SettingsController extends Controller
         // Reject path separators in case a crafted value survives route decoding.
         return str_contains($filename, '/') || str_contains($filename, '\\');
     }
+
+    /**
+     * Show the form to configure the application domain (APP_URL) — the base
+     * URL used everywhere absolute links are generated, including the Google
+     * OAuth callback built in GoogleAuthController.
+     */
+    public function getDomainSettings(): View
+    {
+        return view('settings.domain');
+    }
+
+    /**
+     * Validate and persist APP_URL to .env, then clear the config cache so the
+     * new value takes effect on the next request.
+     */
+    public function postDomainSettings(Request $request): RedirectResponse
+    {
+        if (config('app.lock_passwords')) {
+            return redirect()->back()->with('error', trans('general.feature_disabled'));
+        }
+
+        $validator = Validator::make($request->all(), [
+            'app_url' => ['required', 'url', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('settings.domain.index')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $appUrl = rtrim((string) $request->input('app_url'), '/');
+
+        $this->setEnvValues(['APP_URL' => $appUrl]);
+
+        Artisan::call('config:clear');
+
+        return redirect()->route('settings.domain.index')
+            ->with('success', trans('admin/settings/message.update.success'));
+    }
+
+    /**
+     * Write or update KEY=value pairs in the .env file, preserving everything
+     * else. Same approach as SetupController::setEnvValues() — duplicated
+     * rather than shared, so the setup wizard's env-writing path stays
+     * untouched by settings-page changes.
+     */
+    protected function setEnvValues(array $values): void
+    {
+        $path = base_path('.env');
+        $content = File::exists($path) ? File::get($path) : '';
+
+        foreach ($values as $key => $value) {
+            $line = $key.'='.$this->quoteEnvValue((string) $value);
+            $pattern = '/^'.preg_quote($key, '/').'=.*$/m';
+
+            $content = preg_match($pattern, $content)
+                ? preg_replace($pattern, $line, $content)
+                : rtrim($content)."\n".$line."\n";
+        }
+
+        File::put($path, $content);
+    }
+
+    /**
+     * Quote an .env value when it contains characters that would otherwise
+     * break parsing (whitespace, #, quotes).
+     */
+    protected function quoteEnvValue(string $value): string
+    {
+        if ($value === '') {
+            return '""';
+        }
+
+        if (preg_match('/[\s#"\'\\\\]/', $value) === 1) {
+            return '"'.str_replace(['\\', '"'], ['\\\\', '\\"'], $value).'"';
+        }
+
+        return $value;
+    }
 }
