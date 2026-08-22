@@ -36,8 +36,10 @@ class SetupDatabaseRequest extends Request
             'db_connection' => 'required|in:mysql,pgsql',
             'db_host' => 'required|string|max:255',
             'db_port' => 'required|integer|min:1|max:65535',
-            'db_database' => 'required|string|max:255',
-            'db_username' => 'required|string|max:255',
+            // Restricted to safe SQL identifier characters: these values may be used verbatim
+            // to CREATE DATABASE / CREATE USER when auto-provisioning a brand-new MySQL user.
+            'db_database' => ['required', 'string', 'max:64', 'regex:/^[A-Za-z0-9_]+$/'],
+            'db_username' => ['required', 'string', 'max:32', 'regex:/^[A-Za-z0-9_]+$/'],
             'db_password' => 'nullable|string|max:255',
             'db_sslmode' => 'nullable|boolean',
         ];

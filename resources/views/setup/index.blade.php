@@ -105,6 +105,8 @@ Kiểm tra hệ thống ::
 
       <p>Hỗ trợ MySQL/MariaDB và PostgreSQL &mdash; kể cả <strong>Cloud SQL for PostgreSQL</strong>. Sau khi kiểm tra kết nối thành công, thông tin database sẽ được lưu vào file cấu hình bảo mật <code>{{ $db_config_file }}</code>, không ghi mật khẩu database vào <code>.env</code>.</p>
 
+      <p class="text-muted">Với MySQL/MariaDB: nếu tên database hoặc tài khoản bạn nhập <strong>chưa tồn tại</strong>, hệ thống sẽ tự tạo mới đúng theo giá trị bạn nhập ở đây (dùng tài khoản root nội bộ của container CSDL) &mdash; bạn không cần tra cứu giá trị có sẵn ở nơi khác. Nếu database/tài khoản đã tồn tại, chỉ cần nhập đúng thông tin đang có.</p>
+
       @if ($errors->database->has('db_connection_test'))
         <div class="alert alert-danger">
           Không kết nối được cơ sở dữ liệu với thông tin vừa nhập: <code>{{ $errors->database->first('db_connection_test') }}</code>
@@ -126,8 +128,9 @@ Kiểm tra hệ thống ::
 
           <div class="form-group col-lg-4">
             <label for="db_host">Host</label>
-            <input class="form-control" type="text" name="db_host" id="db_host" placeholder="127.0.0.1 hoặc IP Cloud SQL" required
+            <input class="form-control" type="text" name="db_host" id="db_host" placeholder="db (docker-compose nội bộ) hoặc IP Cloud SQL" required
                    value="{{ old('db_host', $db_connection_config['host'] ?? '127.0.0.1') }}">
+            <p class="help-block">Dùng <code>db</code> nếu chạy chung docker-compose với container CSDL nội bộ; nhập IP/host thật nếu dùng Cloud SQL hoặc database bên ngoài.</p>
             <x-form.error name="db_host" :bag="'database'" />
           </div>
 
@@ -142,14 +145,15 @@ Kiểm tra hệ thống ::
         <div class="row">
           <div class="form-group col-lg-4">
             <label for="db_database">Tên cơ sở dữ liệu</label>
-            <input class="form-control" type="text" name="db_database" id="db_database" required
+            <input class="form-control" type="text" name="db_database" id="db_database" pattern="[A-Za-z0-9_]+" required
                    value="{{ $db_current_database }}">
+            <p class="help-block">Chỉ chữ/số không dấu và dấu gạch dưới (vd: <code>hsb_it</code>).</p>
             <x-form.error name="db_database" :bag="'database'" />
           </div>
 
           <div class="form-group col-lg-4">
             <label for="db_username">Tên đăng nhập</label>
-            <input class="form-control" type="text" name="db_username" id="db_username" required
+            <input class="form-control" type="text" name="db_username" id="db_username" pattern="[A-Za-z0-9_]+" required
                    value="{{ old('db_username', $db_connection_config['username'] ?? '') }}">
             <x-form.error name="db_username" :bag="'database'" />
           </div>

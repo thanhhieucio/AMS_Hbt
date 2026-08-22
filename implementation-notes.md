@@ -171,3 +171,21 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - **Risks:** Payload base64 của script hot-patch hiện ~4KB, an toàn so với giới hạn độ dài lệnh SSH/Windows (không có nguy cơ vượt giới hạn với script hiện tại; nếu script phình to hơn nhiều trong tương lai cần theo dõi lại). Yêu cầu remote VM có `base64` (coreutils chuẩn, có sẵn trên Debian/Ubuntu).
 - **Verify:** `bash -n deploy.sh` syntax OK; test round-trip `base64 -w0 <<'X' ... X | base64 -d` cục bộ cho ra đúng nội dung gốc. Cần chạy lại `bash deploy.sh hot` trên máy thật để xác nhận remote thực sự nhận và chạy được script (thấy log `--- git pull ---`, `--- docker cp changed files ---`... xuất hiện).
 - 2026-08-22 10:09:57 | Edit | implementation-notes.md
+- 2026-08-22 10:28:51 | Edit | app/Http/Requests/SetupDatabaseRequest.php
+
+## 2026-08-22 - Setup wizard tự tạo database/user MySQL thay vì bắt phải trùng giá trị .env
+
+- **Why:** User phản hồi: giá trị Host/Tên đăng nhập/Mật khẩu nhập ở `/setup` phải là giá trị **khởi tạo** ra database, không phải giá trị phải tự đi tra `.env` trên VM rồi nhập lại cho khớp — luồng cũ (`testDatabaseConnection()` chỉ test PDO, không tạo gì) không đáp ứng đúng nhu cầu này.
+- **What:**
+  - `app/Http/Requests/SetupDatabaseRequest.php`: siết `db_database`/`db_username` chỉ nhận `[A-Za-z0-9_]` (max 64/32 ký tự) — bắt buộc để nhúng an toàn trực tiếp vào câu lệnh DDL `CREATE DATABASE`/`CREATE USER` phía dưới mà không cần escape identifier.
+  - `app/Http/Controllers/SetupController.php`: thêm `provisionMysqlDatabase()` — khi `testDatabaseConnection()` thất bại và driver là `mysql`, tự kết nối bằng tài khoản `root` (lấy từ `env('MYSQL_ROOT_PASSWORD')`, biến này docker-compose đã nạp sẵn cho cả container `app` và `db` qua `env_file: .env`), chạy `CREATE DATABASE IF NOT EXISTS`, `CREATE USER IF NOT EXISTS` + `ALTER USER ... IDENTIFIED BY` (để cập nhật mật khẩu nếu user đã tồn tại nhưng mật khẩu khác), `GRANT ALL PRIVILEGES`, `FLUSH PRIVILEGES` — dùng đúng database/username/password người dùng vừa nhập trên form. Sau khi tạo xong, test lại kết nối bằng chính tài khoản mới trước khi lưu cấu hình.
+  - `resources/views/setup/index.blade.php`: thêm ghi chú giải thích hành vi tự tạo database/user, gợi ý host `db` khi dùng chung docker-compose nội bộ, thêm `pattern="[A-Za-z0-9_]+"` + help text cho ô tên database/tên đăng nhập khớp với rule validate mới.
+- **Risks:** Chỉ áp dụng cho driver `mysql` (MariaDB tự host qua docker-compose) — Cloud SQL Postgres là managed service, không tự provision theo cách này (phải tạo instance/database qua Google Cloud Console trước). Nếu `MYSQL_ROOT_PASSWORD` không có trong môi trường (ví dụ container app không cùng `env_file` với root password) thì tự tạo sẽ báo lỗi rõ ràng, không chặn được đường test PDO thông thường. `ALTER USER` sẽ ghi đè mật khẩu của user đã tồn tại nếu admin nhập mật khẩu khác — cần cẩn trọng khi dùng lại tên đăng nhập cũ trên môi trường production đang có dữ liệu thật.
+- **Verify:** `php -l` sạch cho 2 file PHP đã sửa. Cần test thật trên `/setup`: nhập database/username/password hoàn toàn mới (chưa tồn tại) với host `db`, xác nhận hệ thống tự tạo và kết nối thành công thay vì báo lỗi "Access denied"/"Unknown database" như trước.
+- 2026-08-22 10:28:58 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-22 10:29:09 | Edit | app/Http/Controllers/SetupController.php
+- 2026-08-22 10:29:35 | Edit | resources/views/setup/index.blade.php
+- 2026-08-22 10:29:41 | Edit | resources/views/setup/index.blade.php
+- 2026-08-22 10:29:45 | Edit | resources/views/setup/index.blade.php
+- 2026-08-22 10:29:49 | Edit | resources/views/setup/index.blade.php
+- 2026-08-22 10:30:16 | Edit | implementation-notes.md

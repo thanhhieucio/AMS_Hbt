@@ -164,6 +164,16 @@ class SetupController extends Controller
 
         $test = $this->testDatabaseConnection($driver, $host, $port, $database, $username, $password, $sslRequire);
 
+        if (! $test['ok'] && $driver === 'mysql') {
+            $provision = $this->provisionMysqlDatabase($host, $port, $database, $username, (string) $password);
+
+            if ($provision['ok']) {
+                $test = $this->testDatabaseConnection($driver, $host, $port, $database, $username, $password, $sslRequire);
+            } else {
+                $test['error'] = $test['error'].' | Tự tạo database/user thất bại: '.$provision['error'];
+            }
+        }
+
         if (! $test['ok']) {
             return redirect()
                 ->route('setup')
@@ -202,6 +212,47 @@ class SetupController extends Controller
                 \PDO::ATTR_TIMEOUT => 5,
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             ]);
+
+            return ['ok' => true, 'error' => null];
+        } catch (\PDOException $e) {
+            return ['ok' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * If the database/user typed into the setup form doesn't exist yet, create it
+     * (using MySQL root credentials already provisioned into this container by
+     * docker-compose) so the values the admin typed are what initializes the
+     * database, instead of requiring them to match a pre-existing .env by hand.
+     *
+     * Only applies to the self-hosted MySQL/MariaDB container (`MYSQL_ROOT_PASSWORD`
+     * comes from the same docker-compose env_file as the app). Managed databases like
+     * Cloud SQL are provisioned separately and are not touched by this method.
+     */
+    protected function provisionMysqlDatabase(string $host, int $port, string $database, string $username, string $password): array
+    {
+        $rootPassword = env('MYSQL_ROOT_PASSWORD');
+
+        if (! $rootPassword) {
+            return ['ok' => false, 'error' => 'Không tìm thấy MYSQL_ROOT_PASSWORD trên máy chủ để tự tạo database/user.'];
+        }
+
+        try {
+            $root = new \PDO("mysql:host={$host};port={$port}", 'root', $rootPassword, [
+                \PDO::ATTR_TIMEOUT => 5,
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            ]);
+
+            // db_database/db_username are already restricted to [A-Za-z0-9_] by
+            // SetupDatabaseRequest, so backtick-quoting them here is safe.
+            $root->exec("CREATE DATABASE IF NOT EXISTS `{$database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+
+            $quotedPassword = $root->quote($password);
+            $quotedUser = $root->quote($username);
+            $root->exec("CREATE USER IF NOT EXISTS {$quotedUser}@'%' IDENTIFIED BY {$quotedPassword}");
+            $root->exec("ALTER USER {$quotedUser}@'%' IDENTIFIED BY {$quotedPassword}");
+            $root->exec("GRANT ALL PRIVILEGES ON `{$database}`.* TO {$quotedUser}@'%'");
+            $root->exec('FLUSH PRIVILEGES');
 
             return ['ok' => true, 'error' => null];
         } catch (\PDOException $e) {
