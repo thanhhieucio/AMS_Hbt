@@ -232,8 +232,7 @@ fi
 if [ "${#skipped_files[@]}" -gt 0 ]; then
   echo ''
   echo '--- skipped files (use full deploy if these matter) ---'
-  printf '%s
-' "${skipped_files[@]}"
+  printf '%s\n' "${skipped_files[@]}"
 fi
 
 echo '--- status ---'

@@ -133,16 +133,30 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - **Risks:** Hot patch chỉ sửa container đang chạy, không cập nhật Docker image; nếu container bị recreate thì cần deploy chuẩn hoặc hot patch lại. Không phù hợp cho thay đổi Dockerfile, composer/npm dependency, migration cần build/runtime package mới.
 - **Rollback/verify:** Rollback bằng git diff `deploy.sh`. Verify bằng `bash -n deploy.sh` nếu có bash và đọc lại command SSH/docker cp sinh ra.
 
-## 2026-08-22 - S?a SSH hot deploy kh�ng tranh stdin
-- Intent: ngan gcloud compute ssh h?i x�c nh?n tuong t�c khi hot patch truy?n script qua stdin.
-- Touched surface: deploy.sh, c�c l?nh gcloud compute ssh c?a ch? d? full v� hot.
-- Risk: --quiet b? qua prompt x�c nh?n c?a gcloud; kh�ng thay d?i l?nh build/copy t? xa.
-- Rollback: kh�i ph?c hai l?nh gcloud compute ssh v? d?ng kh�ng c� --quiet.
-- Verification: bash -n deploy.sh v� deploy.sh --help.
+## 2026-08-22 - Sửa SSH hot deploy không tranh stdin
+- Intent: ngăn gcloud compute ssh hỏi xác nhận tương tác khi hot patch truyền script qua stdin.
+- Touched surface: deploy.sh, các lệnh gcloud compute ssh của chế độ full và hot.
+- Risk: --quiet bỏ qua prompt xác nhận của gcloud; không thay đổi lệnh build/copy từ xa.
+- Rollback: khôi phục hai lệnh gcloud compute ssh về dạng không có --quiet.
+- Verification: bash -n deploy.sh và deploy.sh --help.
 
-## 2026-08-22 - T? d?ng commit/push tru?c khi deploy
-- Intent: gom commit, push GitHub v� deploy l�n Google Compute v�o m?t l?n ch?y deploy.sh.
-- Touched surface: deploy.sh; t? d?ng stage to�n b? thay d?i trong repository tru?c khi deploy.
-- Risk: git add -A s? dua c? file untracked v�o commit; c?n ki?m tra .gitignore tru?c khi ch?y production.
-- Rollback: d�ng git revert commit deploy n?u c?n; c� th? d?t AUTO_GIT_SYNC=0 d? t?t bu?c t? d?ng.
-- Verification: bash -n deploy.sh, --help v� ki?m tra diff.
+## 2026-08-22 - Tự động commit/push trước khi deploy
+- Intent: gom commit, push GitHub và deploy lên Google Compute vào một lần chạy deploy.sh.
+- Touched surface: deploy.sh; tự động stage toàn bộ thay đổi trong repository trước khi deploy.
+- Risk: git add -A sẽ đưa cả file untracked vào commit; cần kiểm tra .gitignore trước khi chạy production.
+- Rollback: dùng git revert commit deploy nếu cần; có thể đặt AUTO_GIT_SYNC=0 để tắt bước tự động.
+- Verification: bash -n deploy.sh, --help và kiểm tra diff.
+
+## 2026-08-22 - Sửa deploy.sh bị lẫn line-ending gây lỗi khi hot patch qua SSH
+
+- **Why:** User báo `bash deploy.sh hot` báo lỗi `bash: line 1: y: command not found` khi chạy trên VM production; log dừng ngay sau bước `git push` nên không bắt được dòng lỗi cụ thể từ phía remote.
+- **What:**
+  - Phát hiện `deploy.sh` bị lẫn line-ending: dòng 14 (`BRANCH=`), dòng 15 (`AUTO_GIT_SYNC=`) và dòng 235 (`printf` bên trong khối `REMOTE_SCRIPT` gửi qua SSH cho bash thật trên VM) có CRLF trong khi phần còn lại của file là LF — xác nhận bằng đếm byte `\r\n` trực tiếp (Git Bash trên Windows có thể âm thầm bỏ qua CR khi đọc script cục bộ nhưng bash thật trên VM Linux thì không).
+  - Viết lại đoạn `printf '%s\n' "${skipped_files[@]}"` thành một dòng thay vì dựa vào newline literal nằm giữa chuỗi nháy đơn 2 dòng — cách viết cũ dễ vỡ nếu file bị lẫn line-ending trở lại.
+  - Chuẩn hóa toàn bộ `deploy.sh` về LF thuần; thêm `*.sh text eol=lf` vào `.gitattributes` để git luôn checkout `.sh` bằng LF trên Windows, tránh tái diễn.
+  - Sửa mojibake tiếng Việt còn sót ở 2 entry log ngày 2026-08-22 phía trên (do lần ghi trước bị sai encoding).
+- **Risks:** Chưa xác nhận 100% CRLF là nguyên nhân trực tiếp của lỗi `y: command not found` vì không còn log đầy đủ từ phía remote; đây là sửa dựa trên bằng chứng cụ thể nhất tìm được (file thực sự bị lẫn line-ending ở đúng đoạn script chạy qua SSH) kết hợp làm cứng script để loại trừ khả năng này.
+- **Verify:** `grep -cP '\r' deploy.sh` → 0; `file deploy.sh` không còn báo CRLF; `bash -n deploy.sh` syntax OK. Cần chạy lại `bash deploy.sh hot` trên máy thật; nếu vẫn lỗi, chạy `bash deploy.sh hot > deploy.log 2>&1` để lấy đầy đủ log (kể cả output từ VM) rồi rà tiếp.
+- 2026-08-22 09:36:48 | Edit | .gitattributes
+- 2026-08-22 09:36:51 | Edit | deploy.sh
+- 2026-08-22 09:37:49 | Edit | implementation-notes.md
