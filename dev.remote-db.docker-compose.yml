@@ -1,0 +1,34 @@
+# Local development using the production database through an SSH tunnel.
+# Start the tunnel first, then run:
+# docker compose -f dev.remote-db.docker-compose.yml up -d
+services:
+  hsbit:
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+    container_name: hsbit-remote-db
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - hsbit_storage:/var/lib/hsbit
+    env_file:
+      - .env.dev.remote-db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      redis:
+        condition: service_started
+      mailhog:
+        condition: service_started
+
+  redis:
+    image: redis:7.4.3
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"
+
+volumes:
+  hsbit_storage:

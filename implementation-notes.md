@@ -182,6 +182,20 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
   - `resources/views/setup/index.blade.php`: thêm ghi chú giải thích hành vi tự tạo database/user, gợi ý host `db` khi dùng chung docker-compose nội bộ, thêm `pattern="[A-Za-z0-9_]+"` + help text cho ô tên database/tên đăng nhập khớp với rule validate mới.
 - **Risks:** Chỉ áp dụng cho driver `mysql` (MariaDB tự host qua docker-compose) — Cloud SQL Postgres là managed service, không tự provision theo cách này (phải tạo instance/database qua Google Cloud Console trước). Nếu `MYSQL_ROOT_PASSWORD` không có trong môi trường (ví dụ container app không cùng `env_file` với root password) thì tự tạo sẽ báo lỗi rõ ràng, không chặn được đường test PDO thông thường. `ALTER USER` sẽ ghi đè mật khẩu của user đã tồn tại nếu admin nhập mật khẩu khác — cần cẩn trọng khi dùng lại tên đăng nhập cũ trên môi trường production đang có dữ liệu thật.
 - **Verify:** `php -l` sạch cho 2 file PHP đã sửa. Cần test thật trên `/setup`: nhập database/username/password hoàn toàn mới (chưa tồn tại) với host `db`, xác nhận hệ thống tự tạo và kết nối thành công thay vì báo lỗi "Access denied"/"Unknown database" như trước.
+
+## 2026-08-22 - Bước 1: form Settings lưu thông số kết nối Firestore nguồn (chuẩn bị mở rộng sang quản lý tài sản chung)
+
+- **Why:** User có kế hoạch mở rộng HSB-IT từ quản lý thiết bị IT sang quản lý tài sản chung cho trường đại học, và muốn lấy một số danh mục (trước mắt xác nhận có collection sinh viên) từ Firestore của một phần mềm khác cùng tổ chức. User yêu cầu làm từng bước: bước đầu tiên **chỉ lưu thông số kết nối** (Project ID, tên collection sinh viên, Service Account base64), chưa gọi Firestore, chưa thiết kế mapping/import — vì cấu trúc dữ liệu bên đó chưa khảo sát xong.
+- **What:**
+  - `config/services.php`: thêm block `firebase_source.config_file` (mặc định `storage/app/secrets/firebase-source.php`, override được qua `FIREBASE_SOURCE_CONFIG_FILE`) — chỉ trỏ đường dẫn, không chứa giá trị thật.
+  - `app/Http/Requests/SettingsFirebaseSourceRequest.php` (mới): validate `firebase_project_id` (đúng định dạng Project ID Firebase), `firestore_students_collection` (ký tự an toàn cho collection id Firestore), `service_account_base64` (nullable — để trống thì giữ khóa cũ). `errorBag = 'firebase_source'`, `dontFlash = ['service_account_base64']`.
+  - `app/Http/Controllers/SettingsController.php`: thêm `getFirebaseSourceSettings()` / `postFirebaseSourceSettings()` + helper `readFirebaseSourceConfig()` / `writeFirebaseSourceConfig()`. Khi lưu: giải mã base64 → JSON, kiểm tra có đủ `type=service_account`, `project_id`, `client_email`, `private_key` mới chấp nhận; sai thì báo lỗi rõ ràng thay vì lưu rác. Lưu vào file secret ngoài web root (cùng pattern với `HSBIT_DB_CONFIG_FILE` ở `SetupController`), **không** lưu vào bảng `settings` hay `.env` — vì Service Account là secret có quyền truy cập rộng hơn nhiều so với Client Secret Google/SAML mà app hiện lưu thẳng trong DB.
+  - `routes/web.php`: thêm `GET/POST admin/settings/firebase-source` (`settings.firebase_source.index` / `.save`) trong group `prefix('admin')` + `middleware(['auth', 'authorize:superuser'])` sẵn có — chỉ superuser mới thấy/sửa được.
+  - `resources/views/settings/firebase-source.blade.php` (mới): form 3 trường (Project ID, Collection sinh viên, Service Account base64 dạng textarea) + banner hiển thị `client_email` hiện tại nếu đã cấu hình (không hiển thị lại khóa).
+  - `resources/views/settings/index.blade.php`: thêm tile "Nguồn dữ liệu Firebase" (icon `fa-fire`) trỏ vào trang mới.
+  - `resources/lang/vi-VN/admin/settings/general.php`, `resources/lang/en-US/admin/settings/general.php`: thêm key `firebase_source`, `firebase_source_title`, `firebase_source_help`.
+- **Risks:** Đây mới là bước lưu cấu hình — **chưa** có logic thực sự kết nối/đọc Firestore (chưa cài SDK `google/cloud-firestore`, chưa test gọi API thật), nên chưa biết Service Account có đủ quyền đọc đúng collection hay không cho tới bước sau. File secret `storage/app/secrets/firebase-source.php` đã nằm trong `.gitignore` sẵn (cùng thư mục với secret DB) nên không lọt vào git. Danh mục cụ thể cần đồng bộ (ngoài "students") chưa xác định — chờ khảo sát cấu trúc Firestore ở bước tiếp theo.
+- **Verify:** `php -l` sạch cho 3 file PHP; `php artisan route:list --name=firebase` thấy đủ 2 route; render `settings.firebase-source` và `settings.index` qua bootstrap Laravel (không qua HTTP) ra HTML hợp lệ, chứa đủ 3 field và tile mới. Chưa test qua trình duyệt thật với phiên đăng nhập superuser — cần đăng nhập, vào Cài đặt, mở "Nguồn dữ liệu Firebase", thử lưu với chuỗi base64 hợp lệ/không hợp lệ để xác nhận thông báo lỗi hiển thị đúng errorBag.
 - 2026-08-22 10:28:58 | Edit | app/Http/Controllers/SetupController.php
 - 2026-08-22 10:29:09 | Edit | app/Http/Controllers/SetupController.php
 - 2026-08-22 10:29:35 | Edit | resources/views/setup/index.blade.php
@@ -189,3 +203,31 @@ File này ghi lại các thay đổi đáng chú ý trong quá trình cá nhân 
 - 2026-08-22 10:29:45 | Edit | resources/views/setup/index.blade.php
 - 2026-08-22 10:29:49 | Edit | resources/views/setup/index.blade.php
 - 2026-08-22 10:30:16 | Edit | implementation-notes.md
+- 2026-08-22 10:48:29 | Edit | resources/lang/vi-VN/admin/settings/general.php
+- 2026-08-22 10:48:39 | Edit | resources/lang/en-US/admin/settings/general.php
+- 2026-08-22 10:48:44 | Edit | config/services.php
+- 2026-08-22 10:48:50 | Write | app/Http/Requests/SettingsFirebaseSourceRequest.php
+- 2026-08-22 10:48:57 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 10:49:00 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 10:49:14 | Edit | app/Http/Controllers/SettingsController.php
+- 2026-08-22 10:49:24 | Edit | routes/web.php
+- 2026-08-22 10:50:07 | Write | resources/views/settings/firebase-source.blade.php
+- 2026-08-22 10:50:13 | Edit | resources/views/settings/index.blade.php
+- 2026-08-22 10:51:01 | Write | C:/Users/HieuBT/AppData/Local/Temp/claude/D--Dev-AMS-hbt/c61cac47-99a6-4cc4-aeac-15b972d2391f/scratchpad/render_firebase_source_test.php
+- 2026-08-22 10:51:07 | Write | _render_firebase_test.php
+- 2026-08-22 10:51:36 | Write | _render_firebase_check.php
+- 2026-08-22 10:52:11 | Edit | implementation-notes.md
+
+## 2026-08-22 - Luu hu?ng d?n HTTPS cho m�y ch? Google Compute
+- Intent: luu quy tr�nh c?p ch?ng ch? HTTPS cho HSB-IT v�o t�i li?u Markdown d? th?c hi?n sau.
+- Touched surface: docs/huong-dan-cau-hinh-https.md.
+- Risk: t�i li?u c� l?nh thao t�c firewall, DNS v� TLS; c?n thay t�n mi?n m?u b?ng t�n mi?n th?t tru?c khi ch?y.
+- Rollback: ch? c?n x�a t�i li?u n?u kh�ng c�n s? d?ng; kh�ng c� thay d?i runtime.
+- Verification: ki?m tra n?i dung Markdown v� du?ng d?n tham chi?u.
+
+## 2026-08-22 - Ch?y local k?t n?i database production qua SSH tunnel
+- Intent: cho ph�p ki?m th? code local v?i database tr�n VM m� kh�ng m? MariaDB ra Internet.
+- Touched surface: docker-compose.yml, dev.remote-db.docker-compose.yml, .env.dev.remote-db.example, .gitignore, docs/chay-local-ket-noi-db-remote.md.
+- Risk: local d�ng d? li?u th?t; tuy?t d?i kh�ng ch?y migration/reset/seed ph� d? li?u production. C?n full deploy m?t l?n d? bind MariaDB v�o loopback VM.
+- Rollback: x�a override port loopback trong docker-compose.yml v� d?ng local compose; database v?n kh�ng public ra Internet.
+- Verification: ki?m tra Compose config, file secret b? gitignore, v� hu?ng d?n tunnel.

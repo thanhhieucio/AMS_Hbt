@@ -6,6 +6,7 @@ use App\Enums\ActionType;
 use App\Helpers\Helper;
 use App\Helpers\StorageHelper;
 use App\Http\Requests\ImageUploadRequest;
+use App\Http\Requests\SettingsFirebaseSourceRequest;
 use App\Http\Requests\SettingsSamlRequest;
 use App\Http\Requests\StoreLabelSettings;
 use App\Http\Requests\StoreLdapSettings;
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -849,6 +851,102 @@ class SettingsController extends Controller
         }
 
         return redirect()->back()->with('error', trans('general.feature_disabled'));
+    }
+
+    /**
+     * Show the read-only Firestore source connection form (step 1: only saving
+     * the connection parameters — no import/sync logic yet, that comes later
+     * once the collection structure on the other side has been surveyed).
+     */
+    public function getFirebaseSourceSettings(): View
+    {
+        $firebaseSource = $this->readFirebaseSourceConfig();
+
+        return view('settings.firebase-source', compact('firebaseSource'));
+    }
+
+    /**
+     * Validate and persist the Firestore source connection parameters. The
+     * service account key is decoded and sanity-checked (valid base64 -> valid
+     * JSON -> looks like a service account) but not actually used to call
+     * Firestore yet — connecting comes in a later step once we know which
+     * collections/fields we need to pull.
+     */
+    public function postFirebaseSourceSettings(SettingsFirebaseSourceRequest $request): RedirectResponse
+    {
+        $existing = $this->readFirebaseSourceConfig();
+
+        $serviceAccountBase64 = $request->filled('service_account_base64')
+            ? trim($request->input('service_account_base64'))
+            : ($existing['service_account_base64'] ?? null);
+
+        if (! $serviceAccountBase64) {
+            return redirect()
+                ->route('settings.firebase_source.index')
+                ->withInput($request->except('service_account_base64'))
+                ->withErrors(['service_account_base64' => 'Cần dán Service Account (base64) cho lần lưu đầu tiên.'], 'firebase_source');
+        }
+
+        $decoded = base64_decode($serviceAccountBase64, true);
+        $serviceAccount = $decoded === false ? null : json_decode($decoded, true);
+
+        if (
+            ! is_array($serviceAccount)
+            || ($serviceAccount['type'] ?? null) !== 'service_account'
+            || empty($serviceAccount['project_id'])
+            || empty($serviceAccount['client_email'])
+            || empty($serviceAccount['private_key'])
+        ) {
+            return redirect()
+                ->route('settings.firebase_source.index')
+                ->withInput($request->except('service_account_base64'))
+                ->withErrors(['service_account_base64' => 'Chuỗi base64 không giải mã được thành JSON Service Account hợp lệ (thiếu type/project_id/client_email/private_key).'], 'firebase_source');
+        }
+
+        $this->writeFirebaseSourceConfig([
+            'firebase_project_id' => $request->input('firebase_project_id'),
+            'firestore_students_collection' => $request->input('firestore_students_collection'),
+            'service_account_base64' => $serviceAccountBase64,
+            'service_account_client_email' => $serviceAccount['client_email'],
+        ]);
+
+        return redirect()->route('settings.firebase_source.index')
+            ->with('success', trans('admin/settings/message.update.success'));
+    }
+
+    /**
+     * Read the saved Firestore source config, if any. Never returns the raw
+     * service_account_base64 key to a view render path other than internal reuse
+     * (postFirebaseSourceSettings keeps it server-side; the form only ever shows
+     * the client_email as a "currently configured" indicator).
+     */
+    protected function readFirebaseSourceConfig(): array
+    {
+        $path = config('services.firebase_source.config_file');
+
+        if (! is_string($path) || ! File::exists($path)) {
+            return [];
+        }
+
+        $values = include $path;
+
+        return is_array($values) ? $values : [];
+    }
+
+    /**
+     * Store the Firestore source connection outside the web root, same pattern
+     * as the database bootstrap secret file (see SetupController).
+     */
+    protected function writeFirebaseSourceConfig(array $values): void
+    {
+        $path = config('services.firebase_source.config_file');
+        $directory = dirname($path);
+
+        File::ensureDirectoryExists($directory, 0700, true);
+        File::put($path, "<?php\n\nreturn ".var_export($values, true).";\n", true);
+
+        @chmod($directory, 0700);
+        @chmod($path, 0600);
     }
 
     /**

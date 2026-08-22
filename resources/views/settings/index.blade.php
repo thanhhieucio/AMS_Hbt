@@ -239,6 +239,21 @@
         <div class="admin box box-default">
           <div class="box-body text-center">
             <h5>
+              <a href="{{ route('settings.firebase_source.index') }}" class="settings_button">
+                <i class="fas fa-fire fa-4x" aria-hidden="true"></i>
+                <br><br>
+                <span class="name">{{ trans('admin/settings/general.firebase_source') }}</span>
+              </a>
+            </h5>
+            <p class="index-block">{{ trans('admin/settings/general.firebase_source_help') }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-lg-3 col-sm-6 col-xl-1">
+        <div class="admin box box-default">
+          <div class="box-body text-center">
+            <h5>
               <a href="{{ route('settings.saml.index') }}" class="settings_button">
                 <x-icon type="saml" class="fa-4x"/>
                 <br><br>

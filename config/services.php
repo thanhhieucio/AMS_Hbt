@@ -50,4 +50,14 @@ return [
         'maps_api_key' => env('GOOGLE_MAPS_API'),
     ],
 
+    // Read-only source connection to another system's Firestore database (e.g. student
+    // records), used to import reference lists into HSB-IT. The actual project id /
+    // collection / service account key are saved at runtime from Settings > Firebase
+    // by SettingsController and live in a locked-down file outside the web root, not
+    // in this repo's .env or the `settings` DB table (a service account key grants
+    // far more access than the usual OAuth client secret stored there).
+    'firebase_source' => [
+        'config_file' => env('FIREBASE_SOURCE_CONFIG_FILE', storage_path('app/secrets/firebase-source.php')),
+    ],
+
 ];

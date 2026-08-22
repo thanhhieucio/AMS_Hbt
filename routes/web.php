@@ -241,6 +241,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authorize:superuser
     Route::post('branding', [SettingsController::class, 'postBranding'])
         ->name('settings.branding.save');
 
+    Route::get('settings/firebase-source', [SettingsController::class, 'getFirebaseSourceSettings'])
+        ->name('settings.firebase_source.index')
+        ->breadcrumbs(fn (Trail $trail) => $trail->parent('settings.index')
+            ->push(trans('admin/settings/general.firebase_source_title'), route('settings.firebase_source.index')));
+
+    Route::post('settings/firebase-source', [SettingsController::class, 'postFirebaseSourceSettings'])
+        ->name('settings.firebase_source.save');
+
     Route::get('security', [SettingsController::class, 'getSecurity'])
         ->name('settings.security.index')
         ->breadcrumbs(fn (Trail $trail) => $trail->parent('settings.index')
